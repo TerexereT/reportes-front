@@ -23,7 +23,7 @@ const CheckboxList: React.FC<CBListProps> = ({ state, setState }) => {
 					return (
 						<FormControlLabel
 							control={<Checkbox checked={state[key]} onChange={handleChange} name={key} color='primary' />}
-							label={key}
+							label={key.replaceAll('_', ' ')}
 						/>
 					);
 				})}

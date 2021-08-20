@@ -80,7 +80,7 @@ const TableReports: React.FC<TableReportsProps> = ({ state }) => {
 				field: key,
 				headerName: key,
 				type: 'string',
-				width: 180,
+				width: 240,
 				editable: false,
 				resizable: true,
 			};
