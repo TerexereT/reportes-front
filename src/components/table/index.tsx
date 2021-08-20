@@ -1,11 +1,9 @@
-import React from 'react';
-
 // components
-import { Card, CardActions, CardContent, Button, CardHeader } from '@material-ui/core';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid';
-
+import { Button, Card, CardActions, CardContent, CardHeader } from '@material-ui/core';
 // styles
 import { makeStyles } from '@material-ui/core/styles';
+import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid';
+import React from 'react';
 
 const columns: GridColDef[] = [
 	{ field: 'id', headerName: 'ID', width: 90 },
@@ -68,16 +66,33 @@ const useStyles = makeStyles({
 	},
 });
 
-const TableReports: React.FC = () => {
+interface TableReportsProps {
+	state: any;
+}
+
+const TableReports: React.FC<TableReportsProps> = ({ state }) => {
 	const classes = useStyles();
+
+	const cols: any[] = Object.entries(state)
+		.filter(([key, value]: any) => value)
+		.map(([key, value]: any): any => {
+			return {
+				field: key,
+				headerName: key,
+				type: 'string',
+				width: 180,
+				editable: false,
+				resizable: true,
+			};
+		});
 
 	return (
 		<>
 			<Card className={classes.root}>
-				<CardHeader title='' subheader='' />
+				<CardHeader title='Tabla #1' subheader='Info relacionada a la tabla' />
 				<CardContent>
 					<div style={{ height: 400, width: '100%' }}>
-						<DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection disableSelectionOnClick />
+						<DataGrid rows={rows} columns={cols} pageSize={5} checkboxSelection disableSelectionOnClick />
 					</div>
 				</CardContent>
 				<CardActions>

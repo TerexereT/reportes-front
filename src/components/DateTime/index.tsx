@@ -1,12 +1,12 @@
-import 'date-fns';
-import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import classnames from 'classnames';
+import 'date-fns';
+import React from 'react';
 
-const useStyles = makeStyles({
+export const useStylesDT = makeStyles({
 	title: {
 		fontSize: 25,
 	},
@@ -16,7 +16,7 @@ export default function MaterialUIPickers() {
 	// The first commit of Material-UI
 	const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2014-08-18T21:11:54'));
 
-	const classes = useStyles();
+	const classes = useStylesDT();
 
 	const handleDateChange = (date: Date | null) => {
 		setSelectedDate(date);

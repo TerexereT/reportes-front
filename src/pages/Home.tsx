@@ -1,10 +1,29 @@
 import React, { Fragment } from 'react';
-
+import CheckboxList from '../components/CheckboxList';
+import SelectList from '../components/DateTime';
 // ? components
 import TableReports from '../components/table';
-import SelectList from '../components/DateTime';
 
 const Home: React.FC = () => {
+	const [state, setState]: [any, any] = React.useState({
+		CEDULA_RIF: false,
+		COMERCIO: false,
+		DIRECCION: false,
+		TERMINAL: false,
+		FechaEjec: false,
+		FechaPreceso: false,
+		COD_COMERCIO: false,
+		N_CUENTA: false,
+		N_AFILIADO: false,
+		MONTO_NETO: false,
+		MONTO_BRUTO_TDD: false,
+		MONTO_BRUTO_TDC: false,
+		COMISION_MANTENIMIENTO: false,
+		MONTO_BRUTO: false,
+		MONTO_ABONAR: false,
+		TASA: false,
+		ORG: false,
+	});
 	return (
 		<Fragment>
 			<div className='ed-container'>
@@ -14,8 +33,11 @@ const Home: React.FC = () => {
 				<div className='ed-item s-py-2'>
 					<SelectList />
 				</div>
+				<div className='ed-item spy-2'>
+					<CheckboxList state={state} setState={setState} />
+				</div>
 				<div className='ed-item s-to-center'>
-					<TableReports />
+					<TableReports state={state} />
 				</div>
 			</div>
 		</Fragment>
