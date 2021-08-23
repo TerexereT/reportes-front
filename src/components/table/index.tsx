@@ -89,7 +89,10 @@ const TableReports: React.FC<TableReportsProps> = ({ state }) => {
 	return (
 		<>
 			<Card className={classes.root}>
-				<CardHeader title='Tabla #1' subheader='Info relacionada a la tabla' />
+				<CardHeader
+					title='Resultados'
+					subheader='Puede ordenar por columna de la tabla segun los campos seleccionados'
+				/>
 				<CardContent>
 					<div style={{ height: 400, width: '100%' }}>
 						<DataGrid rows={rows} columns={cols} pageSize={5} checkboxSelection disableSelectionOnClick />

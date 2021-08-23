@@ -33,10 +33,10 @@ const Home: React.FC = () => {
 				<div className='ed-item s-py-2'>
 					<SelectList />
 				</div>
-				<div className='ed-item spy-2'>
+				<div className='ed-item s-py-2'>
 					<CheckboxList state={state} setState={setState} />
 				</div>
-				<div className='ed-item s-to-center'>
+				<div className='ed-item s-to-center s-py-2'>
 					<TableReports state={state} />
 				</div>
 			</div>
