@@ -6,11 +6,13 @@ import classnames from 'classnames';
 import 'date-fns';
 import React from 'react';
 
-export const useStylesDT = makeStyles({
+export const useStylesDT = makeStyles((styles) => ({
 	title: {
-		fontSize: 25,
+		fontSize: 32,
+		fontWeight: 500,
+		color: styles.palette.primary.main,
 	},
-});
+}));
 
 interface MaterialUIPickersProps {
 	initDate: Date | null;
@@ -30,46 +32,48 @@ const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate
 	};
 
 	return (
-		<MuiPickersUtilsProvider utils={DateFnsUtils}>
-			<div className='ed-grid m-grid-4'>
-				<Typography className={classnames(classes.title, 'm-cross-end')} color='textSecondary' gutterBottom>
-					Fecha de inicio
-				</Typography>
-				<KeyboardDatePicker
-					disableToolbar
-					variant='inline'
-					format='MM/dd/yyyy'
-					margin='normal'
-					id='date-picker-inline'
-					label='Date picker inline'
-					value={initDate}
-					onChange={handleInitDateChange}
-					KeyboardButtonProps={{
-						'aria-label': 'change date',
-					}}
-					disableFuture={true}
-					maxDate={endDate}
-					maxDateMessage='Seleccione una fecha menor a la fecha fin'
-				/>
-				<Typography className={classnames(classes.title, 'm-cross-end')} color='textSecondary' gutterBottom>
-					Fecha Final
-				</Typography>
-				<KeyboardDatePicker
-					disableToolbar
-					variant='inline'
-					format='MM/dd/yyyy'
-					margin='normal'
-					id='date-picker-inline'
-					label='Date picker inline'
-					value={endDate}
-					onChange={handleEndDateChange}
-					KeyboardButtonProps={{
-						'aria-label': 'change date',
-					}}
-					disableFuture={true}
-				/>
-			</div>
-		</MuiPickersUtilsProvider>
+		<>
+			<MuiPickersUtilsProvider utils={DateFnsUtils}>
+				<div className='ed-grid m-grid-4 s-px-2'>
+					<Typography className={classnames(classes.title, 'm-cross-end')} color='textSecondary' gutterBottom>
+						Fecha de inicio
+					</Typography>
+					<KeyboardDatePicker
+						disableToolbar
+						variant='inline'
+						format='MM/dd/yyyy'
+						margin='normal'
+						id='date-picker-inline'
+						label='Date picker inline'
+						value={initDate}
+						onChange={handleInitDateChange}
+						KeyboardButtonProps={{
+							'aria-label': 'change date',
+						}}
+						disableFuture={true}
+						maxDate={endDate}
+						maxDateMessage='Seleccione una fecha menor a la fecha fin'
+					/>
+					<Typography className={classnames(classes.title, 'm-cross-end')} color='textSecondary' gutterBottom>
+						Fecha Final
+					</Typography>
+					<KeyboardDatePicker
+						disableToolbar
+						variant='inline'
+						format='MM/dd/yyyy'
+						margin='normal'
+						id='date-picker-inline'
+						label='Date picker inline'
+						value={endDate}
+						onChange={handleEndDateChange}
+						KeyboardButtonProps={{
+							'aria-label': 'change date',
+						}}
+						disableFuture={true}
+					/>
+				</div>
+			</MuiPickersUtilsProvider>
+		</>
 	);
 };
 
