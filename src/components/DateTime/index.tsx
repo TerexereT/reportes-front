@@ -12,21 +12,28 @@ export const useStylesDT = makeStyles({
 	},
 });
 
-export default function MaterialUIPickers() {
-	// The first commit of Material-UI
-	const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2014-08-18T21:11:54'));
+interface MaterialUIPickersProps {
+	initDate: Date | null;
+	endDate: Date | null;
+	setInitDate: React.Dispatch<React.SetStateAction<Date | null>>;
+	setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
+}
 
+const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate, setInitDate, setEndDate }) => {
 	const classes = useStylesDT();
 
-	const handleDateChange = (date: Date | null) => {
-		setSelectedDate(date);
+	const handleInitDateChange = (date: Date | null) => {
+		setInitDate(date);
+	};
+	const handleEndDateChange = (date: Date | null) => {
+		setEndDate(date);
 	};
 
 	return (
 		<MuiPickersUtilsProvider utils={DateFnsUtils}>
 			<div className='ed-grid m-grid-4'>
 				<Typography className={classnames(classes.title, 'm-cross-end')} color='textSecondary' gutterBottom>
-					Fecha de inicio{' '}
+					Fecha de inicio
 				</Typography>
 				<KeyboardDatePicker
 					disableToolbar
@@ -35,14 +42,17 @@ export default function MaterialUIPickers() {
 					margin='normal'
 					id='date-picker-inline'
 					label='Date picker inline'
-					value={selectedDate}
-					onChange={handleDateChange}
+					value={initDate}
+					onChange={handleInitDateChange}
 					KeyboardButtonProps={{
 						'aria-label': 'change date',
 					}}
+					disableFuture={true}
+					maxDate={endDate}
+					maxDateMessage='Seleccione una fecha menor a la fecha fin'
 				/>
 				<Typography className={classnames(classes.title, 'm-cross-end')} color='textSecondary' gutterBottom>
-					Fecha Final{' '}
+					Fecha Final
 				</Typography>
 				<KeyboardDatePicker
 					disableToolbar
@@ -51,13 +61,16 @@ export default function MaterialUIPickers() {
 					margin='normal'
 					id='date-picker-inline'
 					label='Date picker inline'
-					value={selectedDate}
-					onChange={handleDateChange}
+					value={endDate}
+					onChange={handleEndDateChange}
 					KeyboardButtonProps={{
 						'aria-label': 'change date',
 					}}
+					disableFuture={true}
 				/>
 			</div>
 		</MuiPickersUtilsProvider>
 	);
-}
+};
+
+export default MaterialUIPickers;

@@ -2,42 +2,11 @@
 import { Button, Card, CardActions, CardContent, CardHeader } from '@material-ui/core';
 // styles
 import { makeStyles } from '@material-ui/core/styles';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import React from 'react';
+import useAxios from '../../config';
 
-const columns: GridColDef[] = [
-	{ field: 'id', headerName: 'ID', width: 90 },
-	{
-		field: 'firstName',
-		headerName: 'First name',
-		width: 150,
-		editable: true,
-	},
-	{
-		field: 'lastName',
-		headerName: 'Last name',
-		width: 150,
-		editable: true,
-	},
-	{
-		field: 'age',
-		headerName: 'Age',
-		type: 'number',
-		width: 110,
-		editable: true,
-	},
-	{
-		field: 'fullName',
-		headerName: 'Full name',
-		description: 'This column has a value getter and is not sortable.',
-		sortable: false,
-		width: 160,
-		valueGetter: (params: GridValueGetterParams) =>
-			`${params.getValue(params.id, 'firstName') || ''} ${params.getValue(params.id, 'lastName') || ''}`,
-	},
-];
-
-const rows = [
+const rowsStatic = [
 	{ id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
 	{ id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
 	{ id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -68,23 +37,47 @@ const useStyles = makeStyles({
 
 interface TableReportsProps {
 	state: any;
+	endDate: Date | null;
+	initDate: Date | null;
 }
 
-const TableReports: React.FC<TableReportsProps> = ({ state }) => {
+const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state }) => {
 	const classes = useStyles();
 
-	const cols: any[] = Object.entries(state)
-		.filter(([key, value]: any) => value)
-		.map(([key, value]: any): any => {
+	const colsID: GridColDef[] = Object.entries(state)
+		.filter(([key, value]) => value)
+		.map(([key, value]: any): GridColDef => {
 			return {
 				field: key,
 				headerName: key,
 				type: 'string',
 				width: 240,
 				editable: false,
-				resizable: true,
 			};
 		});
+
+	let keys: GridColDef[] = Object.entries(state)
+		.filter(([key, value]) => value)
+		.map(([key, value]: any): GridColDef => {
+			return {
+				field: key,
+				headerName: key,
+				type: 'string',
+				width: 240,
+				editable: false,
+			};
+		});
+
+	const traerme = async () => {
+		try {
+			const resp = await useAxios.post(
+				`/query?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
+				{
+					keys,
+				}
+			);
+		} catch (error) {}
+	};
 
 	return (
 		<>
@@ -93,14 +86,16 @@ const TableReports: React.FC<TableReportsProps> = ({ state }) => {
 					title='Resultados'
 					subheader='Puede ordenar por columna de la tabla segun los campos seleccionados'
 				/>
+				<CardActions>
+					<Button size='small' onClick={traerme}>
+						Obtener reportes
+					</Button>
+				</CardActions>
 				<CardContent>
 					<div style={{ height: 400, width: '100%' }}>
-						<DataGrid rows={rows} columns={cols} pageSize={5} checkboxSelection disableSelectionOnClick />
+						<DataGrid rows={rowsStatic} columns={keys} pageSize={5} checkboxSelection disableSelectionOnClick />
 					</div>
 				</CardContent>
-				<CardActions>
-					<Button size='small'>Learn More</Button>
-				</CardActions>
 			</Card>
 		</>
 	);

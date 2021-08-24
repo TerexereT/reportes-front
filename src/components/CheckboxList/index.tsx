@@ -1,17 +1,18 @@
 import { CardContent, CardHeader, Checkbox, FormControlLabel, FormGroup } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import React from 'react';
-import { useStylesDT } from '../DateTime';
 
 interface CBListProps {
 	state: any;
-	setState: any;
+	setState: (val: any) => void;
 }
 
 const CheckboxList: React.FC<CBListProps> = ({ state, setState }) => {
-	const classes = useStylesDT();
+	// const classes = useStylesDT();
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setState({ ...state, [event.target.name]: event.target.checked });
+		if (event.target.name !== 'TERMINAL') {
+			setState({ ...state, [event.target.name]: event.target.checked });
+		}
 	};
 	return (
 		<>
@@ -24,6 +25,7 @@ const CheckboxList: React.FC<CBListProps> = ({ state, setState }) => {
 								<FormControlLabel
 									control={<Checkbox checked={state[key]} onChange={handleChange} name={key} color='primary' />}
 									label={key.replaceAll('_', ' ')}
+									key={key}
 								/>
 							);
 						})}
