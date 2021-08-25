@@ -1,15 +1,25 @@
 import { makeStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import React, { Fragment } from 'react';
+// ? components
 import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
-// ? components
 import TableReports from '../components/table';
+// ? resources
+import TranredLogo from '../images/tranred-logo.png';
 
 const useStyles = makeStyles((styles) => ({
 	headerTitle: {
+		color: '#37256b',
+		fontWeight: 600,
 		fontSize: 40,
 		padding: 0,
+	},
+	card: {
+		minWidth: 275,
+		boxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
+		WebkitBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
+		MozBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
 	},
 }));
 
@@ -43,11 +53,12 @@ const Home: React.FC = () => {
 	return (
 		<Fragment>
 			<div className='ed-container'>
-				<div className='ed-item s-center m-left s-py-2'>
+				<div className='ed-item m-cross-end m-main-justify s-py-2'>
+					<img src={TranredLogo} style={{ width: '12rem' }} alt='logo' />
 					<div className={classes.headerTitle}>Resportes Dinámicos de Movimientos (RDM)</div>
 				</div>
 				<div className='ed-item s-py-2'>
-					<Card>
+					<Card className={classes.card}>
 						<SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} />
 
 						<CheckboxList state={state} setState={setState} />

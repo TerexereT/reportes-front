@@ -8,8 +8,7 @@ import React from 'react';
 
 export const useStylesDT = makeStyles((styles) => ({
 	title: {
-		fontSize: 32,
-		fontWeight: 500,
+		fontSize: 24,
 		color: styles.palette.primary.main,
 	},
 }));
@@ -34,7 +33,7 @@ const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate
 	return (
 		<>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				<div className='ed-grid m-grid-4 s-px-2'>
+				<div className='ed-grid m-cross-baseline m-grid-5 s-px-2 s-pt-2'>
 					<Typography className={classnames(classes.title, 'm-cross-end')} color='textSecondary' gutterBottom>
 						Fecha de inicio
 					</Typography>
@@ -43,8 +42,8 @@ const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate
 						variant='inline'
 						format='MM/dd/yyyy'
 						margin='normal'
-						id='date-picker-inline'
-						label='Date picker inline'
+						// id='date-picker-inline'
+						label='Seleccione la fecha'
 						value={initDate}
 						onChange={handleInitDateChange}
 						KeyboardButtonProps={{
@@ -62,8 +61,8 @@ const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate
 						variant='inline'
 						format='MM/dd/yyyy'
 						margin='normal'
-						id='date-picker-inline'
-						label='Date picker inline'
+						// id='date-picker-inline'
+						label='Seleccione la fecha'
 						value={endDate}
 						onChange={handleEndDateChange}
 						KeyboardButtonProps={{
