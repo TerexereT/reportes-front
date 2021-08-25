@@ -1,5 +1,6 @@
+import { unstable_createMuiStrictModeTheme as createTheme } from '@material-ui/core';
 import { esES as coreesES } from '@material-ui/core/locale';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { esES } from '@material-ui/data-grid';
 import React from 'react';
 // ? components
@@ -11,6 +12,7 @@ const theme = createTheme(
 		palette: {
 			primary: {
 				main: '#2f3775',
+				contrastText: '#ffffff',
 			},
 			secondary: {
 				main: '#dff2ff',
@@ -26,10 +28,17 @@ const theme = createTheme(
 	coreesES
 );
 
+const useStyles = makeStyles((styles) => ({
+	app: {
+		background: styles.palette.primary.light,
+	},
+}));
+
 function App() {
+	const classes = useStyles();
 	return (
 		<ThemeProvider theme={theme}>
-			<div className='App'>
+			<div className={classes.app}>
 				<Home />
 			</div>
 		</ThemeProvider>

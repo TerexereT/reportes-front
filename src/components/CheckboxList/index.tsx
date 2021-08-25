@@ -22,7 +22,7 @@ const CheckboxList: React.FC<CBListProps> = ({ state, setState }) => {
 				subheader='Seleccione las columnas que desea ver en su reporte'
 				className={classes.title}
 			/>
-			<CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+			<CardContent className='m-px-2 m-pb-2' style={{ paddingTop: 0 }}>
 				<FormGroup row style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr' }}>
 					{Object.keys(state).map((key: any) => {
 						return (

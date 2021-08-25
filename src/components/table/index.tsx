@@ -9,6 +9,7 @@ import {
 	GridRowData,
 	GridToolbarContainer,
 	GridToolbarExport,
+	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
 import { AxiosResponse } from 'axios';
 import React from 'react';
@@ -30,6 +31,9 @@ import { useStylesDT } from '../DateTime';
 const useStyles = makeStyles((styles) => ({
 	root: {
 		minWidth: 275,
+		boxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
+		WebkitBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
+		MozBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
 	},
 	bullet: {
 		display: 'inline-block',
@@ -90,8 +94,7 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state })
 			setLoading(false);
 		}
 	};
-	let rowData: GridRowData[];
-	rowData = data.map((val: any, i: number) => {
+	let rowData: GridRowData[] = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
 	let columns: GridColDef[] = [
@@ -146,6 +149,7 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state })
 		return (
 			<GridToolbarContainer>
 				<GridToolbarExport csvOptions={exportType} />
+				<GridToolbarFilterButton />
 			</GridToolbarContainer>
 		);
 	};
