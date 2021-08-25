@@ -55,7 +55,7 @@ const Home: React.FC = () => {
 			<div className='ed-container'>
 				<div className='ed-item m-cross-end m-main-justify s-py-2'>
 					<img src={TranredLogo} style={{ width: '12rem' }} alt='logo' />
-					<div className={classes.headerTitle}>Resportes Dinámicos de Movimientos (RDM)</div>
+					<div className={classes.headerTitle}>Reportes Dinámicos de Movimientos (RDM)</div>
 				</div>
 				<div className='ed-item s-py-2'>
 					<Card className={classes.card}>
