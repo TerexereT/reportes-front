@@ -3,7 +3,7 @@ import axios from 'axios';
 // Set config defaults when creating the instance
 
 const useAxios = axios.create({
-	baseURL: 'http://localhost:5050',
+	baseURL: 'http://10.198.68.21:5050',
 	headers: { common: { token: localStorage.getItem('token') } },
 });
 axios.defaults.headers['Content-Type'] = 'application/json';
