@@ -3,8 +3,7 @@ import { esES as coreesES } from '@material-ui/core/locale';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { esES } from '@material-ui/data-grid';
 import React from 'react';
-// ? components
-import Home from './pages/Home';
+import { Routes } from './router';
 import './scss/index.scss';
 
 const theme = createTheme(
@@ -30,7 +29,7 @@ const theme = createTheme(
 
 const useStyles = makeStyles((styles) => ({
 	app: {
-		background: styles.palette.primary.light,
+		// background: styles.palette.info.light,
 	},
 }));
 
@@ -39,7 +38,7 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.app}>
-				<Home />
+				<Routes />
 			</div>
 		</ThemeProvider>
 	);
