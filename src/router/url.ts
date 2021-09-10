@@ -1,2 +1,4 @@
 export const baseUrl = '/';
-export const repDin = `${baseUrl}reportes-dinamicos/`;
+export const movimientos = `${baseUrl}movimientos/`;
+export const cuotas = `${baseUrl}cuotas/`;
+export const mantenimientos = `${baseUrl}mantenimientos/`;

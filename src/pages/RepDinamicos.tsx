@@ -5,8 +5,6 @@ import React, { Fragment } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
 import TableReports from '../components/table';
-// ? resources
-import TranredLogo from '../images/tranred-logo.png';
 
 const useStyles = makeStyles((styles) => ({
 	headerTitle: {
@@ -54,7 +52,6 @@ const RepDinamicos: React.FC = () => {
 		<Fragment>
 			<div className='ed-container'>
 				<div className='ed-item m-cross-end m-main-justify s-py-2'>
-					<img src={TranredLogo} style={{ width: '12rem' }} alt='logo' />
 					<div className={classes.headerTitle}>Reportes Dinámicos de Movimientos (RDM)</div>
 				</div>
 				<div className='ed-item s-py-2'>

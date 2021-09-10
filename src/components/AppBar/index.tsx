@@ -1,6 +1,5 @@
 import AppBar from '@material-ui/core/AppBar';
 import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,19 +7,20 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import MailIcon from '@material-ui/icons/Mail';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import BuildIcon from '@material-ui/icons/Build';
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 import MenuIcon from '@material-ui/icons/Menu';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import classNames from 'classnames';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import TranredLogo from '../../images/tranred-logo.png';
-
+import { baseUrl, cuotas, mantenimientos, movimientos } from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 	toolbar: {
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'flex-end',
+		justifyContent: 'center',
 		padding: theme.spacing(0, 1),
 		// necessary for content to be below app bar
 		...theme.mixins.toolbar,
@@ -89,17 +89,21 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 	img: {
 		'& img': {
-			width: 245,
+			maxWidth: 176,
 		},
+	},
+	link: {
+		textDecoration: 'none',
+		color: theme.palette.secondary.contrastText,
 	},
 }));
 const MainMenu: React.FC = () => {
 	const classes = useStyles();
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [auth, setAuth] = React.useState(true);
 	const [open, setOpen] = React.useState(false);
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const openM = Boolean(anchorEl);
-	const theme = useTheme();
 
 	const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -119,7 +123,7 @@ const MainMenu: React.FC = () => {
 	return (
 		<div className={classes.root}>
 			<AppBar
-				position='fixed'
+				position='static'
 				className={classNames(classes.appBar, {
 					[classes.appBarShift]: open,
 				})}>
@@ -137,7 +141,7 @@ const MainMenu: React.FC = () => {
 					<Typography variant='h6' className={classes.title}>
 						Reportes Dinámicos
 					</Typography>
-					{auth && (
+					{auth ? (
 						<div>
 							<IconButton
 								aria-label='account of current user'
@@ -165,11 +169,16 @@ const MainMenu: React.FC = () => {
 								<MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
 							</Menu>
 						</div>
+					) : (
+						<>Iniciar Sesión</>
 					)}
 				</Toolbar>
 			</AppBar>
-			<Drawer
-				variant='permanent'
+			<SwipeableDrawer
+				anchor='left'
+				open={open}
+				onOpen={() => setOpen(true)}
+				onClose={handleDrawerClose}
 				className={classNames(classes.drawer, {
 					[classes.drawerOpen]: open,
 					[classes.drawerClose]: !open,
@@ -182,33 +191,43 @@ const MainMenu: React.FC = () => {
 				}}>
 				<div className={classes.toolbar}>
 					<div className={classes.img}>
-						<img src={TranredLogo} alt='logo tranred' />
+						<Link to={baseUrl} onClick={handleDrawerClose}>
+							<img src={TranredLogo} alt='logo tranred' />
+						</Link>
 					</div>
-					<IconButton onClick={handleDrawerClose} style={{ padding: 8 }}>
+					{/* <IconButton onClick={handleDrawerClose} style={{ padding: 8 }}>
 						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-					</IconButton>
+					</IconButton> */}
 				</div>
 				<Divider />
 				<List>
-					{['Movimientos'].map((text, index) => (
-						<ListItem button key={text}>
+					<Link to={movimientos} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'Movimientos'}>
 							<ListItemIcon>
-								<InboxIcon />
+								<ImportExportIcon />
 							</ListItemIcon>
-							<ListItemText primary={text} />
+							<ListItemText primary={'Movimientos'} />
 						</ListItem>
-					))}
+					</Link>
+					<Link to={cuotas} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'Cuotas'}>
+							<ListItemIcon>
+								<AttachMoneyIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Cuotas'} />
+						</ListItem>
+					</Link>
+					<Link to={mantenimientos} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'Mantenimiento'}>
+							<ListItemIcon>
+								<BuildIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Mantenimiento'} />
+						</ListItem>
+					</Link>
 				</List>
 				<Divider />
-				<List>
-					{['All mail', 'Trash', 'Spam'].map((text, index) => (
-						<ListItem button key={text}>
-							<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-							<ListItemText primary={text} />
-						</ListItem>
-					))}
-				</List>
-			</Drawer>
+			</SwipeableDrawer>
 		</div>
 	);
 };
