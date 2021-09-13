@@ -51,9 +51,9 @@ const RepDinamicos: React.FC = () => {
 	return (
 		<Fragment>
 			<div className='ed-container'>
-				<div className='ed-item m-cross-end m-main-justify s-py-2'>
+				{/* <div className='ed-item m-cross-end m-main-justify s-py-2'>
 					<div className={classes.headerTitle}>Reportes Dinámicos de Movimientos</div>
-				</div>
+				</div> */}
 				<div className='ed-item s-py-2'>
 					<Card className={classes.card}>
 						<SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} />
