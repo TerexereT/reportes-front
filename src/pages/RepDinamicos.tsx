@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import React, { Fragment } from 'react';
 // ? components
@@ -6,7 +6,7 @@ import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
 import TableReports from '../components/table';
 
-const useStyles = makeStyles((styles) => ({
+const useStyles = makeStyles((theme: Theme) => ({
 	headerTitle: {
 		color: '#37256b',
 		fontWeight: 600,
@@ -52,7 +52,7 @@ const RepDinamicos: React.FC = () => {
 		<Fragment>
 			<div className='ed-container'>
 				<div className='ed-item m-cross-end m-main-justify s-py-2'>
-					<div className={classes.headerTitle}>Reportes Dinámicos de Movimientos (RDM)</div>
+					<div className={classes.headerTitle}>Reportes Dinámicos de Movimientos</div>
 				</div>
 				<div className='ed-item s-py-2'>
 					<Card className={classes.card}>
@@ -62,7 +62,7 @@ const RepDinamicos: React.FC = () => {
 					</Card>
 				</div>
 				<div className='ed-item s-to-center s-py-2'>
-					<TableReports initDate={initDate} endDate={endDate} state={state} />
+					<TableReports initDate={initDate} endDate={endDate} state={state} from='Movimientos' />
 				</div>
 			</div>
 		</Fragment>

@@ -60,21 +60,31 @@ interface TableReportsProps {
 	state: any;
 	endDate: Date | null;
 	initDate: Date | null;
+	from?: string;
 }
 
-const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state }) => {
+const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, from = '' }) => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
 
-	const date = new Date(Date.now());
-	const exportType: GridExportCsvOptions = {
-		fileName: `RDM - ${date.toISOString().split('T')[0]}`,
+	const getExportFileName = () => {
+		const day = initDate!.getDate();
+		const month = initDate!.getMonth() + 1;
+		const year = initDate!.getFullYear();
+		const dayEnd = endDate!.getDate();
+		const monthEnd = endDate!.getMonth() + 1;
+		const yearEnd = endDate!.getFullYear();
+		return `RD${from} ${keys} Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}`;
 	};
 
 	const keys: string[] = Object.entries(state)
 		.filter(([key, value]) => value)
 		.map(([key, value]): string => key);
 
+	const exportType: GridExportCsvOptions = {
+		fileName: getExportFileName(),
+		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
+	};
 	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
 	const [data, setData]: [any[], any] = React.useState<any>([]);
 	const traerme = async () => {
