@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // components
 import { Button, Card, CardActions, CardContent, CardHeader } from '@material-ui/core';
 // styles
@@ -46,12 +47,12 @@ const useStyles = makeStyles((styles) => ({
 
 interface TableReportsProps {
 	state: any;
-	endDate: Date | null;
-	initDate: Date | null;
+	endDate?: Date | null;
+	initDate?: Date | null;
 	from: string;
 }
 
-const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, from }) => {
+const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.now()), endDate, state, from }) => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
 
@@ -59,10 +60,13 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, f
 		const day = initDate!.getDate();
 		const month = initDate!.getMonth() + 1;
 		const year = initDate!.getFullYear();
-		const dayEnd = endDate!.getDate();
-		const monthEnd = endDate!.getMonth() + 1;
-		const yearEnd = endDate!.getFullYear();
-		return `RD${from} Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd} Campos:${keys}`;
+		if (endDate !== undefined) {
+			const dayEnd = endDate!.getDate();
+			const monthEnd = endDate!.getMonth() + 1;
+			const yearEnd = endDate!.getFullYear();
+			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}][Campos:${keys}]`;
+		}
+		return `RD${from} ${day}-${month}-${year} [Campos:${keys}]`;
 	};
 
 	const keys: string[] = Object.entries(state)
@@ -73,25 +77,42 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, f
 		fileName: getExportFileName(),
 		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
 	};
+	const fieldRef = React.useRef<HTMLInputElement>(null);
 	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
 	const [data, setData]: [any[], any] = React.useState<any>([]);
+	let resp: AxiosResponse<{ message: string; info: any[] }>;
 	const traerme = async () => {
 		console.clear();
 		try {
 			setLoading(true);
-			const resp: AxiosResponse<{ message: string; info: any[] }> = await useAxios.post(
-				`/query?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
-				{
-					keys,
-				}
-			);
-
-			setData(resp.data.info);
+			if (from === 'Movimientos') {
+				resp = await useAxios.post(
+					`/query?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
+					{
+						keys,
+					}
+				);
+				setData(resp.data.info);
+				fieldRef.current?.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start',
+				});
+			}
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
 		}
 	};
+
+	const customToolbar: () => JSX.Element = () => {
+		return (
+			<GridToolbarContainer>
+				<GridToolbarExport csvOptions={exportType} />
+				<GridToolbarFilterButton />
+			</GridToolbarContainer>
+		);
+	};
+
 	let rowData: GridRowData[] = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
@@ -117,12 +138,10 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, f
 		});
 	}
 	React.useEffect(() => {
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 		rowData = data.map((val: any, i: number) => {
 			return { id: i, ...val };
 		});
 		if (rowData[0] !== undefined) {
-			// eslint-disable-next-line react-hooks/exhaustive-deps
 			columns = Object.entries(rowData[0]).map(([key, value]: any): GridColDef => {
 				if (key === 'id') {
 					return {
@@ -143,14 +162,6 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, f
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [keys]);
 
-	const customToolbar: () => JSX.Element = () => {
-		return (
-			<GridToolbarContainer>
-				<GridToolbarExport csvOptions={exportType} />
-				<GridToolbarFilterButton />
-			</GridToolbarContainer>
-		);
-	};
 	return (
 		<>
 			<Card className={classes.root}>
@@ -175,20 +186,20 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, f
 					</CardActions>
 				</div>
 				<CardContent>
-					{data !== undefined && !loading && (
-						<div style={{ height: 400, width: '100%' }}>
-							<DataGrid
-								components={{
-									Toolbar: customToolbar,
-								}}
-								rows={rowData}
-								columns={columns}
-								pageSize={25}
-								checkboxSelection
-								disableSelectionOnClick
-							/>
-						</div>
-					)}
+					<div style={{ height: 400, width: '100%' }}>
+						<DataGrid
+							ref={fieldRef}
+							components={{
+								Toolbar: customToolbar,
+							}}
+							rows={rowData}
+							columns={columns}
+							pageSize={25}
+							checkboxSelection
+							disableSelectionOnClick
+						/>
+					</div>
+					<div ref={fieldRef}></div>
 				</CardContent>
 			</Card>
 		</>
