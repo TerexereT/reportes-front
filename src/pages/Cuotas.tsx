@@ -1,5 +1,8 @@
-import { makeStyles, Theme } from '@material-ui/core';
-import React from 'react';
+import { Card, makeStyles, Theme } from '@material-ui/core';
+import React, { Fragment } from 'react';
+import CheckboxList from '../components/CheckboxList';
+import SelectList from '../components/DateTime';
+import TableReports from '../components/table';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	headerTitle: {
@@ -18,12 +21,36 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Cuotas: React.FC = () => {
 	const classes = useStyles();
+
+	const [state, setState]: [any, any] = React.useState({
+		TERMINAL: true,
+		MONTOTOTAL: false,
+		ESTATUS: false,
+	});
+
+	const today = new Date();
+	const lastMonth = new Date(today);
+	const [initDate, setInitDate] = React.useState<Date | null>(lastMonth);
+	const [endDate, setEndDate] = React.useState<Date | null>(today);
+
 	return (
-		<div className='ed-container'>
-			<div className='ed-item m-cross-end m-main-justify s-py-2'>
-				<div className={classes.headerTitle}>Reportes Dinámicos de Cuotas Vencidas</div>
+		<Fragment>
+			<div className='ed-container'>
+				<div className='ed-item m-cross-end m-main-justify s-py-2'>
+					<div className={classes.headerTitle}>Reportes Dinámicos de Cuotas Vencidas</div>
+				</div>
+				<div className='ed-item s-py-2'>
+					<Card className={classes.card}>
+						<SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} />
+
+						<CheckboxList state={state} setState={setState} />
+					</Card>
+				</div>
+				<div className='ed-item s-to-center s-py-2'>
+					<TableReports initDate={initDate} endDate={endDate} state={state} from='CuotasVencidas' />
+				</div>
 			</div>
-		</div>
+		</Fragment>
 	);
 };
 
