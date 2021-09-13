@@ -102,6 +102,7 @@ const MainMenu: React.FC = () => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [auth, setAuth] = React.useState(true);
 	const [open, setOpen] = React.useState(false);
+	const [section, setSection] = React.useState('Inicio');
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const openM = Boolean(anchorEl);
 
@@ -120,6 +121,28 @@ const MainMenu: React.FC = () => {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
+
+	const handleTitleSection = (seccion: string) => {
+		switch (seccion) {
+			case '/cuotas/':
+				return 'Cuotas Vencidas';
+			case '/movimientos/':
+				return 'Movimientos';
+			case '/mantenimiento/':
+				return 'Mantenimiento';
+
+			default:
+				return 'Inicio';
+		}
+	};
+
+	let path = window.location.pathname;
+
+	React.useEffect(() => {
+		const seccion = window.location.pathname;
+		setSection(handleTitleSection(seccion));
+	}, [path]);
+
 	return (
 		<div className={classes.root}>
 			<AppBar
@@ -139,7 +162,7 @@ const MainMenu: React.FC = () => {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant='h6' className={classes.title}>
-						Reportes Dinámicos
+						Reportes Dinámicos: {section}
 					</Typography>
 					{auth ? (
 						<div>
