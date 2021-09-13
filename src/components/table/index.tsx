@@ -16,18 +16,6 @@ import React from 'react';
 import useAxios from '../../config';
 import { useStylesDT } from '../DateTime';
 
-// const rowsStatic = [
-// 	{ id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-// 	{ id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-// 	{ id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-// 	{ id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-// 	{ id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-// 	{ id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-// 	{ id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-// 	{ id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-// 	{ id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-// ];
-
 const useStyles = makeStyles((styles) => ({
 	root: {
 		minWidth: 275,
@@ -60,10 +48,10 @@ interface TableReportsProps {
 	state: any;
 	endDate: Date | null;
 	initDate: Date | null;
-	from?: string;
+	from: string;
 }
 
-const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, from = '' }) => {
+const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, from }) => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
 
@@ -74,7 +62,7 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate, endDate, state, f
 		const dayEnd = endDate!.getDate();
 		const monthEnd = endDate!.getMonth() + 1;
 		const yearEnd = endDate!.getFullYear();
-		return `RD${from} ${keys} Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}`;
+		return `RD${from} Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd} Campos:${keys}`;
 	};
 
 	const keys: string[] = Object.entries(state)
