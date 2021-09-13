@@ -78,13 +78,13 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
 	};
 	const fieldRef = React.useRef<HTMLInputElement>(null);
-	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
+	// const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
 	const [data, setData]: [any[], any] = React.useState<any>([]);
 	let resp: AxiosResponse<{ message: string; info: any[] }>;
 	const traerme = async () => {
 		console.clear();
 		try {
-			setLoading(true);
+			// setLoading(true);
 			if (from === 'Movimientos') {
 				resp = await useAxios.post(
 					`/query?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
@@ -98,9 +98,9 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 					block: 'start',
 				});
 			}
-			setLoading(false);
+			// setLoading(false);
 		} catch (error) {
-			setLoading(false);
+			// setLoading(false);
 		}
 	};
 
