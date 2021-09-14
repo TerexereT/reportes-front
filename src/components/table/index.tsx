@@ -99,7 +99,9 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 				});
 			}
 			if (from === 'CuotasVencidas') {
-				resp = await useAxios.get(`/aboterminal`);
+				resp = await useAxios.post(`/aboterminal`, {
+					keys,
+				});
 				setData(resp.data.info);
 				fieldRef.current?.scrollIntoView({
 					behavior: 'smooth',
