@@ -17,7 +17,7 @@ stages:
 
 build:
   only:
-    - develop
+    - qa
   script:
   - node -v
   - npm install
