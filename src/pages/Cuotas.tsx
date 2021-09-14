@@ -1,36 +1,31 @@
-import { Card, makeStyles, Theme } from '@material-ui/core';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Card } from '@material-ui/core';
 import React, { Fragment } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import TableReports from '../components/table';
+import useAxios from '../config';
+import { useStyles } from './RepDinamicos';
 // import SelectList from '../components/DateTime';
-
-const useStyles = makeStyles((theme: Theme) => ({
-	headerTitle: {
-		color: '#37256b',
-		fontWeight: 600,
-		fontSize: 40,
-		padding: 0,
-	},
-	card: {
-		minWidth: 275,
-		boxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
-		WebkitBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
-		MozBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
-	},
-}));
 
 const Cuotas: React.FC = () => {
 	const classes = useStyles();
 
-	const [state, setState]: [any, any] = React.useState({
-		TERMINAL: true,
-		MONTOTOTAL: false,
-		ESTATUS: false,
-	});
+	const [state, setState]: [any, any] = React.useState({});
 	// const today = new Date();
 	// const lastMonth = new Date(today);
 	// const [initDate, setInitDate] = React.useState<Date | null>(lastMonth);
 	// const [endDate, setEndDate] = React.useState<Date | null>(today);
+
+	React.useEffect(() => {
+		const getdata = async () => {
+			try {
+				const resp = await useAxios.get('/aboterminal/keys');
+				setState(resp.data.info);
+				console.log('aboterminal', state);
+			} catch (error) {}
+		};
+		getdata();
+	}, []);
 
 	return (
 		<Fragment>
