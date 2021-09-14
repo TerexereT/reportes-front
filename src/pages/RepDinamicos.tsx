@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { makeStyles, Theme } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import React, { Fragment } from 'react';
@@ -5,8 +6,9 @@ import React, { Fragment } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
 import TableReports from '../components/table';
+import useAxios from '../config';
 
-const useStyles = makeStyles((theme: Theme) => ({
+export const useStyles = makeStyles((theme: Theme) => ({
 	headerTitle: {
 		color: '#37256b',
 		fontWeight: 600,
@@ -22,25 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const RepDinamicos: React.FC = () => {
-	const [state, setState]: [any, any] = React.useState({
-		TERMINAL: true,
-		CEDULA_RIF: false,
-		COMERCIO: false,
-		DIRECCION: false,
-		FechaEjec: false,
-		FechaPreceso: false,
-		COD_COMERCIO: false,
-		N_CUENTA: false,
-		N_AFILIADO: false,
-		MONTO_NETO: false,
-		MONTO_BRUTO_TDD: false,
-		MONTO_BRUTO_TDC: false,
-		COMISION_MANTENIMIENTO: false,
-		MONTO_BRUTO: false,
-		MONTO_ABONAR: false,
-		TASA: false,
-		ORG: false,
-	});
+	const [state, setState]: [any, any] = React.useState({});
 
 	const today = new Date();
 	const lastMonth = new Date(today);
@@ -48,6 +32,17 @@ const RepDinamicos: React.FC = () => {
 	const [endDate, setEndDate] = React.useState<Date | null>(today);
 
 	const classes = useStyles();
+
+	React.useEffect(() => {
+		const getdata = async () => {
+			try {
+				const resp = await useAxios.get('/history/keys');
+				setState(resp.data.info);
+				console.log('state', state);
+			} catch (error) {}
+		};
+		getdata();
+	}, []);
 	return (
 		<Fragment>
 			<div className='ed-container'>
