@@ -49,7 +49,7 @@ interface TableReportsProps {
 	state: any;
 	endDate?: Date | null;
 	initDate?: Date | null;
-	from: string;
+	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento';
 }
 
 const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.now()), endDate, state, from }) => {
@@ -64,9 +64,9 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 			const dayEnd = endDate!.getDate();
 			const monthEnd = endDate!.getMonth() + 1;
 			const yearEnd = endDate!.getFullYear();
-			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}][Campos:${keys}]`;
+			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}][${keys}]`;
 		}
-		return `RD${from} ${day}-${month}-${year} [Campos:${keys}]`;
+		return `RD${from}[${day}-${month}-${year}][${keys}]`;
 	};
 
 	const keys: string[] = Object.entries(state)
@@ -87,11 +87,19 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 			// setLoading(true);
 			if (from === 'Movimientos') {
 				resp = await useAxios.post(
-					`/query?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
+					`/history?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
 					{
 						keys,
 					}
 				);
+				setData(resp.data.info);
+				fieldRef.current?.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start',
+				});
+			}
+			if (from === 'CuotasVencidas') {
+				resp = await useAxios.get(`/aboterminal`);
 				setData(resp.data.info);
 				fieldRef.current?.scrollIntoView({
 					behavior: 'smooth',
