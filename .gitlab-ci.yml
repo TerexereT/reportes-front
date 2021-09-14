@@ -20,8 +20,8 @@ build:
     - qa
   script:
   - node -v
-  - npm install
-  - npm install yarn -g
+  - yarn install
+  #- npm install yarn -g
   - yarn build
   stage: build
   artifacts:
