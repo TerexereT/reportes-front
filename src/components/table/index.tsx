@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // components
-import { Button, Card, CardActions, CardContent, CardHeader } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardHeader, CircularProgress } from '@material-ui/core';
 // styles
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -10,8 +10,9 @@ import {
 	GridRowData,
 	GridToolbarContainer,
 	GridToolbarExport,
-	GridToolbarFilterButton,
+	GridToolbarFilterButton
 } from '@material-ui/data-grid';
+import { Alert } from '@material-ui/lab';
 import { AxiosResponse } from 'axios';
 import React from 'react';
 import useAxios from '../../config';
@@ -42,6 +43,14 @@ const useStyles = makeStyles((styles) => ({
 			background: styles.palette.primary.light,
 			color: styles.palette.primary.contrastText,
 		},
+	},
+	row: {
+		display: 'flex',
+		alignItems: 'center',
+		marginRight: '1rem',
+	},
+	loading: {
+		marginRight: '1rem',
 	},
 }));
 
@@ -78,13 +87,14 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
 	};
 	const fieldRef = React.useRef<HTMLInputElement>(null);
-	// const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
+	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
+	const [error, setError]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
 	const [data, setData]: [any[], any] = React.useState<any>([]);
 	let resp: AxiosResponse<{ message: string; info: any[] }>;
 	const traerme = async () => {
-		console.clear();
+		// console.clear();
 		try {
-			// setLoading(true);
+			setLoading(true);
 			if (from === 'Movimientos') {
 				resp = await useAxios.post(
 					`/history?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
@@ -108,9 +118,20 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 					block: 'start',
 				});
 			}
-			// setLoading(false);
+			if (from === 'Mantenimiento') {
+				// resp = await useAxios.post(`/aboterminal`, {
+				// 	keys,
+				// });
+				// setData(resp.data.info);
+				// fieldRef.current?.scrollIntoView({
+				// 	behavior: 'smooth',
+				// 	block: 'start',
+				// });
+			}
+			setLoading(false);
 		} catch (error) {
-			// setLoading(false);
+			setLoading(false);
+			setError(true);
 		}
 	};
 
@@ -188,12 +209,15 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 							subheader='Puede ordenar por columna de la tabla segun los campos seleccionados'
 						/>
 					</div>
-
-					<CardActions>
-						<Button size='small' onClick={traerme} className={classes.Button}>
-							Obtener reportes
-						</Button>
-					</CardActions>
+					<div className={classes.row}>
+						{loading && <CircularProgress className={classes.loading} />}
+						{error && <Alert severity='error'>Error al obtener datos</Alert>}
+						<CardActions>
+							<Button size='small' onClick={traerme} className={classes.Button}>
+								Obtener reportes
+							</Button>
+						</CardActions>
+					</div>
 				</div>
 				<CardContent>
 					<div style={{ height: 400, width: '100%' }}>

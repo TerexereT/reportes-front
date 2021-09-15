@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const MainMenu: React.FC = () => {
 	const classes = useStyles();
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [auth, setAuth] = React.useState(true);
+	const [auth, setAuth] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [section, setSection] = React.useState('Inicio');
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -193,7 +193,8 @@ const MainMenu: React.FC = () => {
 							</Menu>
 						</div>
 					) : (
-						<>Iniciar Sesión</>
+						// <>Iniciar Sesión</>
+						<></>
 					)}
 				</Toolbar>
 			</AppBar>
