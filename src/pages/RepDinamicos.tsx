@@ -38,7 +38,6 @@ const RepDinamicos: React.FC = () => {
 			try {
 				const resp = await useAxios.get('/history/keys');
 				setState(resp.data.info);
-				console.log('state', state);
 			} catch (error) {}
 		};
 		getdata();
