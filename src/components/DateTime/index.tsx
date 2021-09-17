@@ -11,6 +11,18 @@ export const useStylesDT = makeStyles((styles) => ({
 		fontSize: 24,
 		color: styles.palette.primary.main,
 	},
+	Button: {
+		background: styles.palette.primary.main,
+		color: styles.palette.primary.contrastText,
+		marginRight: '1rem',
+		'&:hover': {
+			background: styles.palette.primary.light,
+			color: styles.palette.primary.contrastText,
+		},
+	},
+	row: {
+		display: 'flex',
+	},
 }));
 
 interface MaterialUIPickersProps {
