@@ -22,7 +22,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 		MozBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
 	},
 	row: {
-		padding: '1rem 1rem 0',
+		padding: '1rem',
 		display: 'flex',
 	},
 }));
