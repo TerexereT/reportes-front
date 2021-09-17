@@ -10,7 +10,7 @@ import {
 	GridRowData,
 	GridToolbarContainer,
 	GridToolbarExport,
-	GridToolbarFilterButton
+	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
 import { Alert } from '@material-ui/lab';
 import { AxiosResponse } from 'axios';
@@ -58,10 +58,17 @@ interface TableReportsProps {
 	state: any;
 	endDate?: Date | null;
 	initDate?: Date | null;
+	mantOption?: number;
 	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento';
 }
 
-const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.now()), endDate, state, from }) => {
+const TableReports: React.FC<TableReportsProps> = ({
+	initDate = new Date(Date.now()),
+	endDate,
+	state,
+	from,
+	mantOption,
+}) => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
 
@@ -119,6 +126,13 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 				});
 			}
 			if (from === 'Mantenimiento') {
+				switch (mantOption) {
+					case 0:
+						break;
+
+					default:
+						break;
+				}
 				// resp = await useAxios.post(`/aboterminal`, {
 				// 	keys,
 				// });
