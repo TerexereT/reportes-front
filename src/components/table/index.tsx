@@ -100,6 +100,7 @@ const TableReports: React.FC<TableReportsProps> = ({
 	let resp: AxiosResponse<{ message: string; info: any[] }>;
 	const traerme = async () => {
 		// console.clear();
+		setError(false);
 		try {
 			setLoading(true);
 			if (from === 'Movimientos') {
@@ -127,20 +128,36 @@ const TableReports: React.FC<TableReportsProps> = ({
 			}
 			if (from === 'Mantenimiento') {
 				switch (mantOption) {
-					case 0:
+					case 1:
+						resp = await useAxios.post(`/mantenimiento/1`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
 						break;
-
+					case 2:
+						resp = await useAxios.post(`/mantenimiento/2`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
+						break;
 					default:
-						break;
+						resp = await useAxios.post(`/mantenimiento/0`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
 				}
-				// resp = await useAxios.post(`/aboterminal`, {
-				// 	keys,
-				// });
-				// setData(resp.data.info);
-				// fieldRef.current?.scrollIntoView({
-				// 	behavior: 'smooth',
-				// 	block: 'start',
-				// });
 			}
 			setLoading(false);
 		} catch (error) {
