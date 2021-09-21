@@ -8,10 +8,16 @@ import TableReports from '../components/table';
 import useAxios from '../config';
 import { useStyles } from './RepDinamicos';
 
+export const opciones = [
+	'Sin Plan de Mantenimiento',
+	'Sin Plan de Comisión',
+	'Plan de Mantenimiento Inactivo',
+	'Plan de Comisión Inactivo',
+];
+
 const Mantenimiento: React.FC = () => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
-	const opciones = ['Sin Plan de Mantenimiento', 'Sin Plan de Comisión', 'Plan de Tarifa Inactivo'];
 
 	const [state, setState] = React.useState({});
 	const [show, setShow] = React.useState(false);

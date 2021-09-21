@@ -16,6 +16,7 @@ import { Alert } from '@material-ui/lab';
 import { AxiosResponse } from 'axios';
 import React from 'react';
 import useAxios from '../../config';
+import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
 
 const useStyles = makeStyles((styles) => ({
@@ -76,13 +77,16 @@ const TableReports: React.FC<TableReportsProps> = ({
 		const day = initDate!.getDate();
 		const month = initDate!.getMonth() + 1;
 		const year = initDate!.getFullYear();
+		if (mantOption !== undefined) {
+			return `RDMantenimiento - ${opciones[mantOption]}`;
+		}
 		if (endDate !== undefined) {
 			const dayEnd = endDate!.getDate();
 			const monthEnd = endDate!.getMonth() + 1;
 			const yearEnd = endDate!.getFullYear();
-			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}][${keys}]`;
+			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}]`;
 		}
-		return `RD${from}[${day}-${month}-${year}][${keys}]`;
+		return `RD${from}[${day}-${month}-${year}]`;
 	};
 
 	const keys: string[] = Object.entries(state)
@@ -140,6 +144,16 @@ const TableReports: React.FC<TableReportsProps> = ({
 						break;
 					case 2:
 						resp = await useAxios.post(`/mantenimiento/2`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
+						break;
+					case 3:
+						resp = await useAxios.post(`/mantenimiento/3`, {
 							keys,
 						});
 						setData(resp.data.info);
@@ -259,7 +273,7 @@ const TableReports: React.FC<TableReportsProps> = ({
 							}}
 							rows={rowData}
 							columns={columns}
-							pageSize={25}
+							rowsPerPageOptions={[25, 50, 100]}
 							checkboxSelection
 							disableSelectionOnClick
 						/>
