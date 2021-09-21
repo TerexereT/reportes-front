@@ -259,7 +259,7 @@ const TableReports: React.FC<TableReportsProps> = ({
 							}}
 							rows={rowData}
 							columns={columns}
-							pageSize={25}
+							rowsPerPageOptions={[25, 50, 100]}
 							checkboxSelection
 							disableSelectionOnClick
 						/>
