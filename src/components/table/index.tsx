@@ -16,6 +16,7 @@ import { Alert } from '@material-ui/lab';
 import { AxiosResponse } from 'axios';
 import React from 'react';
 import useAxios from '../../config';
+import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
 
 const useStyles = makeStyles((styles) => ({
@@ -76,13 +77,16 @@ const TableReports: React.FC<TableReportsProps> = ({
 		const day = initDate!.getDate();
 		const month = initDate!.getMonth() + 1;
 		const year = initDate!.getFullYear();
+		if (mantOption !== undefined) {
+			return `RDMantenimiento - ${opciones[mantOption]}`;
+		}
 		if (endDate !== undefined) {
 			const dayEnd = endDate!.getDate();
 			const monthEnd = endDate!.getMonth() + 1;
 			const yearEnd = endDate!.getFullYear();
-			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}][${keys}]`;
+			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}]`;
 		}
-		return `RD${from}[${day}-${month}-${year}][${keys}]`;
+		return `RD${from}[${day}-${month}-${year}]`;
 	};
 
 	const keys: string[] = Object.entries(state)
