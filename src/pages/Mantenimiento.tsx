@@ -11,7 +11,12 @@ import { useStyles } from './RepDinamicos';
 const Mantenimiento: React.FC = () => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
-	const opciones = ['Sin Plan de Mantenimiento', 'Sin Plan de Comisión', 'Plan de Tarifa Inactivo'];
+	const opciones = [
+		'Sin Plan de Mantenimiento',
+		'Sin Plan de Comisión',
+		'Plan de Mantenimiento Inactivo',
+		'Plan de Comisión Inactivo',
+	];
 
 	const [state, setState] = React.useState({});
 	const [show, setShow] = React.useState(false);

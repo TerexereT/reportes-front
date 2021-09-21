@@ -148,6 +148,16 @@ const TableReports: React.FC<TableReportsProps> = ({
 							block: 'start',
 						});
 						break;
+					case 3:
+						resp = await useAxios.post(`/mantenimiento/3`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
+						break;
 					default:
 						resp = await useAxios.post(`/mantenimiento/0`, {
 							keys,
