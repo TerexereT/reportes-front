@@ -6,15 +6,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
 	DataGrid,
 	GridColDef,
-	GridExportCsvOptions,
+	// GridExportCsvOptions,
 	GridRowData,
 	GridToolbarContainer,
-	GridToolbarExport,
+	// GridToolbarExport,
 	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
+import DownloadIcon from '@material-ui/icons/GetApp';
 import { Alert } from '@material-ui/lab';
 import { AxiosResponse } from 'axios';
+// import * as FileSaver from 'file-saver';
 import React from 'react';
+import { CSVLink } from 'react-csv';
+// import * as XLSX from 'xlsx';
 import useAxios from '../../config';
 import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
@@ -52,6 +56,21 @@ const useStyles = makeStyles((styles) => ({
 	},
 	loading: {
 		marginRight: '1rem',
+	},
+	tooltip: {
+		height: '100%',
+		cursor: 'pointer',
+		'& span > a': {
+			textDecoration: 'none',
+			color: '#2f3775',
+		},
+		'&:hover': {
+			textDecoration: 'none',
+		},
+	},
+	icon: {
+		marginRight: 8,
+		fill: '#2f3775',
 	},
 }));
 
@@ -92,19 +111,21 @@ const TableReports: React.FC<TableReportsProps> = ({
 	const keys: string[] = Object.entries(state)
 		.filter(([key, value]) => value)
 		.map(([key, value]): string => key);
-
-	const exportType: GridExportCsvOptions = {
-		fileName: getExportFileName(),
-		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
-	};
+	// const exportType: GridExportCsvOptions = {
+	// 	fileName: getExportFileName(),
+	// 	delimiter: ';',
+	// 	// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
+	// };
 	const fieldRef = React.useRef<HTMLInputElement>(null);
 	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
+	const [download, setDownload]: [boolean, (download: boolean) => void] = React.useState<boolean>(false);
 	const [error, setError]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
 	const [data, setData]: [any[], any] = React.useState<any>([]);
 	let resp: AxiosResponse<{ message: string; info: any[] }>;
 	const traerme = async () => {
 		// console.clear();
 		setError(false);
+		setDownload(false);
 		try {
 			setLoading(true);
 			if (from === 'Movimientos') {
@@ -173,8 +194,10 @@ const TableReports: React.FC<TableReportsProps> = ({
 						});
 				}
 			}
+			setDownload(true);
 			setLoading(false);
 		} catch (error) {
+			setDownload(false);
 			setLoading(false);
 			setError(true);
 		}
@@ -183,8 +206,16 @@ const TableReports: React.FC<TableReportsProps> = ({
 	const customToolbar: () => JSX.Element = () => {
 		return (
 			<GridToolbarContainer>
-				<GridToolbarExport csvOptions={exportType} />
+				{/* <GridToolbarExport csvOptions={exportType} id='exportBtn' /> */}
 				<GridToolbarFilterButton />
+				{download && (
+					<Button className={classes.tooltip}>
+						<DownloadIcon className={classes.icon} />
+						<CSVLink data={data} filename={getExportFileName()}>
+							Descargar
+						</CSVLink>
+					</Button>
+				)}
 			</GridToolbarContainer>
 		);
 	};
@@ -235,7 +266,6 @@ const TableReports: React.FC<TableReportsProps> = ({
 				};
 			});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [keys]);
 
 	return (
