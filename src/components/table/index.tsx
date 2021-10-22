@@ -96,16 +96,17 @@ const TableReports: React.FC<TableReportsProps> = ({
 		const day = initDate!.getDate();
 		const month = initDate!.getMonth() + 1;
 		const year = initDate!.getFullYear();
+		const ext = `.csv`;
 		if (mantOption !== undefined) {
-			return `RDMantenimiento - ${opciones[mantOption]}`;
+			return `RDMantenimiento - ${opciones[mantOption]}${ext}`;
 		}
 		if (endDate !== undefined) {
 			const dayEnd = endDate!.getDate();
 			const monthEnd = endDate!.getMonth() + 1;
 			const yearEnd = endDate!.getFullYear();
-			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}]`;
+			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}]${ext}`;
 		}
-		return `RD${from}[${day}-${month}-${year}]`;
+		return `RD${from}[${day}-${month}-${year}]${ext}`;
 	};
 
 	const keys: string[] = Object.entries(state)
@@ -206,12 +207,12 @@ const TableReports: React.FC<TableReportsProps> = ({
 	const customToolbar: () => JSX.Element = () => {
 		return (
 			<GridToolbarContainer>
-				{/* <GridToolbarExport csvOptions={exportType} id='exportBtn' /> */}
+				{/* <GridToolbarExport csvOptions={exportType} /> */}
 				<GridToolbarFilterButton />
 				{download && (
 					<Button className={classes.tooltip}>
 						<DownloadIcon className={classes.icon} />
-						<CSVLink data={data} filename={getExportFileName()}>
+						<CSVLink data={data} filename={getExportFileName()} separator={';'}>
 							Descargar
 						</CSVLink>
 					</Button>
