@@ -21,6 +21,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
 		WebkitBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
 		MozBoxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
 	},
+	row: {
+		padding: '1rem',
+		display: 'flex',
+	},
 }));
 
 const RepDinamicos: React.FC = () => {
@@ -38,7 +42,6 @@ const RepDinamicos: React.FC = () => {
 			try {
 				const resp = await useAxios.get('/history/keys');
 				setState(resp.data.info);
-				console.log('state', state);
 			} catch (error) {}
 		};
 		getdata();

@@ -1,20 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // components
-import { Button, Card, CardActions, CardContent, CardHeader } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardHeader, CircularProgress } from '@material-ui/core';
 // styles
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	DataGrid,
 	GridColDef,
-	GridExportCsvOptions,
+	// GridExportCsvOptions,
 	GridRowData,
 	GridToolbarContainer,
-	GridToolbarExport,
+	// GridToolbarExport,
 	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
+import DownloadIcon from '@material-ui/icons/GetApp';
+import { Alert } from '@material-ui/lab';
 import { AxiosResponse } from 'axios';
+// import * as FileSaver from 'file-saver';
 import React from 'react';
+import { CSVLink } from 'react-csv';
+// import * as XLSX from 'xlsx';
 import useAxios from '../../config';
+import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
 
 const useStyles = makeStyles((styles) => ({
@@ -43,16 +49,46 @@ const useStyles = makeStyles((styles) => ({
 			color: styles.palette.primary.contrastText,
 		},
 	},
+	row: {
+		display: 'flex',
+		alignItems: 'center',
+		marginRight: '1rem',
+	},
+	loading: {
+		marginRight: '1rem',
+	},
+	tooltip: {
+		height: '100%',
+		cursor: 'pointer',
+		'& span > a': {
+			textDecoration: 'none',
+			color: '#2f3775',
+		},
+		'&:hover': {
+			textDecoration: 'none',
+		},
+	},
+	icon: {
+		marginRight: 8,
+		fill: '#2f3775',
+	},
 }));
 
 interface TableReportsProps {
 	state: any;
 	endDate?: Date | null;
 	initDate?: Date | null;
+	mantOption?: number;
 	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento';
 }
 
-const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.now()), endDate, state, from }) => {
+const TableReports: React.FC<TableReportsProps> = ({
+	initDate = new Date(Date.now()),
+	endDate,
+	state,
+	from,
+	mantOption,
+}) => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
 
@@ -60,31 +96,39 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 		const day = initDate!.getDate();
 		const month = initDate!.getMonth() + 1;
 		const year = initDate!.getFullYear();
+		const ext = `.csv`;
+		if (mantOption !== undefined) {
+			return `RDMantenimiento - ${opciones[mantOption]}${ext}`;
+		}
 		if (endDate !== undefined) {
 			const dayEnd = endDate!.getDate();
 			const monthEnd = endDate!.getMonth() + 1;
 			const yearEnd = endDate!.getFullYear();
-			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}][${keys}]`;
+			return `RD${from}[Desde:${day}-${month}-${year} Hasta:${dayEnd}-${monthEnd}-${yearEnd}]${ext}`;
 		}
-		return `RD${from}[${day}-${month}-${year}][${keys}]`;
+		return `RD${from}[${day}-${month}-${year}]${ext}`;
 	};
 
 	const keys: string[] = Object.entries(state)
 		.filter(([key, value]) => value)
 		.map(([key, value]): string => key);
-
-	const exportType: GridExportCsvOptions = {
-		fileName: getExportFileName(),
-		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
-	};
+	// const exportType: GridExportCsvOptions = {
+	// 	fileName: getExportFileName(),
+	// 	delimiter: ';',
+	// 	// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
+	// };
 	const fieldRef = React.useRef<HTMLInputElement>(null);
-	// const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
+	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
+	const [download, setDownload]: [boolean, (download: boolean) => void] = React.useState<boolean>(false);
+	const [error, setError]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
 	const [data, setData]: [any[], any] = React.useState<any>([]);
 	let resp: AxiosResponse<{ message: string; info: any[] }>;
 	const traerme = async () => {
-		console.clear();
+		// console.clear();
+		setError(false);
+		setDownload(false);
 		try {
-			// setLoading(true);
+			setLoading(true);
 			if (from === 'Movimientos') {
 				resp = await useAxios.post(
 					`/history?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
@@ -108,17 +152,71 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 					block: 'start',
 				});
 			}
-			// setLoading(false);
+			if (from === 'Mantenimiento') {
+				switch (mantOption) {
+					case 1:
+						resp = await useAxios.post(`/mantenimiento/1`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
+						break;
+					case 2:
+						resp = await useAxios.post(`/mantenimiento/2`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
+						break;
+					case 3:
+						resp = await useAxios.post(`/mantenimiento/3`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
+						break;
+					default:
+						resp = await useAxios.post(`/mantenimiento/0`, {
+							keys,
+						});
+						setData(resp.data.info);
+						fieldRef.current?.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start',
+						});
+				}
+			}
+			setDownload(true);
+			setLoading(false);
 		} catch (error) {
-			// setLoading(false);
+			setDownload(false);
+			setLoading(false);
+			setError(true);
 		}
 	};
 
 	const customToolbar: () => JSX.Element = () => {
 		return (
 			<GridToolbarContainer>
-				<GridToolbarExport csvOptions={exportType} />
+				{/* <GridToolbarExport csvOptions={exportType} /> */}
 				<GridToolbarFilterButton />
+				{download && (
+					<Button className={classes.tooltip}>
+						<DownloadIcon className={classes.icon} />
+						<CSVLink data={data} filename={getExportFileName()} separator={';'}>
+							Descargar
+						</CSVLink>
+					</Button>
+				)}
 			</GridToolbarContainer>
 		);
 	};
@@ -169,7 +267,6 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 				};
 			});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [keys]);
 
 	return (
@@ -188,12 +285,15 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 							subheader='Puede ordenar por columna de la tabla segun los campos seleccionados'
 						/>
 					</div>
-
-					<CardActions>
-						<Button size='small' onClick={traerme} className={classes.Button}>
-							Obtener reportes
-						</Button>
-					</CardActions>
+					<div className={classes.row}>
+						{loading && <CircularProgress className={classes.loading} />}
+						{error && <Alert severity='error'>Error al obtener datos</Alert>}
+						<CardActions>
+							<Button size='small' onClick={traerme} className={classes.Button}>
+								Obtener reportes
+							</Button>
+						</CardActions>
+					</div>
 				</div>
 				<CardContent>
 					<div style={{ height: 400, width: '100%' }}>
@@ -204,7 +304,7 @@ const TableReports: React.FC<TableReportsProps> = ({ initDate = new Date(Date.no
 							}}
 							rows={rowData}
 							columns={columns}
-							pageSize={25}
+							rowsPerPageOptions={[25, 50, 100]}
 							checkboxSelection
 							disableSelectionOnClick
 						/>
