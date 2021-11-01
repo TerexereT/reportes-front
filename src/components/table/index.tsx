@@ -6,18 +6,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
 	DataGrid,
 	GridColDef,
+	GridExportCsvOptions,
 	// GridExportCsvOptions,
 	GridRowData,
 	GridToolbarContainer,
+	GridToolbarExport,
 	// GridToolbarExport,
 	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
-import DownloadIcon from '@material-ui/icons/GetApp';
 import { Alert } from '@material-ui/lab';
 import { AxiosResponse } from 'axios';
 // import * as FileSaver from 'file-saver';
 import React from 'react';
-import { CSVLink } from 'react-csv';
 // import * as XLSX from 'xlsx';
 import useAxios from '../../config';
 import { opciones } from '../../pages/Mantenimiento';
@@ -112,11 +112,11 @@ const TableReports: React.FC<TableReportsProps> = ({
 	const keys: string[] = Object.entries(state)
 		.filter(([key, value]) => value)
 		.map(([key, value]): string => key);
-	// const exportType: GridExportCsvOptions = {
-	// 	fileName: getExportFileName(),
-	// 	delimiter: ';',
-	// 	// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
-	// };
+	const exportType: GridExportCsvOptions = {
+		fileName: getExportFileName(),
+		delimiter: ';',
+		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
+	};
 	const fieldRef = React.useRef<HTMLInputElement>(null);
 	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
 	const [download, setDownload]: [boolean, (download: boolean) => void] = React.useState<boolean>(false);
@@ -207,16 +207,16 @@ const TableReports: React.FC<TableReportsProps> = ({
 	const customToolbar: () => JSX.Element = () => {
 		return (
 			<GridToolbarContainer>
-				{/* <GridToolbarExport csvOptions={exportType} /> */}
+				{download && <GridToolbarExport csvOptions={exportType} />}
 				<GridToolbarFilterButton />
-				{download && (
+				{/* {download && (
 					<Button className={classes.tooltip}>
 						<DownloadIcon className={classes.icon} />
 						<CSVLink data={data} filename={getExportFileName()} separator={';'}>
 							Descargar
 						</CSVLink>
 					</Button>
-				)}
+				)} */}
 			</GridToolbarContainer>
 		);
 	};
@@ -306,6 +306,7 @@ const TableReports: React.FC<TableReportsProps> = ({
 							columns={columns}
 							rowsPerPageOptions={[25, 50, 100]}
 							checkboxSelection
+							columnBuffer={1}
 							disableSelectionOnClick
 						/>
 					</div>
