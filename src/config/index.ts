@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Set config defaults when creating the instance
-const API_URL = `reportes`;
+const API_URL = `reportedinamico.tranred.com.ve`;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const qa = `http://10.198.73.15:4040`;
 const dev = `http://10.198.68.21:4040`;
