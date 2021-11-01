@@ -24,6 +24,7 @@ stages:
   - deploy
 
 build:
+  stage: build
   only:
     - qa
   script:
@@ -36,6 +37,7 @@ build:
       - build/
 
 deploy:
+  stage: deploy
   only:
     - qa
   script:
@@ -45,7 +47,8 @@ deploy:
   dependencies:
     - build
     
-build:
+build_pro:
+  stage: build
   only:
     - main
   script:
@@ -57,7 +60,8 @@ build:
     paths:
       - build/
 
-deploy:
+deploy_pro:
+  stage: deploy
   only:
     - main
   script:
