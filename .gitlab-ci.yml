@@ -24,6 +24,7 @@ stages:
   - deploy
 
 build:
+  stage: build
   only:
     - qa
   script:
@@ -36,6 +37,7 @@ build:
       - build/
 
 deploy:
+  stage: deploy
   only:
     - qa
   script:
@@ -45,3 +47,26 @@ deploy:
   dependencies:
     - build
     
+build_pro:
+  stage: build
+  only:
+    - main
+  script:
+  - node -v
+  - yarn install
+  - yarn build
+  stage: build
+  artifacts:
+    paths:
+      - build/
+
+deploy_pro:
+  stage: deploy
+  only:
+    - main
+  script:
+    - sudo scp  -i ~/.ssh/key_PRO.pem  -r build/* $USUARIO@$IP_REMOTE_PRO:$DOCUMENT_ROOT
+
+  stage: deploy
+  dependencies:
+    - build    
