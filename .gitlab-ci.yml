@@ -30,7 +30,8 @@ build:
   script:
   - node -v
   - yarn install
-  - yarn build
+  - REACT_APP_APIURL=10.198.73.15:4040
+  - yarn build 
   stage: build
   artifacts:
     paths:
