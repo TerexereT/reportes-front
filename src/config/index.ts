@@ -10,5 +10,3 @@ const useAxios = axios.create({
 axios.defaults.headers['Content-Type'] = 'application/json';
 
 export default useAxios;
-
-//REACT_APP_APIURL=http://reportedinamicoqa.tranred.com.ve
