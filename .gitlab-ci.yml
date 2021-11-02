@@ -24,18 +24,21 @@ stages:
   - deploy
 
 build:
+  stage: build
   only:
     - qa
   script:
   - node -v
   - yarn install
-  - yarn build
+  - REACT_APP_APIURL=10.198.73.15:4040
+  - yarn build 
   stage: build
   artifacts:
     paths:
       - build/
 
 deploy:
+  stage: deploy
   only:
     - qa
   script:
@@ -45,7 +48,8 @@ deploy:
   dependencies:
     - build
     
-build:
+build_pro:
+  stage: build
   only:
     - main
   script:
@@ -57,7 +61,8 @@ build:
     paths:
       - build/
 
-deploy:
+deploy_pro:
+  stage: deploy
   only:
     - main
   script:
