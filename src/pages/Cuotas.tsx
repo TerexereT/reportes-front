@@ -21,7 +21,6 @@ const Cuotas: React.FC = () => {
 			try {
 				const resp = await useAxios.get('/aboterminal/keys');
 				setState(resp.data.info);
-				console.log('aboterminal', state);
 			} catch (error) {}
 		};
 		getdata();

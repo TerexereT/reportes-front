@@ -9,32 +9,65 @@ before_script:
   - cat ~/.ssh/key_64.pem |base64 -d > ~/.ssh/key.pem
   - chmod 400 ~/.ssh/key.pem
   - eval "$(ssh-agent -s)"
-  - cat ~/.ssh/key.pem
+#####SSH PRO
+  - echo $SSH_PRIVATE_KEY_PRO >> ~/.ssh/key_64_PRO.pem
+  - cat ~/.ssh/key_64_PRO.pem |base64 -d > ~/.ssh/key_PRO.pem
+  - chmod 400 ~/.ssh/key_PRO.pem
+  - eval "$(ssh-agent -s)"
+
+
+
+
 
 stages:
   - build
   - deploy
 
 build:
+  stage: build
   only:
     - qa
   script:
   - node -v
   - yarn install
-  #- npm install yarn -g
-  - yarn build
+  - REACT_APP_APIURL=10.198.73.15:4040
+  - yarn build 
   stage: build
   artifacts:
     paths:
       - build/
 
 deploy:
+  stage: deploy
   only:
     - qa
   script:
-    #- ssh  -i ~/.ssh/key.pem $USUARIO@$IP_REMOTEQA "sudo  tar -zvcf /home/$USUARIO/comercios-$(date +%Y%m%d_%H%M).tar.gz $DOCUMENT_ROOT  "
     - sudo scp  -i ~/.ssh/key.pem  -r build/* $USUARIO@$IP_REMOTEQA:$DOCUMENT_ROOT
 
   stage: deploy
   dependencies:
     - build
+    
+build_pro:
+  stage: build
+  only:
+    - main
+  script:
+  - node -v
+  - yarn install
+  - yarn build
+  stage: build
+  artifacts:
+    paths:
+      - build/
+
+deploy_pro:
+  stage: deploy
+  only:
+    - main
+  script:
+    - sudo scp  -i ~/.ssh/key_PRO.pem  -r build/* $USUARIO@$IP_REMOTE_PRO:$DOCUMENT_ROOT
+
+  stage: deploy
+  dependencies:
+    - build    
