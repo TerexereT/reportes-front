@@ -79,7 +79,7 @@ interface TableReportsProps {
 	endDate?: Date | null;
 	initDate?: Date | null;
 	mantOption?: number;
-	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento';
+	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen';
 }
 
 const TableReports: React.FC<TableReportsProps> = ({
@@ -195,6 +195,16 @@ const TableReports: React.FC<TableReportsProps> = ({
 						});
 				}
 			}
+			if (from === 'CuotasResumen') {
+				resp = await useAxios.post(`/cuotas_resumidas`, {
+					keys,
+				});
+				setData(resp.data.info);
+				fieldRef.current?.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start',
+				});
+			}
 			setDownload(true);
 			setLoading(false);
 		} catch (error) {
@@ -237,11 +247,35 @@ const TableReports: React.FC<TableReportsProps> = ({
 					width: 25,
 				};
 			}
+			if (key === 'MONTOTOTAL') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 175,
+				};
+			}
+			if (key === 'CANT_CUOTAS') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 185,
+				};
+			}
+			if (key === 'ESTATUS') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 140,
+				};
+			}
 			return {
 				field: key,
 				headerName: key,
 				type: 'string',
-				width: 240,
+				width: 220,
 			};
 		});
 	}
