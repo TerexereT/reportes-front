@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import AppBar from '@material-ui/core/AppBar';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,7 +21,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TranredLogo from '../../images/tranred-logo.png';
-import { baseUrl, cuotas, mantenimientos, movimientos } from '../../router/url';
+import { baseUrl, cuotas, cuotasR, mantenimientos, movimientos } from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
@@ -99,7 +100,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 const MainMenu: React.FC = () => {
 	const classes = useStyles();
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [auth, setAuth] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
 	const [section, setSection] = React.useState('Inicio');
@@ -130,6 +130,8 @@ const MainMenu: React.FC = () => {
 				return 'Movimientos';
 			case '/mantenimiento/':
 				return 'Mantenimiento';
+			case '/cuotasResumen/':
+				return 'Cuotas Resumidas';
 
 			default:
 				return 'Inicio';
@@ -239,6 +241,14 @@ const MainMenu: React.FC = () => {
 								<AttachMoneyIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Cuotas'} />
+						</ListItem>
+					</Link>
+					<Link to={cuotasR} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'CuotasRes'}>
+							<ListItemIcon>
+								<AttachMoneyIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Cuotas Resumidas'} />
 						</ListItem>
 					</Link>
 					<Link to={mantenimientos} onClick={handleDrawerClose} className={classes.link}>
