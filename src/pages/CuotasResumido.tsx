@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Card } from '@material-ui/core';
-import { FC, Fragment, useEffect, useState } from 'react';
+import { FC, Fragment, useLayoutEffect, useState } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import TableReports from '../components/table';
 import useAxios from '../config';
@@ -11,7 +11,7 @@ const CuotasResumido: FC = () => {
 
 	const [state, setState] = useState({});
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const getdata = async () => {
 			try {
 				const resp = await useAxios.get('/cuotas_resumidas/keys');
