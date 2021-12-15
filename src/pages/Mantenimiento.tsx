@@ -9,10 +9,10 @@ import useAxios from '../config';
 import { useStyles } from './RepDinamicos';
 
 export const opciones = [
-	'Sin Plan de Mantenimiento',
-	'Sin Plan de Comisión',
-	'Plan de Mantenimiento Inactivo',
-	'Plan de Comisión Inactivo',
+	'Sin Mantenimiento / Inactivo',
+	'Sin Comisión / Inactivo',
+	// 'Plan de Mantenimiento Inactivo',
+	// 'Plan de Comisión Inactivo',
 ];
 
 const Mantenimiento: React.FC = () => {
