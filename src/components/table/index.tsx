@@ -6,18 +6,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
 	DataGrid,
 	GridColDef,
-	GridExportCsvOptions,
 	// GridExportCsvOptions,
+	GridExportCsvOptions,
 	GridRowData,
 	GridToolbarContainer,
 	GridToolbarExport,
 	// GridToolbarExport,
 	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
+// import DownloadIcon from '@material-ui/icons/FontDownload';
 import { Alert } from '@material-ui/lab';
 import { AxiosResponse } from 'axios';
 // import * as FileSaver from 'file-saver';
-import React from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
+// import { CSVLink } from 'react-csv';
 // import * as XLSX from 'xlsx';
 import useAxios from '../../config';
 import { opciones } from '../../pages/Mantenimiento';
@@ -82,7 +84,7 @@ interface TableReportsProps {
 	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen';
 }
 
-const TableReports: React.FC<TableReportsProps> = ({
+const TableReports: FC<TableReportsProps> = ({
 	initDate = new Date(Date.now()),
 	endDate,
 	state,
@@ -96,7 +98,8 @@ const TableReports: React.FC<TableReportsProps> = ({
 		const day = initDate!.getDate();
 		const month = initDate!.getMonth() + 1;
 		const year = initDate!.getFullYear();
-		const ext = `.csv`;
+		// const ext = `.csv`;
+		const ext = ``;
 		if (mantOption !== undefined) {
 			return `RDMantenimiento - ${opciones[mantOption]}${ext}`;
 		}
@@ -117,12 +120,12 @@ const TableReports: React.FC<TableReportsProps> = ({
 		delimiter: ';',
 		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
 	};
-	const fieldRef = React.useRef<HTMLInputElement>(null);
-	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
-	const [download, setDownload]: [boolean, (download: boolean) => void] = React.useState<boolean>(false);
-	const [error, setError]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
-	const [data, setData]: [any[], any] = React.useState<any>([]);
+	const [download, setDownload]: [boolean, (download: boolean) => void] = useState<boolean>(false);
+	const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState<boolean>(false);
+	const [error, setError]: [boolean, (loading: boolean) => void] = useState<boolean>(false);
 	let resp: AxiosResponse<{ message: string; info: any[] }>;
+	const [data, setData]: [any[], any] = useState<any>([]);
+	const fieldRef = useRef<HTMLInputElement>(null);
 	const traerme = async () => {
 		// console.clear();
 		setError(false);
@@ -136,7 +139,7 @@ const TableReports: React.FC<TableReportsProps> = ({
 						keys,
 					}
 				);
-				setData(resp.data.info);
+				setData(formatData(resp.data.info));
 				fieldRef.current?.scrollIntoView({
 					behavior: 'smooth',
 					block: 'start',
@@ -231,6 +234,17 @@ const TableReports: React.FC<TableReportsProps> = ({
 		);
 	};
 
+	const formatData = (data: any[]) => {
+		let formatedData = data;
+		formatedData.forEach((val) => {
+			let dir = val.DIRECCION;
+			dir = dir.split('\r').join('').split('\n').join('');
+			val.DIRECCION = dir;
+			return val;
+		});
+		return formatedData;
+	};
+
 	let rowData: GridRowData[] = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
@@ -279,7 +293,8 @@ const TableReports: React.FC<TableReportsProps> = ({
 			};
 		});
 	}
-	React.useEffect(() => {
+
+	useEffect(() => {
 		rowData = data.map((val: any, i: number) => {
 			return { id: i, ...val };
 		});
