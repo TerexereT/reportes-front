@@ -14,11 +14,6 @@ before_script:
   - cat ~/.ssh/key_64_PRO.pem |base64 -d > ~/.ssh/key_PRO.pem
   - chmod 400 ~/.ssh/key_PRO.pem
   - eval "$(ssh-agent -s)"
-
-
-
-
-
 stages:
   - build
   - deploy
@@ -55,6 +50,7 @@ build_pro:
   script:
   - node -v
   - yarn install
+  - REACT_APP_APIURL=10.198.71.36:4040
   - yarn build
   stage: build
   artifacts:
