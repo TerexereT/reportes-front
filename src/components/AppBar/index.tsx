@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TranredLogo from '../../images/tranred-logo.png';
-import { baseUrl, cuotas, cuotasR, mantenimientos, movimientos } from '../../router/url';
+import { baseUrl, cancelarCuotas, cuotas, cuotasR, mantenimientos, movimientos } from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
@@ -124,15 +124,16 @@ const MainMenu: React.FC = () => {
 
 	const handleTitleSection = (seccion: string) => {
 		switch (seccion) {
-			case '/cuotas/':
+			case cuotas:
 				return 'Cuotas Vencidas';
-			case '/movimientos/':
+			case movimientos:
 				return 'Movimientos';
-			case '/mantenimiento/':
+			case mantenimientos:
 				return 'Mantenimiento';
-			case '/cuotasResumen/':
+			case cuotasR:
 				return 'Cuotas Resumidas';
-
+			case cancelarCuotas:
+				return 'Cancelar Cuotas';
 			default:
 				return 'Inicio';
 		}
