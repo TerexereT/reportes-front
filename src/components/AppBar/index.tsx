@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import BuildIcon from '@material-ui/icons/Build';
+import CreditCard from '@material-ui/icons/CreditCard';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import MenuIcon from '@material-ui/icons/Menu';
 import classNames from 'classnames';
@@ -258,6 +259,14 @@ const MainMenu: React.FC = () => {
 								<BuildIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Mantenimiento'} />
+						</ListItem>
+					</Link>
+					<Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'CancelarCuotas'}>
+							<ListItemIcon>
+								<CreditCard />
+							</ListItemIcon>
+							<ListItemText primary={'Cancelar Cuotas'} />
 						</ListItem>
 					</Link>
 				</List>
