@@ -23,6 +23,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 // import { CSVLink } from 'react-csv';
 // import * as XLSX from 'xlsx';
 import useAxios from '../../config';
+import Round from '../../functions/Round';
 import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
 
@@ -247,11 +248,6 @@ const TableReports: FC<TableReportsProps> = ({
 		return formatedData;
 	};
 
-	const round = (num: any) => {
-		let m = Number((Math.abs(num) * 100).toPrecision(15));
-		return (Math.round(m) / 100) * Math.sign(num);
-	};
-
 	let rowData: GridRowData[] = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
@@ -299,7 +295,7 @@ const TableReports: FC<TableReportsProps> = ({
 					type: 'string',
 					width: 220,
 					valueFormatter: (params: GridValueFormatterParams) => {
-						const number = round(params.value as number);
+						const number = Round(params.value as number);
 						return `${number}`;
 					},
 				};
@@ -358,7 +354,7 @@ const TableReports: FC<TableReportsProps> = ({
 						type: 'string',
 						width: 220,
 						valueFormatter: (params: GridValueFormatterParams) => {
-							const number = round(params.value as number);
+							const number = Round(params.value as number);
 							return `${number}`;
 						},
 					};
