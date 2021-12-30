@@ -198,6 +198,7 @@ const CancelarCuotas: FC = () => {
 				...selectedRow,
 				dicomSelected,
 			});
+			handleClose();
 		} catch (error) {}
 	};
 
