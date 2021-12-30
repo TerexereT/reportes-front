@@ -1,25 +1,21 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { GuardedRoute, GuardProvider } from 'react-router-guards';
 import AppBar from '../components/AppBar';
-import Cuotas from '../pages/Cuotas';
-import CuotasResumido from '../pages/CuotasResumido';
-// templates
-import Home from '../pages/Home';
-import Mantenimiento from '../pages/Mantenimiento';
-import RepDinamicos from '../pages/RepDinamicos';
-import { baseUrl, cuotas, cuotasR, mantenimientos, movimientos } from './url';
+import { Lock } from './guards';
+import RutasNav from './routes/Rutas';
 
 export const Routes: React.FC = () => {
 	return (
 		<Router>
-			<AppBar />
-			<Switch>
-				<Route path={cuotas} component={Cuotas} />
-				<Route path={cuotasR} component={CuotasResumido} />
-				<Route path={mantenimientos} component={Mantenimiento} />
-				<Route path={movimientos} component={RepDinamicos} />
-				<Route path={baseUrl} component={Home} />
-			</Switch>
+			<GuardProvider guards={[Lock]}>
+				<AppBar />
+				<Switch>
+					{RutasNav.map(({ path, component, meta }, i) => {
+						return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
+					})}
+				</Switch>
+			</GuardProvider>
 		</Router>
 	);
 };

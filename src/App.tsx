@@ -2,8 +2,7 @@ import { unstable_createMuiStrictModeTheme as createTheme } from '@material-ui/c
 import { esES as coreesES } from '@material-ui/core/locale';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { esES } from '@material-ui/data-grid';
-import React from 'react';
-import { Routes } from './router';
+import Routes from './router/Routes';
 import './scss/index.scss';
 
 const theme = createTheme(
