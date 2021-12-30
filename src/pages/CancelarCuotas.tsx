@@ -129,7 +129,7 @@ const CancelarCuotas: FC = () => {
 	const [cuotaIva, setCuotaIva] = useState(0);
 	const [cuotaNeto, setCuotaNeto] = useState(0);
 	const [cuotaTotal, setCuotaTotal] = useState(0);
-	const [terminal, setTerminal] = useState('01000024');
+	const [terminal, setTerminal] = useState('');
 	const [dicomSelected, setDicomSelected] = useState<DicomSelectedInt>({
 		id: 0,
 		valorVenta: 0,
