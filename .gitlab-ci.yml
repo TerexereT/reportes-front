@@ -26,6 +26,7 @@ build:
   - node -v
   - yarn install
   - REACT_APP_APIURL=10.198.73.15:4040
+  - REACT_APP_PSWD=@drianaTovar.
   - yarn build 
   stage: build
   artifacts:
