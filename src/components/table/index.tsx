@@ -13,6 +13,7 @@ import {
 	GridToolbarExport,
 	// GridToolbarExport,
 	GridToolbarFilterButton,
+	GridValueFormatterParams,
 } from '@material-ui/data-grid';
 // import DownloadIcon from '@material-ui/icons/FontDownload';
 import { Alert } from '@material-ui/lab';
@@ -22,10 +23,11 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 // import { CSVLink } from 'react-csv';
 // import * as XLSX from 'xlsx';
 import useAxios from '../../config';
+import Round from '../../functions/Round';
 import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
 
-const useStyles = makeStyles((styles) => ({
+export const useStyles = makeStyles((styles) => ({
 	root: {
 		minWidth: 275,
 		boxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
@@ -46,6 +48,7 @@ const useStyles = makeStyles((styles) => ({
 	Button: {
 		background: styles.palette.primary.main,
 		color: styles.palette.primary.contrastText,
+		textTransform: 'none',
 		'&:hover': {
 			background: styles.palette.primary.light,
 			color: styles.palette.primary.contrastText,
@@ -285,11 +288,23 @@ const TableReports: FC<TableReportsProps> = ({
 					width: 140,
 				};
 			}
+			if (key === 'COMISION_AFILIA_TDD') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 220,
+					valueFormatter: (params: GridValueFormatterParams) => {
+						const number = Round(params.value as number);
+						return `${number}`;
+					},
+				};
+			}
 			return {
 				field: key,
 				headerName: key,
 				type: 'string',
-				width: 220,
+				width: 240,
 			};
 		});
 	}
@@ -305,7 +320,43 @@ const TableReports: FC<TableReportsProps> = ({
 						field: key,
 						headerName: key,
 						type: 'string',
-						width: 20,
+						width: 25,
+					};
+				}
+				if (key === 'MONTOTOTAL') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 175,
+					};
+				}
+				if (key === 'CANT_CUOTAS') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 185,
+					};
+				}
+				if (key === 'ESTATUS') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 140,
+					};
+				}
+				if (key === 'COMISION_AFILIA_TDD') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 220,
+						valueFormatter: (params: GridValueFormatterParams) => {
+							const number = Round(params.value as number);
+							return `${number}`;
+						},
 					};
 				}
 				return {
@@ -316,7 +367,7 @@ const TableReports: FC<TableReportsProps> = ({
 				};
 			});
 		}
-	}, [keys]);
+	}, [state]);
 
 	return (
 		<>

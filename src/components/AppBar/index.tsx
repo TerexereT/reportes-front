@@ -15,13 +15,14 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import BuildIcon from '@material-ui/icons/Build';
+import CreditCard from '@material-ui/icons/CreditCard';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import MenuIcon from '@material-ui/icons/Menu';
 import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TranredLogo from '../../images/tranred-logo.png';
-import { baseUrl, cuotas, cuotasR, mantenimientos, movimientos } from '../../router/url';
+import { baseUrl, cancelarCuotas, cuotas, cuotasR, mantenimientos, movimientos } from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
@@ -124,15 +125,16 @@ const MainMenu: React.FC = () => {
 
 	const handleTitleSection = (seccion: string) => {
 		switch (seccion) {
-			case '/cuotas/':
+			case cuotas:
 				return 'Cuotas Vencidas';
-			case '/movimientos/':
+			case movimientos:
 				return 'Movimientos';
-			case '/mantenimiento/':
+			case mantenimientos:
 				return 'Mantenimiento';
-			case '/cuotasResumen/':
+			case cuotasR:
 				return 'Cuotas Resumidas';
-
+			case cancelarCuotas:
+				return 'Cancelar Cuotas';
 			default:
 				return 'Inicio';
 		}
@@ -259,6 +261,14 @@ const MainMenu: React.FC = () => {
 							<ListItemText primary={'Mantenimiento'} />
 						</ListItem>
 					</Link>
+					{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'CancelarCuotas'}>
+							<ListItemIcon>
+								<CreditCard />
+							</ListItemIcon>
+							<ListItemText primary={'Cancelar Cuotas'} />
+						</ListItem>
+					</Link> */}
 				</List>
 				<Divider />
 			</SwipeableDrawer>
