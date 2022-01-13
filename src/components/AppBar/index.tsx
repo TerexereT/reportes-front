@@ -261,14 +261,14 @@ const MainMenu: React.FC = () => {
 							<ListItemText primary={'Mantenimiento'} />
 						</ListItem>
 					</Link>
-					/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
+					{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'CancelarCuotas'}>
 							<ListItemIcon>
 								<CreditCard />
 							</ListItemIcon>
 							<ListItemText primary={'Cancelar Cuotas'} />
 						</ListItem>
-					</Link> */
+					</Link> */}
 				</List>
 				<Divider />
 			</SwipeableDrawer>
