@@ -288,18 +288,18 @@ const TableReports: FC<TableReportsProps> = ({
 					width: 140,
 				};
 			}
-			if (key === 'COMISION_AFILIA_TDD') {
-				return {
-					field: key,
-					headerName: key,
-					type: 'string',
-					width: 220,
-					valueFormatter: (params: GridValueFormatterParams) => {
-						const number = Round(params.value as number);
-						return `${number}`;
-					},
-				};
-			}
+			// if (key === 'COMISION_AFILIA_TDD') {
+			// 	return {
+			// 		field: key,
+			// 		headerName: key,
+			// 		type: 'string',
+			// 		width: 220,
+			// 		valueFormatter: (params: GridValueFormatterParams) => {
+			// 			const number = Round(params.value as number);
+			// 			return `${number}`;
+			// 		},
+			// 	};
+			// }
 			return {
 				field: key,
 				headerName: key,
