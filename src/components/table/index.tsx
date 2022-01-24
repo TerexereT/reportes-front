@@ -13,7 +13,6 @@ import {
 	GridToolbarExport,
 	// GridToolbarExport,
 	GridToolbarFilterButton,
-	GridValueFormatterParams,
 } from '@material-ui/data-grid';
 // import DownloadIcon from '@material-ui/icons/FontDownload';
 import { Alert } from '@material-ui/lab';
@@ -23,7 +22,6 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 // import { CSVLink } from 'react-csv';
 // import * as XLSX from 'xlsx';
 import useAxios from '../../config';
-import Round from '../../functions/Round';
 import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
 
@@ -345,18 +343,6 @@ const TableReports: FC<TableReportsProps> = ({
 						headerName: key,
 						type: 'string',
 						width: 140,
-					};
-				}
-				if (key === 'COMISION_AFILIA_TDD') {
-					return {
-						field: key,
-						headerName: key,
-						type: 'string',
-						width: 220,
-						valueFormatter: (params: GridValueFormatterParams) => {
-							const number = Round(params.value as number);
-							return `${number}`;
-						},
 					};
 				}
 				return {
