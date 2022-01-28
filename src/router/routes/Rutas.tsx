@@ -5,7 +5,8 @@ import CuotasResumido from '../../pages/CuotasResumido';
 import Home from '../../pages/Home';
 import Mantenimiento from '../../pages/Mantenimiento';
 import RepDinamicos from '../../pages/RepDinamicos';
-import { baseUrl, cancelarCuotas, cuotas, cuotasR, mantenimientos, movimientos } from '../url';
+import ReporteXACI from '../../pages/ReporteXACI';
+import { baseUrl, cancelarCuotas, cuotas, cuotasR, mantenimientos, movimientos, reportexaci } from '../url';
 
 export interface meta extends Meta {
 	auth: boolean;
@@ -22,6 +23,11 @@ const RutasNav: Route[] = [
 		path: cancelarCuotas,
 		component: CancelarCuotas,
 		meta: { auth: true },
+	},
+	{
+		path: reportexaci,
+		component: ReporteXACI,
+		meta: { auth: false },
 	},
 	{
 		path: cuotas,
