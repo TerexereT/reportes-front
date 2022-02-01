@@ -279,10 +279,10 @@ const ReporteXACI: FC = () => {
 						{loading ? (
 							<>
 								<LinearProgress />
-								<div className={classes.loading}>
-									{!errorLoading ? <>Cargando...</> : <>Error al cargar los datos, refresque la página</>}
-								</div>
+								<div className={classes.loading}>Cargando...</div>
 							</>
+						) : errorLoading ? (
+							<div className={classes.loading}>Error al cargar la información, actualice la página</div>
 						) : (
 							<DataGrid
 								components={{
