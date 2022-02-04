@@ -151,6 +151,8 @@ const MainMenu: React.FC = () => {
 				return 'Cancelar Cuotas';
 			case reportexaci:
 				return 'Mantenimiento por ACI';
+			case librePago:
+				return 'Libre Pago';
 			default:
 				return 'Inicio';
 		}
