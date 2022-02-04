@@ -22,6 +22,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import classNames from 'classnames';
 import { FC, Fragment, useEffect, useLayoutEffect, useState } from 'react';
 import { useStyles as useStylesT } from '../components/table';
 import useAxios from '../config';
@@ -88,6 +89,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 			margin: '8px 0',
 		},
 	},
+	loadingAbsolute: {
+		position: 'fixed',
+		bottom: '1rem',
+		right: '1rem',
+	},
 }));
 
 const style = {
@@ -125,6 +131,7 @@ const CancelarCuotas: FC = () => {
 	const [state, setState] = useState({});
 	const [dicom, setDicom] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [loadingP, setLoadingP] = useState(false);
 	const [fecha, setFecha] = useState<string>();
 	const [cuotaIva, setCuotaIva] = useState(0);
 	const [cuotaNeto, setCuotaNeto] = useState(0);
@@ -193,13 +200,18 @@ const CancelarCuotas: FC = () => {
 
 	const handleCancelar = async () => {
 		try {
+			setLoadingP(true);
 			await useAxios.put(`/cancelar_cuotas/cuota`, {
 				terminal,
 				...selectedRow,
 				dicomSelected,
 			});
+			Search({ key: 'Enter' });
 			handleClose();
-		} catch (error) {}
+			setLoadingP(false);
+		} catch (error) {
+			setLoadingP(false);
+		}
 	};
 
 	const Search = async (e: any) => {
@@ -253,7 +265,7 @@ const CancelarCuotas: FC = () => {
 			<Fragment>
 				<div className='ed-container'>
 					<div className={classes.base}>
-						<Card className={classesT.root} style={{ width: '100%' }}>
+						<Card className={classesT.root} style={{ width: '100%', height: '100%', paddingBottom: '2rem' }}>
 							<div className={classes.row}>
 								<TextField
 									className={classes.textField}
@@ -336,6 +348,7 @@ const CancelarCuotas: FC = () => {
 							<Button className={classes.pagarCuota} onClick={handleCancelar}>
 								Cancelar Cuota
 							</Button>
+							{loadingP && <CircularProgress className={classNames(classesT.loading, classes.loadingAbsolute)} />}
 						</div>
 					</Box>
 				</Fade>
