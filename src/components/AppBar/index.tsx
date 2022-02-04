@@ -29,6 +29,7 @@ import {
 	cancelarCuotas,
 	cuotas,
 	cuotasR,
+	librePago,
 	mantenimientos,
 	movimientos,
 	reportexaci,
@@ -282,6 +283,14 @@ const MainMenu: React.FC = () => {
 								<HardwareIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Mantenimiento por ACI'} />
+						</ListItem>
+					</Link>
+					<Link to={librePago} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'Libre Pago'}>
+							<ListItemIcon className={classes.icon}>
+								<HardwareIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Libre Pago'} />
 						</ListItem>
 					</Link>
 					{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
