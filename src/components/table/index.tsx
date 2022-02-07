@@ -238,9 +238,11 @@ const TableReports: FC<TableReportsProps> = ({
 	const formatData = (data: any[]) => {
 		let formatedData = data;
 		formatedData.forEach((val) => {
-			let dir = val.DIRECCION;
-			dir = dir.split('\r').join('').split('\n').join('');
-			val.DIRECCION = dir;
+			if (val.DIRECCION) {
+				let dir = val.DIRECCION;
+				dir = dir.split('\r').join('').split('\n').join('');
+				val.DIRECCION = dir;
+			}
 			return val;
 		});
 		return formatedData;

@@ -1,31 +1,19 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-	Backdrop,
-	Box,
-	Button,
-	Card,
-	CircularProgress,
-	Fade,
-	InputAdornment,
-	makeStyles,
-	Modal,
-	TextField,
-	Theme,
-} from '@material-ui/core';
+import { Button, Card, CircularProgress, InputAdornment, makeStyles, TextField, Theme } from '@material-ui/core';
 import {
 	DataGrid,
 	GridColDef,
+	GridExportCsvOptions,
 	GridRowData,
 	GridToolbarContainer,
+	GridToolbarExport,
 	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
-import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import classNames from 'classnames';
 import { FC, Fragment, useEffect, useLayoutEffect, useState } from 'react';
 import { useStyles as useStylesT } from '../components/table';
-import useAxios from '../config';
 import Round from '../functions/Round';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -122,7 +110,7 @@ interface DicomSelectedInt {
 	valorVenta: number;
 }
 
-const CancelarCuotas: FC = () => {
+const LibrePago: FC = () => {
 	const classes = useStyles();
 	const classesT = useStylesT();
 
@@ -137,6 +125,7 @@ const CancelarCuotas: FC = () => {
 	const [cuotaNeto, setCuotaNeto] = useState(0);
 	const [cuotaTotal, setCuotaTotal] = useState(0);
 	const [terminal, setTerminal] = useState('');
+	const [download, setDownload]: [boolean, (download: boolean) => void] = useState<boolean>(false);
 	const [dicomSelected, setDicomSelected] = useState<DicomSelectedInt>({
 		id: 0,
 		valorVenta: 0,
@@ -150,7 +139,9 @@ const CancelarCuotas: FC = () => {
 	});
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setTerminal(event.target.value);
+		const re = /^\d+(\,*(\d*)+)*$/;
+		const value: string = event.target.value;
+		if (re.test(value) || value === '') setTerminal(value);
 	};
 
 	const handleClose = () => setOpen(false);
@@ -185,10 +176,27 @@ const CancelarCuotas: FC = () => {
 		return { id: i, ...val };
 	});
 
+	const getExportFileName = () => {
+		const initDate = new Date(Date.now());
+		const day = initDate.getDate();
+		const month = initDate.getMonth() + 1;
+		const year = initDate.getFullYear();
+		// const ext = `.csv`;
+		const ext = ``;
+		return `RDLibrePago [${day}-${month}-${year}]${ext}`;
+	};
+
+	const exportType: GridExportCsvOptions = {
+		fileName: getExportFileName(),
+		delimiter: ';',
+		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
+	};
+
 	const customToolbar: () => JSX.Element = () => {
 		return (
 			<GridToolbarContainer style={{ marginLeft: '1rem' }}>
 				<GridToolbarFilterButton />
+				{download && <GridToolbarExport csvOptions={exportType} />}
 			</GridToolbarContainer>
 		);
 	};
@@ -201,11 +209,11 @@ const CancelarCuotas: FC = () => {
 	const handleCancelar = async () => {
 		try {
 			setLoadingP(true);
-			await useAxios.put(`/cancelar_cuotas/cuota`, {
-				terminal,
-				...selectedRow,
-				dicomSelected,
-			});
+			// await useAxios.put(`/cancelar_cuotas/cuota`, {
+			// 	terminal,
+			// 	...selectedRow,
+			// 	dicomSelected,
+			// });
 			Search({ key: 'Enter' });
 			handleClose();
 			setLoadingP(false);
@@ -216,17 +224,21 @@ const CancelarCuotas: FC = () => {
 
 	const Search = async (e: any) => {
 		if (e.key === 'Enter') {
+			let terminalArray = terminal.split(',');
+			console.log('terminalArray', terminalArray);
 			try {
-				setLoading(true);
-				await useAxios
-					.post(`/cancelar_cuotas`, {
-						terminal,
-					})
-					.then((resp) => {
-						setData(resp.data.info);
-						setLoading(false);
-					});
+				// setLoading(true);
+				// await useAxios
+				// 	.post(`/cancelar_cuotas`, {
+				// 		terminal,
+				// 	})
+				// 	.then((resp) => {
+				// 		setData(resp.data.info);
+				// 		setLoading(false);
+				//      setDownload(true);
+				// 	});
 			} catch (error) {
+				setDownload(false);
 				setLoading(false);
 			}
 		}
@@ -234,13 +246,13 @@ const CancelarCuotas: FC = () => {
 
 	useLayoutEffect(() => {
 		const getData = async () => {
-			await useAxios.get(`/cancelar_cuotas/keys`).then((resp) => {
-				setState(resp.data.info);
-			});
-			await useAxios.get(`/dicom`).then((resp) => {
-				setDicom(resp.data.info);
-				setDicomSelected(resp.data.info[0]);
-			});
+			// await useAxios.get(`/cancelar_cuotas/keys`).then((resp) => {
+			// 	setState(resp.data.info);
+			// });
+			// await useAxios.get(`/dicom`).then((resp) => {
+			// 	setDicom(resp.data.info);
+			// 	setDicomSelected(resp.data.info[0]);
+			// });
 		};
 		getData();
 	}, []);
@@ -295,14 +307,14 @@ const CancelarCuotas: FC = () => {
 								rowsPerPageOptions={[25, 50, 100]}
 								checkboxSelection
 								columnBuffer={1}
-								onCellDoubleClick={DoubleClick}
+								// onCellDoubleClick={DoubleClick}
 								disableSelectionOnClick
 							/>
 						</Card>
 					</div>
 				</div>
 			</Fragment>
-			<Modal
+			{/* <Modal
 				open={open}
 				onClose={handleClose}
 				closeAfterTransition
@@ -352,9 +364,9 @@ const CancelarCuotas: FC = () => {
 						</div>
 					</Box>
 				</Fade>
-			</Modal>
+			</Modal> */}
 		</>
 	);
 };
 
-export default CancelarCuotas;
+export default LibrePago;
