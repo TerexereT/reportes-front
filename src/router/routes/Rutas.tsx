@@ -3,9 +3,20 @@ import CancelarCuotas from '../../pages/CancelarCuotas';
 import Cuotas from '../../pages/Cuotas';
 import CuotasResumido from '../../pages/CuotasResumido';
 import Home from '../../pages/Home';
+import LibrePago from '../../pages/LibrePago';
 import Mantenimiento from '../../pages/Mantenimiento';
 import RepDinamicos from '../../pages/RepDinamicos';
-import { baseUrl, cancelarCuotas, cuotas, cuotasR, mantenimientos, movimientos } from '../url';
+import ReporteXACI from '../../pages/ReporteXACI';
+import {
+	baseUrl,
+	cancelarCuotas,
+	cuotas,
+	cuotasR,
+	librePago,
+	mantenimientos,
+	movimientos,
+	reportexaci,
+} from '../url';
 
 export interface meta extends Meta {
 	auth: boolean;
@@ -22,6 +33,16 @@ const RutasNav: Route[] = [
 		path: cancelarCuotas,
 		component: CancelarCuotas,
 		meta: { auth: true },
+	},
+	{
+		path: librePago,
+		component: LibrePago,
+		meta: { auth: false },
+	},
+	{
+		path: reportexaci,
+		component: ReporteXACI,
+		meta: { auth: false },
 	},
 	{
 		path: cuotas,

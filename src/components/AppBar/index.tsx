@@ -15,14 +15,25 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import BuildIcon from '@material-ui/icons/Build';
-import CreditCard from '@material-ui/icons/CreditCard';
+// import CreditCard from '@material-ui/icons/CreditCard';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import MenuIcon from '@material-ui/icons/Menu';
+import HardwareIcon from '@mui/icons-material/Hardware';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TranredLogo from '../../images/tranred-logo.png';
-import { baseUrl, cancelarCuotas, cuotas, cuotasR, mantenimientos, movimientos } from '../../router/url';
+import {
+	baseUrl,
+	cancelarCuotas,
+	cuotas,
+	cuotasR,
+	librePago,
+	mantenimientos,
+	movimientos,
+	reportexaci,
+} from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
 	root: {
@@ -98,6 +109,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 		textDecoration: 'none',
 		color: theme.palette.secondary.contrastText,
 	},
+	icon: {
+		minWidth: 40,
+	},
 }));
 const MainMenu: React.FC = () => {
 	const classes = useStyles();
@@ -135,6 +149,10 @@ const MainMenu: React.FC = () => {
 				return 'Cuotas Resumidas';
 			case cancelarCuotas:
 				return 'Cancelar Cuotas';
+			case reportexaci:
+				return 'Mantenimiento por ACI';
+			case librePago:
+				return 'Libre Pago';
 			default:
 				return 'Inicio';
 		}
@@ -231,7 +249,7 @@ const MainMenu: React.FC = () => {
 				<List>
 					<Link to={movimientos} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'Movimientos'}>
-							<ListItemIcon>
+							<ListItemIcon className={classes.icon}>
 								<ImportExportIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Movimientos'} />
@@ -239,7 +257,7 @@ const MainMenu: React.FC = () => {
 					</Link>
 					<Link to={cuotas} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'Cuotas'}>
-							<ListItemIcon>
+							<ListItemIcon className={classes.icon}>
 								<AttachMoneyIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Cuotas'} />
@@ -247,23 +265,39 @@ const MainMenu: React.FC = () => {
 					</Link>
 					<Link to={cuotasR} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'CuotasRes'}>
-							<ListItemIcon>
-								<AttachMoneyIcon />
+							<ListItemIcon className={classes.icon}>
+								<MonetizationOnIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Cuotas Resumidas'} />
 						</ListItem>
 					</Link>
 					<Link to={mantenimientos} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'Mantenimiento'}>
-							<ListItemIcon>
+							<ListItemIcon className={classes.icon}>
 								<BuildIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Mantenimiento'} />
 						</ListItem>
 					</Link>
+					<Link to={reportexaci} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'Mantenimiento por ACI'}>
+							<ListItemIcon className={classes.icon}>
+								<HardwareIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Mantenimiento por ACI'} />
+						</ListItem>
+					</Link>
+					{/* <Link to={librePago} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'Libre Pago'}>
+							<ListItemIcon className={classes.icon}>
+								<HardwareIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Libre Pago'} />
+						</ListItem>
+					</Link> */}
 					{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'CancelarCuotas'}>
-							<ListItemIcon>
+							<ListItemIcon className={classes.icon}>
 								<CreditCard />
 							</ListItemIcon>
 							<ListItemText primary={'Cancelar Cuotas'} />
