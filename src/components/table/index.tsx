@@ -13,6 +13,7 @@ import {
 	GridToolbarExport,
 	// GridToolbarExport,
 	GridToolbarFilterButton,
+	GridValueFormatterParams,
 } from '@material-ui/data-grid';
 // import DownloadIcon from '@material-ui/icons/FontDownload';
 import { Alert } from '@material-ui/lab';
@@ -286,6 +287,19 @@ const TableReports: FC<TableReportsProps> = ({
 					headerName: key,
 					type: 'string',
 					width: 140,
+				};
+			}
+			if (key === 'TASA') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 220,
+					valueFormatter: (params: GridValueFormatterParams) => {
+						const number = params.value as string;
+
+						return `${number.replace('.', ',')}`;
+					},
 				};
 			}
 			// if (key === 'COMISION_AFILIA_TDD') {
