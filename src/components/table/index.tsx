@@ -393,7 +393,7 @@ const TableReports: FC<TableReportsProps> = ({
 							rows={rowData}
 							columns={columns}
 							rowsPerPageOptions={[25, 50, 100]}
-							checkboxSelection
+							// checkboxSelection
 							columnBuffer={1}
 							disableSelectionOnClick
 						/>
