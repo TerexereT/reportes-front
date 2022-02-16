@@ -20,6 +20,7 @@ import ImportExportIcon from '@material-ui/icons/ImportExport';
 import MenuIcon from '@material-ui/icons/Menu';
 import HardwareIcon from '@mui/icons-material/Hardware';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -287,14 +288,14 @@ const MainMenu: React.FC = () => {
 							<ListItemText primary={'Mantenimiento por ACI'} />
 						</ListItem>
 					</Link>
-					{/* <Link to={librePago} onClick={handleDrawerClose} className={classes.link}>
+					<Link to={librePago} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'Libre Pago'}>
 							<ListItemIcon className={classes.icon}>
-								<HardwareIcon />
+								<ReceiptIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Libre Pago'} />
 						</ListItem>
-					</Link> */}
+					</Link>
 					{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'CancelarCuotas'}>
 							<ListItemIcon className={classes.icon}>

@@ -12,13 +12,16 @@ import {
 	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
 import SearchIcon from '@material-ui/icons/Search';
-import { FC, Fragment, useEffect, useLayoutEffect, useState } from 'react';
+import { CardActions } from '@mui/material';
+import { FC, Fragment, useLayoutEffect, useState } from 'react';
+import SelectList from '../components/DateTime';
 import { useStyles as useStylesT } from '../components/table';
-import Round from '../functions/Round';
+import useAxios from '../config';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	base: {
 		display: 'flex',
+		flexDirection: 'column',
 		width: '100%',
 		height: '100vh',
 		padding: '2rem',
@@ -68,6 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 	row: {
 		display: 'flex',
 		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	totalRow: {
 		display: 'flex',
@@ -81,6 +85,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 		position: 'fixed',
 		bottom: '1rem',
 		right: '1rem',
+	},
+	Button: {
+		background: theme.palette.primary.main,
+		color: theme.palette.primary.contrastText,
+		textTransform: 'none',
+		'&:hover': {
+			background: theme.palette.primary.light,
+			color: theme.palette.primary.contrastText,
+		},
 	},
 }));
 
@@ -114,29 +127,16 @@ const LibrePago: FC = () => {
 	const classes = useStyles();
 	const classesT = useStylesT();
 
+	const today = new Date();
+	const lastMonth = new Date(today);
 	const [data, setData] = useState<GridRowData[]>([]);
-	const [open, setOpen] = useState(false);
 	const [state, setState] = useState({});
-	const [dicom, setDicom] = useState([]);
+	// const [Cantidad, setCantidad] = useState(0);
 	const [loading, setLoading] = useState(false);
-	const [loadingP, setLoadingP] = useState(false);
-	const [fecha, setFecha] = useState<string>();
-	const [cuotaIva, setCuotaIva] = useState(0);
-	const [cuotaNeto, setCuotaNeto] = useState(0);
-	const [cuotaTotal, setCuotaTotal] = useState(0);
+	const [endDate, setEndDate] = useState<Date | null>(today);
 	const [terminal, setTerminal] = useState('');
+	const [initDate, setInitDate] = useState<Date | null>(lastMonth);
 	const [download, setDownload]: [boolean, (download: boolean) => void] = useState<boolean>(false);
-	const [dicomSelected, setDicomSelected] = useState<DicomSelectedInt>({
-		id: 0,
-		valorVenta: 0,
-	});
-	const [selectedRow, setSelectedRow] = useState<SelectedRowInt>({
-		AFILIADO: '',
-		ESTATUS: '',
-		FECHPROCESO: '',
-		IVA: 0,
-		MONTOTOTAL: 0,
-	});
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const re = /^\d+(\,*(\d*)+)*$/;
@@ -144,24 +144,29 @@ const LibrePago: FC = () => {
 		if (re.test(value) || value === '') setTerminal(value);
 	};
 
-	const handleClose = () => setOpen(false);
-	const handleOpen = () => setOpen(true);
-
 	let columns: GridColDef[] = Object.entries(state).map(([key, value]: any): GridColDef => {
-		if (key === 'MONTOTOTAL') {
+		if (key === 'Estatus') {
 			return {
 				field: key,
-				headerName: 'MONTOTOTAL($)',
+				headerName: 'Estatus de la Transaccion',
 				type: 'string',
-				width: 200,
+				width: 240,
 			};
 		}
-		if (key === 'IVA') {
+		if (key === 'Metodo') {
 			return {
 				field: key,
-				headerName: 'IVA($)',
+				headerName: 'Tipo de Mensaje',
 				type: 'string',
-				width: 120,
+				width: 240,
+			};
+		}
+		if (key === 'Origen') {
+			return {
+				field: key,
+				headerName: 'Tipo de Transaccion',
+				type: 'string',
+				width: 240,
 			};
 		}
 		return {
@@ -201,42 +206,34 @@ const LibrePago: FC = () => {
 		);
 	};
 
-	const DoubleClick = (event: any) => {
-		handleOpen();
-		setSelectedRow(event.row);
-	};
-
-	const handleCancelar = async () => {
-		try {
-			setLoadingP(true);
-			// await useAxios.put(`/cancelar_cuotas/cuota`, {
-			// 	terminal,
-			// 	...selectedRow,
-			// 	dicomSelected,
-			// });
-			Search({ key: 'Enter' });
-			handleClose();
-			setLoadingP(false);
-		} catch (error) {
-			setLoadingP(false);
-		}
-	};
-
 	const Search = async (e: any) => {
 		if (e.key === 'Enter') {
-			let terminalArray = terminal.split(',');
-			console.log('terminalArray', terminalArray);
+			let terminalArray = terminal
+				.split(',')
+				.filter((val) => val !== ',')
+				.filter((val) => val !== '')
+				// .map((val) => `'${val}'`)
+				.join(',')
+				.replace('"', '')
+				.replace('\n', '');
+			// console.log('terminalArray', terminalArray);
 			try {
-				// setLoading(true);
-				// await useAxios
-				// 	.post(`/cancelar_cuotas`, {
-				// 		terminal,
-				// 	})
-				// 	.then((resp) => {
-				// 		setData(resp.data.info);
-				// 		setLoading(false);
-				//      setDownload(true);
-				// 	});
+				setLoading(true);
+				await useAxios
+					.post(
+						`/libre-pago?init=${initDate?.toISOString().split('T')[0]}&end=${
+							endDate?.toISOString().split('T')[0]
+						}`,
+						{
+							terminales: terminalArray,
+						}
+					)
+					.then((resp) => {
+						setData(resp.data.info);
+						setLoading(false);
+						setDownload(true);
+					});
+				// setLoading(false);
 			} catch (error) {
 				setDownload(false);
 				setLoading(false);
@@ -246,38 +243,36 @@ const LibrePago: FC = () => {
 
 	useLayoutEffect(() => {
 		const getData = async () => {
-			// await useAxios.get(`/cancelar_cuotas/keys`).then((resp) => {
-			// 	setState(resp.data.info);
-			// });
-			// await useAxios.get(`/dicom`).then((resp) => {
-			// 	setDicom(resp.data.info);
-			// 	setDicomSelected(resp.data.info[0]);
-			// });
+			await useAxios.get(`/libre-pago/keys`).then((resp) => {
+				setState(resp.data.info);
+			});
 		};
 		getData();
 	}, []);
 
-	useEffect(() => {
-		rowData = data.map((val: any, i: number) => {
-			return { id: i, ...val };
-		});
-		if (Object.keys(selectedRow).length > 0) {
-			const fechaFormateada = new Date(selectedRow.FECHPROCESO).toLocaleDateString();
-			const cuota = selectedRow.MONTOTOTAL * dicomSelected.valorVenta;
-			const iva = selectedRow.IVA * dicomSelected.valorVenta;
-			setFecha(fechaFormateada);
-			setCuotaNeto(Round(cuota));
-			setCuotaIva(Round(iva));
-			setCuotaTotal(Round(cuota + iva));
-		}
-	}, [data, dicomSelected, selectedRow]);
+	// useEffect(() => {
+	// 	if (Object.keys(data).length > 0) {
+	// 		const last = data.length - 1;
+	// 		if (data[last].Fecha === 'TotalMonto') {
+	// 			setCantidad(data[last].Cantidad);
+	// 		}
+	// 	}
+	// }, [data]);
 
 	return (
 		<>
 			<Fragment>
 				<div className='ed-container'>
 					<div className={classes.base}>
-						<Card className={classesT.root} style={{ width: '100%', height: '100%', paddingBottom: '2rem' }}>
+						<Card
+							className={classesT.root}
+							style={{ width: '100%', height: '100%', paddingBottom: '2rem', overflow: 'auto' }}>
+							<SelectList
+								initDate={initDate}
+								endDate={endDate}
+								setInitDate={setInitDate}
+								setEndDate={setEndDate}
+							/>
 							<div className={classes.row}>
 								<TextField
 									className={classes.textField}
@@ -296,6 +291,11 @@ const LibrePago: FC = () => {
 									}}
 									onChange={handleChange}
 								/>
+								<CardActions>
+									<Button size='small' onClick={() => Search({ key: 'Enter' })} className={classes.Button}>
+										Obtener reportes
+									</Button>
+								</CardActions>
 								{loading && <CircularProgress className={classesT.loading} />}
 							</div>
 							<DataGrid
@@ -305,66 +305,12 @@ const LibrePago: FC = () => {
 								rows={rowData}
 								columns={columns}
 								rowsPerPageOptions={[25, 50, 100]}
-								checkboxSelection
 								columnBuffer={1}
-								// onCellDoubleClick={DoubleClick}
-								disableSelectionOnClick
 							/>
 						</Card>
 					</div>
 				</div>
 			</Fragment>
-			{/* <Modal
-				open={open}
-				onClose={handleClose}
-				closeAfterTransition
-				BackdropComponent={Backdrop}
-				BackdropProps={{
-					timeout: 500,
-				}}>
-				<Fade in={open}>
-					<Box sx={style}>
-						<Button className={classes.closeBtn} onClick={handleClose}>
-							<CloseIcon />
-						</Button>
-						<div className={classes.modalContainer}>
-							<Autocomplete
-								className={classes.autocomplete}
-								options={dicom}
-								value={dicomSelected}
-								getOptionLabel={(option: any) => (option.valorVenta ? `${option.valorVenta}` : '')}
-								getOptionSelected={(option: any, value: any) => option.id === value.id}
-								onChange={(event, value: any) => {
-									setDicomSelected(value);
-								}}
-								renderInput={(params: any) => (
-									<TextField {...params} name='dicom' label='Tasa Dicom' variant='outlined' />
-								)}
-							/>
-							<div className={classes.totalRow}>
-								<p>
-									<b>Fecha:</b> {fecha}
-								</p>
-								<p>
-									<b>Monto:</b> {cuotaNeto}
-								</p>
-								<p>
-									<b>IVA: </b>
-									{cuotaIva}
-								</p>
-								<p>
-									<b>Total de cuota: </b>
-									{cuotaTotal}
-								</p>
-							</div>
-							<Button className={classes.pagarCuota} onClick={handleCancelar}>
-								Cancelar Cuota
-							</Button>
-							{loadingP && <CircularProgress className={classNames(classesT.loading, classes.loadingAbsolute)} />}
-						</div>
-					</Box>
-				</Fade>
-			</Modal> */}
 		</>
 	);
 };

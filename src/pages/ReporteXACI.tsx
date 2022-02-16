@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import { FC, Fragment, useEffect, useLayoutEffect, useState } from 'react';
 import { useStyles as useStylesT } from '../components/table';
 import useAxios from '../config';
+import formatData from '../functions/FormatData';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	base: {
@@ -259,8 +260,7 @@ const ReporteXACI: FC = () => {
 					setState(resp.data.info);
 				});
 				await useAxios.get(`/reporte_aci`).then((resp) => {
-					console.log(resp.data.info);
-					setData(resp.data.info);
+					setData(formatData(resp.data.info));
 				});
 			} catch (error) {
 				console.log(error);

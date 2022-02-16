@@ -22,6 +22,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 // import { CSVLink } from 'react-csv';
 // import * as XLSX from 'xlsx';
 import useAxios from '../../config';
+import formatData from '../../functions/FormatData';
 import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
 
@@ -235,19 +236,6 @@ const TableReports: FC<TableReportsProps> = ({
 		);
 	};
 
-	const formatData = (data: any[]) => {
-		let formatedData = data;
-		formatedData.forEach((val) => {
-			if (val.DIRECCION) {
-				let dir = val.DIRECCION;
-				dir = dir.split('\r').join('').split('\n').join('');
-				val.DIRECCION = dir;
-			}
-			return val;
-		});
-		return formatedData;
-	};
-
 	let rowData: GridRowData[] = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
@@ -393,7 +381,7 @@ const TableReports: FC<TableReportsProps> = ({
 							rows={rowData}
 							columns={columns}
 							rowsPerPageOptions={[25, 50, 100]}
-							checkboxSelection
+							// checkboxSelection
 							columnBuffer={1}
 							disableSelectionOnClick
 						/>
