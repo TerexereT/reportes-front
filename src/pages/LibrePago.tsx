@@ -148,7 +148,7 @@ const LibrePago: FC = () => {
 		if (key === 'Estatus') {
 			return {
 				field: key,
-				headerName: 'Estatus de la Transacción',
+				headerName: 'Estatus de la Transaccion',
 				type: 'string',
 				width: 240,
 			};
@@ -164,7 +164,7 @@ const LibrePago: FC = () => {
 		if (key === 'Origen') {
 			return {
 				field: key,
-				headerName: 'Tipo de Transacción',
+				headerName: 'Tipo de Transaccion',
 				type: 'string',
 				width: 240,
 			};
