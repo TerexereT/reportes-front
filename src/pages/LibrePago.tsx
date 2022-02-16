@@ -12,8 +12,8 @@ import {
 	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
 import SearchIcon from '@material-ui/icons/Search';
-import { CardActions, Typography } from '@mui/material';
-import { FC, Fragment, useEffect, useLayoutEffect, useState } from 'react';
+import { CardActions } from '@mui/material';
+import { FC, Fragment, useLayoutEffect, useState } from 'react';
 import SelectList from '../components/DateTime';
 import { useStyles as useStylesT } from '../components/table';
 import useAxios from '../config';
@@ -131,7 +131,7 @@ const LibrePago: FC = () => {
 	const lastMonth = new Date(today);
 	const [data, setData] = useState<GridRowData[]>([]);
 	const [state, setState] = useState({});
-	const [Cantidad, setCantidad] = useState(0);
+	// const [Cantidad, setCantidad] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [endDate, setEndDate] = useState<Date | null>(today);
 	const [terminal, setTerminal] = useState('');
@@ -145,20 +145,28 @@ const LibrePago: FC = () => {
 	};
 
 	let columns: GridColDef[] = Object.entries(state).map(([key, value]: any): GridColDef => {
-		if (key === 'MONTOTOTAL') {
+		if (key === 'Estatus') {
 			return {
 				field: key,
-				headerName: 'MONTOTOTAL($)',
+				headerName: 'Estatus de la Transacción',
 				type: 'string',
-				width: 200,
+				width: 240,
 			};
 		}
-		if (key === 'IVA') {
+		if (key === 'Metodo') {
 			return {
 				field: key,
-				headerName: 'IVA($)',
+				headerName: 'Tipo de Mensaje',
 				type: 'string',
-				width: 120,
+				width: 240,
+			};
+		}
+		if (key === 'Origen') {
+			return {
+				field: key,
+				headerName: 'Tipo de Transacción',
+				type: 'string',
+				width: 240,
 			};
 		}
 		return {
@@ -204,7 +212,11 @@ const LibrePago: FC = () => {
 				.split(',')
 				.filter((val) => val !== ',')
 				.filter((val) => val !== '')
-				.join(',');
+				// .map((val) => `'${val}'`)
+				.join(',')
+				.replace('"', '')
+				.replace('\n', '');
+			// console.log('terminalArray', terminalArray);
 			try {
 				setLoading(true);
 				await useAxios
@@ -221,6 +233,7 @@ const LibrePago: FC = () => {
 						setLoading(false);
 						setDownload(true);
 					});
+				// setLoading(false);
 			} catch (error) {
 				setDownload(false);
 				setLoading(false);
@@ -237,14 +250,14 @@ const LibrePago: FC = () => {
 		getData();
 	}, []);
 
-	useEffect(() => {
-		if (Object.keys(data).length > 0) {
-			const last = data.length - 1;
-			if (data[last].Fecha === 'TotalMonto') {
-				setCantidad(data[last].Cantidad);
-			}
-		}
-	}, [data]);
+	// useEffect(() => {
+	// 	if (Object.keys(data).length > 0) {
+	// 		const last = data.length - 1;
+	// 		if (data[last].Fecha === 'TotalMonto') {
+	// 			setCantidad(data[last].Cantidad);
+	// 		}
+	// 	}
+	// }, [data]);
 
 	return (
 		<>
@@ -284,9 +297,6 @@ const LibrePago: FC = () => {
 									</Button>
 								</CardActions>
 								{loading && <CircularProgress className={classesT.loading} />}
-								<Typography className={classesT.title} color='textSecondary' gutterBottom>
-									Cantidad Total: {Cantidad}
-								</Typography>
 							</div>
 							<DataGrid
 								components={{
