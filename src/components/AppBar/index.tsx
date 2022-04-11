@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		minWidth: 40,
 	},
 }));
-const MainMenu: React.FC = () => {
+const MainMenu = () => {
 	const classes = useStyles();
 	const [auth, setAuth] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
@@ -228,7 +228,10 @@ const MainMenu: React.FC = () => {
 			<SwipeableDrawer
 				anchor='left'
 				open={open}
-				onOpen={() => setOpen(true)}
+				onOpen={() => {
+					setOpen(true);
+					return {};
+				}}
 				onClose={handleDrawerClose}
 				className={classNames(classes.drawer, {
 					[classes.drawerOpen]: open,
