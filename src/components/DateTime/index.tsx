@@ -52,9 +52,7 @@ const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate
 	return (
 		<>
 			<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				<div
-					// className='ed-grid m-cross-baseline m-grid-5 s-px-2 s-pt-2'
-					className={classes.row}>
+				<div className={classes.row}>
 					<Typography className={classes.title} color='textSecondary' gutterBottom>
 						Fecha de inicio
 					</Typography>
@@ -62,10 +60,9 @@ const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate
 						className={classes.datePicker}
 						disableToolbar
 						variant='inline'
-						format='MM/dd/yyyy'
+						format='dd/MM/yyyy'
 						margin='normal'
-						// id='date-picker-inline'
-						label='Seleccione la fecha'
+						label='Ingrese la fecha de inicio'
 						value={initDate}
 						onChange={handleInitDateChange}
 						KeyboardButtonProps={{
@@ -82,10 +79,9 @@ const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate
 						className={classes.datePicker}
 						disableToolbar
 						variant='inline'
-						format='MM/dd/yyyy'
+						format='dd/MM/yyyy'
 						margin='normal'
-						// id='date-picker-inline'
-						label='Seleccione la fecha'
+						label='Ingrese la fecha de fin'
 						value={endDate}
 						onChange={handleEndDateChange}
 						KeyboardButtonProps={{

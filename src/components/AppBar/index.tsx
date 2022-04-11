@@ -21,6 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import HardwareIcon from '@mui/icons-material/Hardware';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import ReceiptIcon from '@mui/icons-material/Receipt';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -33,6 +34,7 @@ import {
 	librePago,
 	mantenimientos,
 	movimientos,
+	pagoCuota,
 	reportexaci,
 } from '../../router/url';
 const drawerWidth = 240;
@@ -154,6 +156,8 @@ const MainMenu: React.FC = () => {
 				return 'Mantenimiento por ACI';
 			case librePago:
 				return 'Libre Pago';
+			case pagoCuota:
+				return 'Pago Cuota';
 			default:
 				return 'Inicio';
 		}
@@ -294,6 +298,14 @@ const MainMenu: React.FC = () => {
 								<ReceiptIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Libre Pago'} />
+						</ListItem>
+					</Link>
+					<Link to={pagoCuota} onClick={handleDrawerClose} className={classes.link}>
+						<ListItem button key={'Pago Cuota'}>
+							<ListItemIcon className={classes.icon}>
+								<ReceiptLongIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Pago Cuota'} />
 						</ListItem>
 					</Link>
 					{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>

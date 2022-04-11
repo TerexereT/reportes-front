@@ -83,7 +83,7 @@ interface TableReportsProps {
 	endDate?: Date | null;
 	initDate?: Date | null;
 	mantOption?: number;
-	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen';
+	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen' | 'PagoCuota';
 }
 
 const TableReports: FC<TableReportsProps> = ({
@@ -142,20 +142,12 @@ const TableReports: FC<TableReportsProps> = ({
 					}
 				);
 				setData(formatData(resp.data.info));
-				fieldRef.current?.scrollIntoView({
-					behavior: 'smooth',
-					block: 'start',
-				});
 			}
 			if (from === 'CuotasVencidas') {
 				resp = await useAxios.post(`/aboterminal`, {
 					keys,
 				});
 				setData(resp.data.info);
-				fieldRef.current?.scrollIntoView({
-					behavior: 'smooth',
-					block: 'start',
-				});
 			}
 			if (from === 'Mantenimiento') {
 				switch (mantOption) {
@@ -164,40 +156,24 @@ const TableReports: FC<TableReportsProps> = ({
 							keys,
 						});
 						setData(resp.data.info);
-						fieldRef.current?.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-						});
 						break;
 					case 2:
 						resp = await useAxios.post(`/mantenimiento/2`, {
 							keys,
 						});
 						setData(resp.data.info);
-						fieldRef.current?.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-						});
 						break;
 					case 3:
 						resp = await useAxios.post(`/mantenimiento/3`, {
 							keys,
 						});
 						setData(resp.data.info);
-						fieldRef.current?.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-						});
 						break;
 					default:
 						resp = await useAxios.post(`/mantenimiento/0`, {
 							keys,
 						});
 						setData(resp.data.info);
-						fieldRef.current?.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-						});
 				}
 			}
 			if (from === 'CuotasResumen') {
@@ -205,11 +181,17 @@ const TableReports: FC<TableReportsProps> = ({
 					keys,
 				});
 				setData(resp.data.info);
-				fieldRef.current?.scrollIntoView({
-					behavior: 'smooth',
-					block: 'start',
-				});
 			}
+			if (from === 'PagoCuota') {
+				resp = await useAxios.post(
+					`/pago-cuota?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`
+				);
+				setData(resp.data.info);
+			}
+			fieldRef.current?.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start',
+			});
 			setDownload(true);
 			setLoading(false);
 		} catch (error) {
