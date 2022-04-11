@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		minWidth: 40,
 	},
 }));
-const MainMenu: React.FC = () => {
+const MainMenu = () => {
 	const classes = useStyles();
 	const [auth, setAuth] = React.useState(false);
 	const [open, setOpen] = React.useState(false);
@@ -171,144 +171,148 @@ const MainMenu: React.FC = () => {
 	}, [path]);
 
 	return (
-		<div className={classes.root}>
-			<AppBar
-				position='static'
-				className={classNames(classes.appBar, {
-					[classes.appBarShift]: open,
-				})}>
-				<Toolbar>
-					<IconButton
-						color='inherit'
-						aria-label='open drawer'
-						onClick={handleDrawerOpen}
-						edge='start'
-						className={classNames(classes.menuButton, {
-							[classes.hide]: open,
-						})}>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant='h6' className={classes.title}>
-						Reportes Dinámicos: {section}
-					</Typography>
-					{auth ? (
-						<div>
-							<IconButton
-								aria-label='account of current user'
-								aria-controls='menu-appbar'
-								aria-haspopup='true'
-								onClick={handleMenu}
-								color='inherit'>
-								<AccountCircle />
-							</IconButton>
-							<Menu
-								id='menu-appbar'
-								anchorEl={anchorEl}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								open={openM}
-								onClose={handleClose}>
-								<MenuItem onClick={handleClose}>Perfil</MenuItem>
-								<MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
-							</Menu>
-						</div>
-					) : (
-						// <>Iniciar Sesión</>
-						<></>
-					)}
-				</Toolbar>
-			</AppBar>
-			<SwipeableDrawer
-				anchor='left'
-				open={open}
-				onOpen={() => setOpen(true)}
-				onClose={handleDrawerClose}
-				className={classNames(classes.drawer, {
-					[classes.drawerOpen]: open,
-					[classes.drawerClose]: !open,
-				})}
-				classes={{
-					paper: classNames({
+		<>
+			<div className={classes.root}>
+				<AppBar
+					position='static'
+					className={classNames(classes.appBar, {
+						[classes.appBarShift]: open,
+					})}>
+					<Toolbar>
+						<IconButton
+							color='inherit'
+							aria-label='open drawer'
+							onClick={handleDrawerOpen}
+							edge='start'
+							className={classNames(classes.menuButton, {
+								[classes.hide]: open,
+							})}>
+							<MenuIcon />
+						</IconButton>
+						<Typography variant='h6' className={classes.title}>
+							Reportes Dinámicos: {section}
+						</Typography>
+						{auth ? (
+							<div>
+								<IconButton
+									aria-label='account of current user'
+									aria-controls='menu-appbar'
+									aria-haspopup='true'
+									onClick={handleMenu}
+									color='inherit'>
+									<AccountCircle />
+								</IconButton>
+								<Menu
+									id='menu-appbar'
+									anchorEl={anchorEl}
+									anchorOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									keepMounted
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									open={openM}
+									onClose={handleClose}>
+									<MenuItem onClick={handleClose}>Perfil</MenuItem>
+									<MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
+								</Menu>
+							</div>
+						) : (
+							// <>Iniciar Sesión</>
+							<></>
+						)}
+					</Toolbar>
+				</AppBar>
+				<SwipeableDrawer
+					anchor='left'
+					open={open}
+					onOpen={() => {
+						setOpen(true);
+						return {};
+					}}
+					onClose={handleDrawerClose}
+					className={classNames(classes.drawer, {
 						[classes.drawerOpen]: open,
 						[classes.drawerClose]: !open,
-					}),
-				}}>
-				<div className={classes.toolbar}>
-					<div className={classes.img}>
-						<Link to={baseUrl} onClick={handleDrawerClose}>
-							<img src={TranredLogo} alt='logo tranred' />
-						</Link>
-					</div>
-					{/* <IconButton onClick={handleDrawerClose} style={{ padding: 8 }}>
+					})}
+					classes={{
+						paper: classNames({
+							[classes.drawerOpen]: open,
+							[classes.drawerClose]: !open,
+						}),
+					}}>
+					<div className={classes.toolbar}>
+						<div className={classes.img}>
+							<Link to={baseUrl} onClick={handleDrawerClose}>
+								<img src={TranredLogo} alt='logo tranred' />
+							</Link>
+						</div>
+						{/* <IconButton onClick={handleDrawerClose} style={{ padding: 8 }}>
 						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
 					</IconButton> */}
-				</div>
-				<Divider />
-				<List>
-					<Link to={movimientos} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Movimientos'}>
-							<ListItemIcon className={classes.icon}>
-								<ImportExportIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Movimientos'} />
-						</ListItem>
-					</Link>
-					<Link to={cuotas} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Cuotas'}>
-							<ListItemIcon className={classes.icon}>
-								<AttachMoneyIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Cuotas'} />
-						</ListItem>
-					</Link>
-					<Link to={cuotasR} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'CuotasRes'}>
-							<ListItemIcon className={classes.icon}>
-								<MonetizationOnIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Cuotas Resumidas'} />
-						</ListItem>
-					</Link>
-					<Link to={mantenimientos} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Mantenimiento'}>
-							<ListItemIcon className={classes.icon}>
-								<BuildIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Mantenimiento'} />
-						</ListItem>
-					</Link>
-					<Link to={reportexaci} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Mantenimiento por ACI'}>
-							<ListItemIcon className={classes.icon}>
-								<HardwareIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Mantenimiento por ACI'} />
-						</ListItem>
-					</Link>
-					<Link to={librePago} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Libre Pago'}>
-							<ListItemIcon className={classes.icon}>
-								<ReceiptIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Libre Pago'} />
-						</ListItem>
-					</Link>
-					<Link to={pagoCuota} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Pago Cuota'}>
-							<ListItemIcon className={classes.icon}>
-								<ReceiptLongIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Pago Cuota'} />
-						</ListItem>
-					</Link>
-					{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
+					</div>
+					<Divider />
+					<List>
+						<Link to={movimientos} onClick={handleDrawerClose} className={classes.link}>
+							<ListItem button key={'Movimientos'}>
+								<ListItemIcon className={classes.icon}>
+									<ImportExportIcon />
+								</ListItemIcon>
+								<ListItemText primary={'Movimientos'} />
+							</ListItem>
+						</Link>
+						<Link to={cuotas} onClick={handleDrawerClose} className={classes.link}>
+							<ListItem button key={'Cuotas'}>
+								<ListItemIcon className={classes.icon}>
+									<AttachMoneyIcon />
+								</ListItemIcon>
+								<ListItemText primary={'Cuotas'} />
+							</ListItem>
+						</Link>
+						<Link to={cuotasR} onClick={handleDrawerClose} className={classes.link}>
+							<ListItem button key={'CuotasRes'}>
+								<ListItemIcon className={classes.icon}>
+									<MonetizationOnIcon />
+								</ListItemIcon>
+								<ListItemText primary={'Cuotas Resumidas'} />
+							</ListItem>
+						</Link>
+						<Link to={mantenimientos} onClick={handleDrawerClose} className={classes.link}>
+							<ListItem button key={'Mantenimiento'}>
+								<ListItemIcon className={classes.icon}>
+									<BuildIcon />
+								</ListItemIcon>
+								<ListItemText primary={'Mantenimiento'} />
+							</ListItem>
+						</Link>
+						<Link to={reportexaci} onClick={handleDrawerClose} className={classes.link}>
+							<ListItem button key={'Mantenimiento por ACI'}>
+								<ListItemIcon className={classes.icon}>
+									<HardwareIcon />
+								</ListItemIcon>
+								<ListItemText primary={'Mantenimiento por ACI'} />
+							</ListItem>
+						</Link>
+						<Link to={librePago} onClick={handleDrawerClose} className={classes.link}>
+							<ListItem button key={'Libre Pago'}>
+								<ListItemIcon className={classes.icon}>
+									<ReceiptIcon />
+								</ListItemIcon>
+								<ListItemText primary={'Libre Pago'} />
+							</ListItem>
+						</Link>
+						<Link to={pagoCuota} onClick={handleDrawerClose} className={classes.link}>
+							<ListItem button key={'Pago Cuota'}>
+								<ListItemIcon className={classes.icon}>
+									<ReceiptLongIcon />
+								</ListItemIcon>
+								<ListItemText primary={'Pago Cuota'} />
+							</ListItem>
+						</Link>
+						{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
 						<ListItem button key={'CancelarCuotas'}>
 							<ListItemIcon className={classes.icon}>
 								<CreditCard />
@@ -316,10 +320,11 @@ const MainMenu: React.FC = () => {
 							<ListItemText primary={'Cancelar Cuotas'} />
 						</ListItem>
 					</Link> */}
-				</List>
-				<Divider />
-			</SwipeableDrawer>
-		</div>
+					</List>
+					<Divider />
+				</SwipeableDrawer>
+			</div>
+		</>
 	);
 };
 
