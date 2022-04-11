@@ -57,7 +57,11 @@ const Mantenimiento: React.FC = () => {
 								value={option}
 								onChange={handleChange}>
 								{opciones.map((val, i) => {
-									return <MenuItem value={i}>{val}</MenuItem>;
+									return (
+										<MenuItem key={i} value={i}>
+											{val}
+										</MenuItem>
+									);
 								})}
 							</Select>
 						</div>

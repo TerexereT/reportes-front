@@ -5,6 +5,7 @@ import CuotasResumido from '../../pages/CuotasResumido';
 import Home from '../../pages/Home';
 import LibrePago from '../../pages/LibrePago';
 import Mantenimiento from '../../pages/Mantenimiento';
+import PagoCuota from '../../pages/PagoCuota';
 import RepDinamicos from '../../pages/RepDinamicos';
 import ReporteXACI from '../../pages/ReporteXACI';
 import {
@@ -15,6 +16,7 @@ import {
 	librePago,
 	mantenimientos,
 	movimientos,
+	pagoCuota,
 	reportexaci,
 } from '../url';
 
@@ -37,6 +39,11 @@ const RutasNav: Route[] = [
 	{
 		path: librePago,
 		component: LibrePago,
+		meta: { auth: false },
+	},
+	{
+		path: pagoCuota,
+		component: PagoCuota,
 		meta: { auth: false },
 	},
 	{

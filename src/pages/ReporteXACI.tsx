@@ -10,7 +10,7 @@ import {
 	GridToolbarFilterButton,
 } from '@material-ui/data-grid';
 import classNames from 'classnames';
-import { FC, Fragment, useEffect, useLayoutEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useStyles as useStylesT } from '../components/table';
 import useAxios from '../config';
 import formatData from '../functions/FormatData';
@@ -218,6 +218,14 @@ const ReporteXACI: FC = () => {
 					width: 205,
 				};
 			}
+			if (key === 'ESTATUS') {
+				return {
+					field: key,
+					headerName: 'ESTATUS',
+					type: 'string',
+					width: 140,
+				};
+			}
 			if (key === 'IVA') {
 				return {
 					field: key,
@@ -273,31 +281,29 @@ const ReporteXACI: FC = () => {
 
 	return (
 		<>
-			<Fragment>
-				<div className={classNames('ed-container', classes.base)}>
-					<Card className={classesT.root} style={{ width: '100%', position: 'relative' }}>
-						{loading ? (
-							<>
-								<LinearProgress />
-								<div className={classes.loading}>Cargando...</div>
-							</>
-						) : errorLoading ? (
-							<div className={classes.loading}>Error al cargar la información, actualice la página</div>
-						) : (
-							<DataGrid
-								components={{
-									Toolbar: customToolbar,
-								}}
-								rows={rowData}
-								columns={columnData}
-								rowsPerPageOptions={[25, 50, 100]}
-								columnBuffer={1}
-								disableSelectionOnClick
-							/>
-						)}
-					</Card>
-				</div>
-			</Fragment>
+			<div className={classNames('ed-container', classes.base)}>
+				<Card className={classesT.root} style={{ width: '100%', position: 'relative' }}>
+					{loading ? (
+						<>
+							<LinearProgress />
+							<div className={classes.loading}>Cargando...</div>
+						</>
+					) : errorLoading ? (
+						<div className={classes.loading}>Error al cargar la información, actualice la página</div>
+					) : (
+						<DataGrid
+							components={{
+								Toolbar: customToolbar,
+							}}
+							rows={rowData}
+							columns={columnData}
+							rowsPerPageOptions={[25, 50, 100]}
+							columnBuffer={1}
+							disableSelectionOnClick
+						/>
+					)}
+				</Card>
+			</div>
 		</>
 	);
 };
