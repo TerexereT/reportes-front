@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from '@mui/icons-material/Search';
 import {
 	Backdrop,
 	Box,
@@ -7,23 +9,15 @@ import {
 	CircularProgress,
 	Fade,
 	InputAdornment,
-	makeStyles,
 	Modal,
 	TextField,
 	Theme,
-} from '@material-ui/core';
-import {
-	DataGrid,
-	GridColDef,
-	GridRowData,
-	GridToolbarContainer,
-	GridToolbarFilterButton,
-} from '@material-ui/data-grid';
-import CloseIcon from '@material-ui/icons/Close';
-import SearchIcon from '@material-ui/icons/Search';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+} from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import makeStyles from '@mui/styles/makeStyles';
+import { DataGrid, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
 import classNames from 'classnames';
-import { FC, Fragment, useEffect, useLayoutEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useStyles as useStylesT } from '../components/table';
 import useAxios from '../config';
 import Round from '../functions/Round';
@@ -126,7 +120,7 @@ const CancelarCuotas: FC = () => {
 	const classes = useStyles();
 	const classesT = useStylesT();
 
-	const [data, setData] = useState<GridRowData[]>([]);
+	const [data, setData] = useState<any>([]);
 	const [open, setOpen] = useState(false);
 	const [state, setState] = useState({});
 	const [dicom, setDicom] = useState([]);
@@ -156,7 +150,7 @@ const CancelarCuotas: FC = () => {
 	const handleClose = () => setOpen(false);
 	const handleOpen = () => setOpen(true);
 
-	let columns: GridColDef[] = Object.entries(state).map(([key, value]: any): GridColDef => {
+	let columns: any = Object.entries(state).map(([key, value]: any) => {
 		if (key === 'MONTOTOTAL') {
 			return {
 				field: key,
@@ -181,7 +175,7 @@ const CancelarCuotas: FC = () => {
 		};
 	});
 
-	let rowData: GridRowData[] = data.map((val: any, i: number) => {
+	let rowData = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
 
@@ -262,7 +256,7 @@ const CancelarCuotas: FC = () => {
 
 	return (
 		<>
-			<Fragment>
+			<>
 				<div className='ed-container'>
 					<div className={classes.base}>
 						<Card className={classesT.root} style={{ width: '100%', height: '100%', paddingBottom: '2rem' }}>
@@ -301,7 +295,7 @@ const CancelarCuotas: FC = () => {
 						</Card>
 					</div>
 				</div>
-			</Fragment>
+			</>
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -321,7 +315,7 @@ const CancelarCuotas: FC = () => {
 								options={dicom}
 								value={dicomSelected}
 								getOptionLabel={(option: any) => (option.valorVenta ? `${option.valorVenta}` : '')}
-								getOptionSelected={(option: any, value: any) => option.id === value.id}
+								isOptionEqualToValue={(option: any, value: any) => option.id === value.id}
 								onChange={(event, value: any) => {
 									setDicomSelected(value);
 								}}

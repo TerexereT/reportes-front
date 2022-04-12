@@ -1,21 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // components
-import { Button, Card, CardActions, CardContent, CardHeader, CircularProgress } from '@material-ui/core';
-// styles
-import { makeStyles } from '@material-ui/core/styles';
+import { Alert, Button, Card, CardActions, CardContent, CardHeader, CircularProgress } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
 	DataGrid,
-	GridColDef,
-	// GridExportCsvOptions,
-	GridExportCsvOptions,
-	GridRowData,
+	GridCsvExportOptions,
 	GridToolbarContainer,
 	GridToolbarExport,
-	// GridToolbarExport,
 	GridToolbarFilterButton,
-} from '@material-ui/data-grid';
-// import DownloadIcon from '@material-ui/icons/FontDownload';
-import { Alert } from '@material-ui/lab';
+} from '@mui/x-data-grid';
 import { AxiosResponse } from 'axios';
 // import * as FileSaver from 'file-saver';
 import React, { FC, useEffect, useRef, useState } from 'react';
@@ -117,7 +110,7 @@ const TableReports: FC<TableReportsProps> = ({
 	const keys: string[] = Object.entries(state)
 		.filter(([key, value]) => value)
 		.map(([key, value]): string => key);
-	const exportType: GridExportCsvOptions = {
+	const exportType: GridCsvExportOptions = {
 		fileName: getExportFileName(),
 		delimiter: ';',
 		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
@@ -201,7 +194,7 @@ const TableReports: FC<TableReportsProps> = ({
 		}
 	};
 
-	const customToolbar: () => JSX.Element = () => {
+	const customToolbar = () => {
 		return (
 			<GridToolbarContainer>
 				{download && <GridToolbarExport csvOptions={exportType} />}
@@ -218,14 +211,14 @@ const TableReports: FC<TableReportsProps> = ({
 		);
 	};
 
-	let rowData: GridRowData[] = data.map((val: any, i: number) => {
+	let rowData = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
-	let columns: GridColDef[] = [
+	let columns: any = [
 		{ field: 'Seleccione filtros', headerName: 'key', type: 'string', width: 240, editable: false },
 	];
 	if (rowData[0] !== undefined) {
-		columns = Object.entries(rowData[0]).map(([key, value]: any): GridColDef => {
+		columns = Object.entries(rowData[0]).map(([key, value]) => {
 			if (key === 'id') {
 				return {
 					field: key,
@@ -258,18 +251,6 @@ const TableReports: FC<TableReportsProps> = ({
 					width: 140,
 				};
 			}
-			// if (key === 'COMISION_AFILIA_TDD') {
-			// 	return {
-			// 		field: key,
-			// 		headerName: key,
-			// 		type: 'string',
-			// 		width: 220,
-			// 		valueFormatter: (params: GridValueFormatterParams) => {
-			// 			const number = Round(params.value as number);
-			// 			return `${number}`;
-			// 		},
-			// 	};
-			// }
 			return {
 				field: key,
 				headerName: key,
@@ -284,7 +265,7 @@ const TableReports: FC<TableReportsProps> = ({
 			return { id: i, ...val };
 		});
 		if (rowData[0] !== undefined) {
-			columns = Object.entries(rowData[0]).map(([key, value]: any): GridColDef => {
+			columns = Object.entries(rowData[0]).map(([key, value]) => {
 				if (key === 'id') {
 					return {
 						field: key,

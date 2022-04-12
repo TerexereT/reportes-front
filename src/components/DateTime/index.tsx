@@ -1,10 +1,11 @@
-import DateFnsUtils from '@date-io/date-fns';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { DatePicker, LocalizationProvider } from '@mui/lab';
+import { TextField, TextFieldProps, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import classnames from 'classnames';
 import 'date-fns';
-import React from 'react';
+import { FC } from 'react';
 
 export const useStylesDT = makeStyles((styles) => ({
 	title: {
@@ -26,6 +27,7 @@ export const useStylesDT = makeStyles((styles) => ({
 		display: 'grid',
 		gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
 		alignItems: 'center',
+		marginTop: '10px',
 	},
 	datePicker: {
 		margin: '16px 10px 8px',
@@ -33,64 +35,55 @@ export const useStylesDT = makeStyles((styles) => ({
 }));
 
 interface MaterialUIPickersProps {
-	initDate: Date | null;
-	endDate: Date | null;
-	setInitDate: React.Dispatch<React.SetStateAction<Date | null>>;
-	setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
+	initDate: Date | undefined;
+	endDate: Date | undefined;
+	setInitDate: any;
+	setEndDate: any;
 }
 
-const MaterialUIPickers: React.FC<MaterialUIPickersProps> = ({ initDate, endDate, setInitDate, setEndDate }) => {
+const MaterialUIPickers: FC<MaterialUIPickersProps> = ({ initDate, endDate, setInitDate, setEndDate }) => {
 	const classes = useStylesDT();
 
-	const handleInitDateChange = (date: Date | null) => {
+	const handleInitDateChange = (date: Date | null | undefined) => {
 		setInitDate(date);
 	};
-	const handleEndDateChange = (date: Date | null) => {
+	const handleEndDateChange = (date: Date | null | undefined) => {
 		setEndDate(date);
 	};
 
 	return (
 		<>
-			<MuiPickersUtilsProvider utils={DateFnsUtils}>
+			<LocalizationProvider dateAdapter={AdapterDateFns}>
 				<div className={classes.row}>
 					<Typography className={classes.title} color='textSecondary' gutterBottom>
 						Fecha de inicio
 					</Typography>
-					<KeyboardDatePicker
+					<DatePicker
+						renderInput={(props: TextFieldProps) => (
+							<TextField label='Date' value={initDate?.toLocaleString()} {...props} />
+						)}
 						className={classes.datePicker}
-						disableToolbar
-						variant='inline'
-						format='dd/MM/yyyy'
-						margin='normal'
+						inputFormat='dd/MM/yyyy'
 						label='Ingrese la fecha de inicio'
 						value={initDate}
 						onChange={handleInitDateChange}
-						KeyboardButtonProps={{
-							'aria-label': 'change date',
-						}}
 						disableFuture={true}
 						maxDate={endDate}
-						maxDateMessage='Seleccione una fecha menor a la fecha fin'
 					/>
 					<Typography className={classnames(classes.title)} color='textSecondary' gutterBottom>
 						Fecha Final
 					</Typography>
-					<KeyboardDatePicker
+					<DatePicker
+						renderInput={(props) => <TextField label='Date' value={endDate?.toLocaleString()} {...props} />}
 						className={classes.datePicker}
-						disableToolbar
-						variant='inline'
-						format='dd/MM/yyyy'
-						margin='normal'
+						inputFormat='dd/MM/yyyy'
 						label='Ingrese la fecha de fin'
 						value={endDate}
 						onChange={handleEndDateChange}
-						KeyboardButtonProps={{
-							'aria-label': 'change date',
-						}}
 						disableFuture={true}
 					/>
 				</div>
-			</MuiPickersUtilsProvider>
+			</LocalizationProvider>
 		</>
 	);
 };
