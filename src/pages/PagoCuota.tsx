@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import React from 'react';
 // import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
@@ -13,8 +13,8 @@ const PagoCuota: React.FC = () => {
 	const [state, setState]: [any, any] = React.useState({});
 	const today = new Date();
 	const lastMonth = new Date(today);
-	const [initDate, setInitDate] = React.useState<Date | null>(lastMonth);
-	const [endDate, setEndDate] = React.useState<Date | null>(today);
+	const [initDate, setInitDate] = React.useState<Date | undefined>(lastMonth);
+	const [endDate, setEndDate] = React.useState<Date | undefined>(today);
 
 	React.useEffect(() => {
 		const getdata = async () => {

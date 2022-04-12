@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card } from '@material-ui/core';
+import { Card } from '@mui/material';
 import { FC, Fragment, useLayoutEffect, useState } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import TableReports from '../components/table';

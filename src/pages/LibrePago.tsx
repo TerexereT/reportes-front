@@ -1,18 +1,16 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Card, CircularProgress, InputAdornment, makeStyles, TextField, Theme } from '@material-ui/core';
+import SearchIcon from '@mui/icons-material/Search';
+import { Button, Card, CardActions, CircularProgress, InputAdornment, TextField, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
 	DataGrid,
-	GridColDef,
-	GridExportCsvOptions,
-	GridRowData,
+	GridCsvExportOptions,
 	GridToolbarContainer,
 	GridToolbarExport,
 	GridToolbarFilterButton,
-} from '@material-ui/data-grid';
-import SearchIcon from '@material-ui/icons/Search';
-import { CardActions } from '@mui/material';
+} from '@mui/x-data-grid';
 import { FC, Fragment, useLayoutEffect, useState } from 'react';
 import SelectList from '../components/DateTime';
 import { useStyles as useStylesT } from '../components/table';
@@ -129,13 +127,13 @@ const LibrePago: FC = () => {
 
 	const today = new Date();
 	const lastMonth = new Date(today);
-	const [data, setData] = useState<GridRowData[]>([]);
+	const [data, setData] = useState<any>([]);
 	const [state, setState] = useState({});
 	// const [Cantidad, setCantidad] = useState(0);
 	const [loading, setLoading] = useState(false);
-	const [endDate, setEndDate] = useState<Date | null>(today);
+	const [endDate, setEndDate] = useState<Date | undefined>(today);
 	const [terminal, setTerminal] = useState('');
-	const [initDate, setInitDate] = useState<Date | null>(lastMonth);
+	const [initDate, setInitDate] = useState<Date | undefined>(lastMonth);
 	const [download, setDownload]: [boolean, (download: boolean) => void] = useState<boolean>(false);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,7 +142,7 @@ const LibrePago: FC = () => {
 		if (re.test(value) || value === '') setTerminal(value);
 	};
 
-	let columns: GridColDef[] = Object.entries(state).map(([key, value]: any): GridColDef => {
+	let columns = Object.entries(state).map(([key, value]: any) => {
 		if (key === 'Estatus') {
 			return {
 				field: key,
@@ -177,7 +175,7 @@ const LibrePago: FC = () => {
 		};
 	});
 
-	let rowData: GridRowData[] = data.map((val: any, i: number) => {
+	let rowData = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
 
@@ -191,7 +189,7 @@ const LibrePago: FC = () => {
 		return `RDLibrePago [${day}-${month}-${year}]${ext}`;
 	};
 
-	const exportType: GridExportCsvOptions = {
+	const exportType: GridCsvExportOptions = {
 		fileName: getExportFileName(),
 		delimiter: ';',
 		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,

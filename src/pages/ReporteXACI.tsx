@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card, LinearProgress, makeStyles, Theme } from '@material-ui/core';
+import { Card, LinearProgress, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
 	DataGrid,
-	GridColDef,
-	GridExportCsvOptions,
-	GridRowData,
+	GridCsvExportOptions,
 	GridToolbarContainer,
 	GridToolbarExport,
 	GridToolbarFilterButton,
-} from '@material-ui/data-grid';
+} from '@mui/x-data-grid';
 import classNames from 'classnames';
 import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useStyles as useStylesT } from '../components/table';
@@ -91,9 +90,9 @@ const ReporteXACI: FC = () => {
 	const [state, setState] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [errorLoading, setError] = useState(false);
-	const [data, setData] = useState<GridRowData[]>([]);
-	const [rowData, setRowData] = useState<GridRowData[]>([]);
-	const [columnData, setColumnData] = useState<GridColDef[]>([]);
+	const [data, setData] = useState<any>([]);
+	const [rowData, setRowData] = useState<any>([]);
+	const [columnData, setColumnData] = useState<any>([]);
 
 	const classes = useStyles();
 	const classesT = useStylesT();
@@ -162,7 +161,7 @@ const ReporteXACI: FC = () => {
 		return `RDMantXACI [${day}-${month}-${year}]${ext}`;
 	};
 
-	const exportType: GridExportCsvOptions = {
+	const exportType: GridCsvExportOptions = {
 		fileName: getExportFileName(),
 		delimiter: ';',
 	};
@@ -177,7 +176,7 @@ const ReporteXACI: FC = () => {
 	};
 
 	const updateColumns = () => {
-		return Object.entries(state).map(([key, value]: any): GridColDef => {
+		return Object.entries(state).map(([key, value]: any) => {
 			if (key === 'TERMINAL') {
 				return {
 					field: key,
