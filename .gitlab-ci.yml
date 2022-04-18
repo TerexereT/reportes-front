@@ -63,7 +63,7 @@ deploy_pro:
   only:
     - main
   script:
-    - sudo scp  -i ~/.ssh/key_PRO.pem  -r build/* $USUARIO@$IP_REMOTE_PRO:$DOCUMENT_ROOT
+    - sudo scp  -i ~/.ssh/key_PRO.pem  -r * $USUARIO@$IP_REMOTE_PRO:$DOCUMENT_ROOT
 
   stage: deploy
   dependencies:
