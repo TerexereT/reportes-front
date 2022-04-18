@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { makeStyles, Theme } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
-import React, { Fragment } from 'react';
+import { Theme } from '@mui/material';
+import Card from '@mui/material/Card';
+import makeStyles from '@mui/styles/makeStyles';
+import React, { Fragment, useLayoutEffect } from 'react';
 // ? components
 import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
@@ -31,9 +32,13 @@ const RepDinamicos: React.FC = () => {
 	const [state, setState]: [any, any] = React.useState({});
 
 	const today = new Date();
-	const lastMonth = new Date(today);
-	const [initDate, setInitDate] = React.useState<Date | null>(lastMonth);
-	const [endDate, setEndDate] = React.useState<Date | null>(today);
+	const lastMonth = new Date();
+	useLayoutEffect(() => {
+		console.log('fecha de Movimientos', today.toLocaleDateString());
+		console.log('fecha de Movimientos 2', lastMonth.toLocaleDateString());
+	}, []);
+	const [initDate, setInitDate] = React.useState<Date | undefined>(lastMonth);
+	const [endDate, setEndDate] = React.useState<Date | undefined>(today);
 
 	const classes = useStyles();
 
@@ -49,9 +54,6 @@ const RepDinamicos: React.FC = () => {
 	return (
 		<Fragment>
 			<div className='ed-container'>
-				{/* <div className='ed-item m-cross-end m-main-justify s-py-2'>
-					<div className={classes.headerTitle}>Reportes Dinámicos de Movimientos</div>
-				</div> */}
 				<div className='ed-item s-py-2'>
 					<Card className={classes.card}>
 						<SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} />

@@ -1,28 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import BuildIcon from '@material-ui/icons/Build';
-// import CreditCard from '@material-ui/icons/CreditCard';
-import ImportExportIcon from '@material-ui/icons/ImportExport';
-import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import BuildIcon from '@mui/icons-material/Build';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HardwareIcon from '@mui/icons-material/Hardware';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import ImportExportIcon from '@mui/icons-material/ImportExport';
+import MenuIcon from '@mui/icons-material/Menu';
 import ReceiptIcon from '@mui/icons-material/Receipt';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { Theme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import TranredLogo from '../../images/tranred-logo.png';
 import {
@@ -33,6 +29,7 @@ import {
 	librePago,
 	mantenimientos,
 	movimientos,
+	pagoCuota,
 	reportexaci,
 } from '../../router/url';
 const drawerWidth = 240;
@@ -114,12 +111,50 @@ const useStyles = makeStyles((theme: Theme) => ({
 		minWidth: 40,
 	},
 }));
-const MainMenu: React.FC = () => {
+
+const links = [
+	{
+		name: 'Movimientos',
+		link: movimientos,
+		icon: <ImportExportIcon />,
+	},
+	{
+		name: 'Cuotas',
+		link: cuotas,
+		icon: <AttachMoneyIcon />,
+	},
+	{
+		name: 'Cuotas Resumidas',
+		link: cuotasR,
+		icon: <AttachMoneyIcon />,
+	},
+	{
+		name: 'Mantenimiento',
+		link: mantenimientos,
+		icon: <BuildIcon />,
+	},
+	{
+		name: 'Mantenimiento por ACI',
+		link: reportexaci,
+		icon: <HardwareIcon />,
+	},
+	{
+		name: 'Libre Pago',
+		link: librePago,
+		icon: <ReceiptIcon />,
+	},
+	{
+		name: 'Pago Cuota',
+		link: pagoCuota,
+		icon: <ReceiptLongIcon />,
+	},
+];
+const MainMenu = () => {
 	const classes = useStyles();
-	const [auth, setAuth] = React.useState(false);
-	const [open, setOpen] = React.useState(false);
-	const [section, setSection] = React.useState('Inicio');
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const [auth, setAuth] = useState(false);
+	const [open, setOpen] = useState(false);
+	const [section, setSection] = useState('Inicio');
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const openM = Boolean(anchorEl);
 
 	const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -154,6 +189,8 @@ const MainMenu: React.FC = () => {
 				return 'Mantenimiento por ACI';
 			case librePago:
 				return 'Libre Pago';
+			case pagoCuota:
+				return 'Pago Cuota';
 			default:
 				return 'Inicio';
 		}
@@ -161,153 +198,137 @@ const MainMenu: React.FC = () => {
 
 	let path = window.location.pathname;
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const seccion = window.location.pathname;
 		setSection(handleTitleSection(seccion));
 	}, [path]);
 
 	return (
-		<div className={classes.root}>
-			<AppBar
-				position='static'
-				className={classNames(classes.appBar, {
-					[classes.appBarShift]: open,
-				})}>
-				<Toolbar>
-					<IconButton
-						color='inherit'
-						aria-label='open drawer'
-						onClick={handleDrawerOpen}
-						edge='start'
-						className={classNames(classes.menuButton, {
-							[classes.hide]: open,
-						})}>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant='h6' className={classes.title}>
-						Reportes Dinámicos: {section}
-					</Typography>
-					{auth ? (
-						<div>
-							<IconButton
-								aria-label='account of current user'
-								aria-controls='menu-appbar'
-								aria-haspopup='true'
-								onClick={handleMenu}
-								color='inherit'>
-								<AccountCircle />
-							</IconButton>
-							<Menu
-								id='menu-appbar'
-								anchorEl={anchorEl}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								open={openM}
-								onClose={handleClose}>
-								<MenuItem onClick={handleClose}>Perfil</MenuItem>
-								<MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
-							</Menu>
+		<>
+			<div className={classes.root}>
+				<AppBar
+					position='static'
+					className={classNames(classes.appBar, {
+						[classes.appBarShift]: open,
+					})}>
+					<Toolbar>
+						<IconButton
+							color='inherit'
+							aria-label='open drawer'
+							onClick={handleDrawerOpen}
+							edge='start'
+							className={classNames(classes.menuButton, {
+								[classes.hide]: open,
+							})}
+							size='large'>
+							<MenuIcon />
+						</IconButton>
+						<Typography variant='h6' className={classes.title}>
+							Reportes Dinámicos: {section}
+						</Typography>
+						{auth ? (
+							<div>
+								<IconButton
+									aria-label='account of current user'
+									aria-controls='menu-appbar'
+									aria-haspopup='true'
+									onClick={handleMenu}
+									color='inherit'
+									size='large'>
+									<AccountCircle />
+								</IconButton>
+								<Menu
+									id='menu-appbar'
+									anchorEl={anchorEl}
+									anchorOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									keepMounted
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									open={openM}
+									onClose={handleClose}>
+									<MenuItem onClick={handleClose}>Perfil</MenuItem>
+									<MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
+								</Menu>
+							</div>
+						) : (
+							// <>Iniciar Sesión</>
+							<></>
+						)}
+					</Toolbar>
+				</AppBar>
+				<Drawer
+					anchor='left'
+					variant='permanent'
+					onClose={handleDrawerClose}
+					ModalProps={{
+						keepMounted: true,
+					}}
+					classes={{
+						paper: classNames({
+							[classes.drawerOpen]: open,
+							[classes.drawerClose]: !open,
+						}),
+					}}
+					sx={{
+						flexShrink: 0,
+						[`& .MuiDrawer-paper`]: {
+							width: open ? drawerWidth : 0,
+							boxSizing: 'content-box',
+						},
+					}}>
+					<div className={classes.toolbar}>
+						<div className={classes.img}>
+							<Link to={baseUrl} onClick={handleDrawerClose}>
+								<img src={TranredLogo} alt='logo tranred' />
+							</Link>
 						</div>
-					) : (
-						// <>Iniciar Sesión</>
-						<></>
-					)}
-				</Toolbar>
-			</AppBar>
-			<SwipeableDrawer
-				anchor='left'
-				open={open}
-				onOpen={() => setOpen(true)}
-				onClose={handleDrawerClose}
-				className={classNames(classes.drawer, {
-					[classes.drawerOpen]: open,
-					[classes.drawerClose]: !open,
-				})}
-				classes={{
-					paper: classNames({
+						<IconButton onClick={handleDrawerClose}>
+							<ChevronLeftIcon />
+						</IconButton>
+					</div>
+					<Divider />
+					<List>
+						{links.map(({ name, icon, link }, i) => (
+							<Link to={link} key={i} onClick={handleDrawerClose} className={classes.link}>
+								<ListItem button>
+									<ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
+									<ListItemText primary={name} />
+								</ListItem>
+							</Link>
+						))}
+					</List>
+					<Divider />
+				</Drawer>
+				{/*
+                
+				<SwipeableDrawer
+					anchor='left'
+					open={open}
+					onOpen={() => {
+						setOpen(true);
+						return {};
+					}}
+					onClose={handleDrawerClose}
+					className={classNames(classes.drawer, {
 						[classes.drawerOpen]: open,
 						[classes.drawerClose]: !open,
-					}),
-				}}>
-				<div className={classes.toolbar}>
-					<div className={classes.img}>
-						<Link to={baseUrl} onClick={handleDrawerClose}>
-							<img src={TranredLogo} alt='logo tranred' />
-						</Link>
-					</div>
-					{/* <IconButton onClick={handleDrawerClose} style={{ padding: 8 }}>
-						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-					</IconButton> */}
-				</div>
-				<Divider />
-				<List>
-					<Link to={movimientos} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Movimientos'}>
-							<ListItemIcon className={classes.icon}>
-								<ImportExportIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Movimientos'} />
-						</ListItem>
-					</Link>
-					<Link to={cuotas} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Cuotas'}>
-							<ListItemIcon className={classes.icon}>
-								<AttachMoneyIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Cuotas'} />
-						</ListItem>
-					</Link>
-					<Link to={cuotasR} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'CuotasRes'}>
-							<ListItemIcon className={classes.icon}>
-								<MonetizationOnIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Cuotas Resumidas'} />
-						</ListItem>
-					</Link>
-					<Link to={mantenimientos} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Mantenimiento'}>
-							<ListItemIcon className={classes.icon}>
-								<BuildIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Mantenimiento'} />
-						</ListItem>
-					</Link>
-					<Link to={reportexaci} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Mantenimiento por ACI'}>
-							<ListItemIcon className={classes.icon}>
-								<HardwareIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Mantenimiento por ACI'} />
-						</ListItem>
-					</Link>
-					<Link to={librePago} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'Libre Pago'}>
-							<ListItemIcon className={classes.icon}>
-								<ReceiptIcon />
-							</ListItemIcon>
-							<ListItemText primary={'Libre Pago'} />
-						</ListItem>
-					</Link>
-					{/* <Link to={cancelarCuotas} onClick={handleDrawerClose} className={classes.link}>
-						<ListItem button key={'CancelarCuotas'}>
-							<ListItemIcon className={classes.icon}>
-								<CreditCard />
-							</ListItemIcon>
-							<ListItemText primary={'Cancelar Cuotas'} />
-						</ListItem>
-					</Link> */}
-				</List>
-				<Divider />
-			</SwipeableDrawer>
-		</div>
+					})}
+					classes={{
+						paper: classNames({
+							[classes.drawerOpen]: open,
+							[classes.drawerClose]: !open,
+						}),
+					}}>
+				</SwipeableDrawer>
+                
+                */}
+			</div>
+		</>
 	);
 };
 
