@@ -67,4 +67,4 @@ deploy_pro:
 
   stage: deploy
   dependencies:
-    - build    
+    - build_pro    
