@@ -11,7 +11,7 @@ import {
 	GridToolbarExport,
 	GridToolbarFilterButton,
 } from '@mui/x-data-grid';
-import { FC, Fragment, useLayoutEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import SelectList from '../components/DateTime';
 import { useStyles as useStylesT } from '../components/table';
 import useAxios from '../config';
@@ -248,23 +248,47 @@ const LibrePago: FC = () => {
 		getData();
 	}, []);
 
-	// useEffect(() => {
-	// 	if (Object.keys(data).length > 0) {
-	// 		const last = data.length - 1;
-	// 		if (data[last].Fecha === 'TotalMonto') {
-	// 			setCantidad(data[last].Cantidad);
-	// 		}
-	// 	}
-	// }, [data]);
+	useEffect(() => {
+		columns = Object.entries(state).map(([key, value]: any) => {
+			if (key === 'Estatus') {
+				return {
+					field: key,
+					headerName: 'Estatus de la Transaccion',
+					type: 'string',
+					width: 240,
+				};
+			}
+			if (key === 'Metodo') {
+				return {
+					field: key,
+					headerName: 'Tipo de Mensaje',
+					type: 'string',
+					width: 240,
+				};
+			}
+			if (key === 'Origen') {
+				return {
+					field: key,
+					headerName: 'Tipo de Transaccion',
+					type: 'string',
+					width: 240,
+				};
+			}
+			return {
+				field: key,
+				headerName: key,
+				type: 'string',
+				width: 240,
+			};
+		});
+	}, [state]);
 
 	return (
 		<>
-			<Fragment>
-				<div className='ed-container'>
-					<div className={classes.base}>
-						<Card
-							className={classesT.root}
-							style={{ width: '100%', height: '100%', paddingBottom: '2rem', overflow: 'auto' }}>
+			<div className='ed-container'>
+				<div className={classes.base}>
+					<div className='ed-item s-py-2'>
+						<Card className={classesT.root} style={{ width: '100%', height: '100%' }}>
 							<SelectList
 								initDate={initDate}
 								endDate={endDate}
@@ -296,6 +320,10 @@ const LibrePago: FC = () => {
 								</CardActions>
 								{loading && <CircularProgress className={classesT.loading} />}
 							</div>
+						</Card>
+					</div>
+					<div className='ed-item s-to-center s-py-2'>
+						<Card className={classesT.root} style={{ width: '100%', height: '95vh' }}>
 							<DataGrid
 								components={{
 									Toolbar: customToolbar,
@@ -308,7 +336,7 @@ const LibrePago: FC = () => {
 						</Card>
 					</div>
 				</div>
-			</Fragment>
+			</div>
 		</>
 	);
 };
