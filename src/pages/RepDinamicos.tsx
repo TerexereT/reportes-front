@@ -2,7 +2,7 @@
 import { Theme } from '@mui/material';
 import Card from '@mui/material/Card';
 import makeStyles from '@mui/styles/makeStyles';
-import React, { Fragment, useLayoutEffect } from 'react';
+import React, { Fragment } from 'react';
 // ? components
 import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
@@ -33,10 +33,6 @@ const RepDinamicos: React.FC = () => {
 
 	const today = new Date();
 	const lastMonth = new Date();
-	useLayoutEffect(() => {
-		console.log('fecha de Movimientos', today.toLocaleDateString());
-		console.log('fecha de Movimientos 2', lastMonth.toLocaleDateString());
-	}, []);
 	const [initDate, setInitDate] = React.useState<Date | undefined>(lastMonth);
 	const [endDate, setEndDate] = React.useState<Date | undefined>(today);
 
