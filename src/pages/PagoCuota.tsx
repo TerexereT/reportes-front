@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Card } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
+import { FC, useLayoutEffect, useState } from 'react';
 // import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
 import TableReports from '../components/table';
@@ -16,7 +16,7 @@ const PagoCuota: FC = () => {
 	const [initDate, setInitDate] = useState<Date | undefined>(lastMonth);
 	const [endDate, setEndDate] = useState<Date | undefined>(today);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const getdata = async () => {
 			try {
 				const resp = await useAxios.get('/pago-cuotas/keys');
