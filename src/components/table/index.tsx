@@ -227,6 +227,30 @@ const TableReports: FC<TableReportsProps> = ({
 					width: 25,
 				};
 			}
+			if (key === 'TERMINAL') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 130,
+				};
+			}
+			if (key === 'FECHA_PAGO') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 130,
+				};
+			}
+			if (key === 'CANTIDAD_PAGADAS') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 180,
+				};
+			}
 			if (key === 'MONTOTOTAL') {
 				return {
 					field: key,
@@ -272,6 +296,30 @@ const TableReports: FC<TableReportsProps> = ({
 						headerName: key,
 						type: 'string',
 						width: 25,
+					};
+				}
+				if (key === 'TERMINAL') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 130,
+					};
+				}
+				if (key === 'FECHA_PAGO') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 130,
+					};
+				}
+				if (key === 'CANTIDAD_PAGADAS') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 180,
 					};
 				}
 				if (key === 'MONTOTOTAL') {
