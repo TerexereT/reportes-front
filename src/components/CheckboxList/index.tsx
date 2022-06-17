@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
 	Button,
 	CardActions,
@@ -6,20 +7,25 @@ import {
 	Checkbox,
 	FormControlLabel,
 	FormGroup,
+	MenuItem,
+	Select,
+	SelectChangeEvent,
 } from '@mui/material';
 // import Card from '@mui/material/Card';
-import React from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { useStylesDT } from '../DateTime';
 
 interface CBListProps {
 	state: any;
 	setState: (val: any) => void;
+	Sponsor?: any;
+	setSponsor?: (val: any) => void;
 }
 
-const CheckboxList: React.FC<CBListProps> = ({ state, setState }) => {
+const CheckboxList: FC<CBListProps> = ({ state, setState, Sponsor, setSponsor }) => {
 	const classes = useStylesDT();
-	const [options, setOptions] = React.useState(true);
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const [options, setOptions] = useState(true);
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event.target.name !== 'TERMINAL') {
 			setState({ ...state, [event.target.name]: event.target.checked });
 		}
@@ -35,6 +41,11 @@ const CheckboxList: React.FC<CBListProps> = ({ state, setState }) => {
 		});
 		setOptions(true);
 	};
+
+	const handleChangeSelect = (event: SelectChangeEvent) => {
+		setSponsor!(event.target.value as string);
+	};
+
 	return (
 		<>
 			<div className={classes.row}>
@@ -48,6 +59,14 @@ const CheckboxList: React.FC<CBListProps> = ({ state, setState }) => {
 						Seleccionar todos
 					</Button>
 				</CardActions>
+				{
+					<CardActions>
+						<Select value={Sponsor} onChange={handleChangeSelect}>
+							<MenuItem value={720}>BVC</MenuItem>
+							<MenuItem value={722}>Plaza</MenuItem>
+						</Select>
+					</CardActions>
+				}
 			</div>
 			<CardContent className='m-px-2 m-pb-2' style={{ paddingTop: 0 }}>
 				{options && (

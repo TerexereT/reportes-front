@@ -11,7 +11,7 @@ import {
 } from '@mui/x-data-grid';
 import { AxiosResponse } from 'axios';
 // import * as FileSaver from 'file-saver';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 // import { CSVLink } from 'react-csv';
 // import * as XLSX from 'xlsx';
 import useAxios from '../../config';
@@ -76,6 +76,7 @@ interface TableReportsProps {
 	endDate?: Date | null;
 	initDate?: Date | null;
 	mantOption?: number;
+	Sponsor?: number;
 	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen' | 'PagoCuota';
 }
 
@@ -85,6 +86,7 @@ const TableReports: FC<TableReportsProps> = ({
 	state,
 	from,
 	mantOption,
+	Sponsor,
 }) => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
@@ -129,7 +131,9 @@ const TableReports: FC<TableReportsProps> = ({
 			setLoading(true);
 			if (from === 'Movimientos') {
 				resp = await useAxios.post(
-					`/history?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
+					`/history?init=${initDate?.toISOString().split('T')[0]}&end=${
+						endDate?.toISOString().split('T')[0]
+					}&sponsor=${Sponsor}`,
 					{
 						keys,
 					}
