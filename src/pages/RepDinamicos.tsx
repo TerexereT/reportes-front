@@ -2,7 +2,7 @@
 import { Theme } from '@mui/material';
 import Card from '@mui/material/Card';
 import makeStyles from '@mui/styles/makeStyles';
-import React, { Fragment } from 'react';
+import { FC, Fragment, useEffect, useState } from 'react';
 // ? components
 import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
@@ -28,17 +28,23 @@ export const useStyles = makeStyles((theme: Theme) => ({
 	},
 }));
 
-const RepDinamicos: React.FC = () => {
-	const [state, setState]: [any, any] = React.useState({});
+export interface ISponsor {
+	name: string;
+	value: string;
+}
+
+const RepDinamicos: FC = () => {
+	const [state, setState]: [any, any] = useState({});
 
 	const today = new Date();
 	const lastMonth = new Date();
-	const [initDate, setInitDate] = React.useState<Date | undefined>(lastMonth);
-	const [endDate, setEndDate] = React.useState<Date | undefined>(today);
+	const [initDate, setInitDate] = useState<Date | undefined>(lastMonth);
+	const [endDate, setEndDate] = useState<Date | undefined>(today);
+	const [Sponsor, setSponsor] = useState(720);
 
 	const classes = useStyles();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const getdata = async () => {
 			try {
 				const resp = await useAxios.get('/history/keys');
@@ -54,11 +60,11 @@ const RepDinamicos: React.FC = () => {
 					<Card className={classes.card}>
 						<SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} />
 
-						<CheckboxList state={state} setState={setState} />
+						<CheckboxList state={state} setState={setState} Sponsor={Sponsor} setSponsor={setSponsor} />
 					</Card>
 				</div>
 				<div className='ed-item s-to-center s-py-2'>
-					<TableReports initDate={initDate} endDate={endDate} state={state} from='Movimientos' />
+					<TableReports initDate={initDate} endDate={endDate} state={state} Sponsor={Sponsor} from='Movimientos' />
 				</div>
 			</div>
 		</Fragment>
