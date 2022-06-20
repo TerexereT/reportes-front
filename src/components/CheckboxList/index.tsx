@@ -59,14 +59,14 @@ const CheckboxList: FC<CBListProps> = ({ state, setState, Sponsor, setSponsor })
 						Seleccionar todos
 					</Button>
 				</CardActions>
-				{
+				{Sponsor && (
 					<CardActions>
 						<Select value={Sponsor} onChange={handleChangeSelect}>
 							<MenuItem value={720}>BVC</MenuItem>
 							<MenuItem value={722}>Plaza</MenuItem>
 						</Select>
 					</CardActions>
-				}
+				)}
 			</div>
 			<CardContent className='m-px-2 m-pb-2' style={{ paddingTop: 0 }}>
 				{options && (
