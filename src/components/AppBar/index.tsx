@@ -31,6 +31,7 @@ import {
 	movimientos,
 	pagoCuota,
 	reportexaci,
+	transaccional,
 } from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -148,6 +149,11 @@ const links = [
 		link: pagoCuota,
 		icon: <ReceiptLongIcon />,
 	},
+	// {
+	// 	name: 'Transaccional',
+	// 	link: transaccional,
+	// 	icon: <HandshakeIcon />,
+	// },
 ];
 const MainMenu = () => {
 	const classes = useStyles();
@@ -191,6 +197,8 @@ const MainMenu = () => {
 				return 'Libre Pago';
 			case pagoCuota:
 				return 'Pago Cuota';
+			case transaccional:
+				return 'Transaccional';
 			default:
 				return 'Inicio';
 		}

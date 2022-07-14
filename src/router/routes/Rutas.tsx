@@ -8,6 +8,7 @@ import Mantenimiento from '../../pages/Mantenimiento';
 import PagoCuota from '../../pages/PagoCuota';
 import RepDinamicos from '../../pages/RepDinamicos';
 import ReporteXACI from '../../pages/ReporteXACI';
+import Transaccional from '../../pages/Transaccional';
 import {
 	baseUrl,
 	cancelarCuotas,
@@ -18,6 +19,7 @@ import {
 	movimientos,
 	pagoCuota,
 	reportexaci,
+	transaccional,
 } from '../url';
 
 export interface meta extends Meta {
@@ -35,6 +37,11 @@ const RutasNav: Route[] = [
 		path: cancelarCuotas,
 		component: CancelarCuotas,
 		meta: { auth: true },
+	},
+	{
+		path: transaccional,
+		component: Transaccional,
+		meta: { auth: false },
 	},
 	{
 		path: librePago,

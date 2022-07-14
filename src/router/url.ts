@@ -7,3 +7,4 @@ export const cancelarCuotas = `${baseUrl}cancelacion-cuotas/`;
 export const reportexaci = `${baseUrl}mantenimiento-aci/`;
 export const librePago = `${baseUrl}libre-pago/`;
 export const pagoCuota = `${baseUrl}pago-cuota/`;
+export const transaccional = `${baseUrl}transaccional/`;
