@@ -1,9 +1,11 @@
 import { Meta } from 'react-router-guards/dist/types';
+import Login from '../../pages/auth';
 import CancelarCuotas from '../../pages/CancelarCuotas';
 import Cuotas from '../../pages/Cuotas';
 import CuotasResumido from '../../pages/CuotasResumido';
 import Home from '../../pages/Home';
 import LibrePago from '../../pages/LibrePago';
+import LoadExcel from '../../pages/LoadExcel';
 import Mantenimiento from '../../pages/Mantenimiento';
 import PagoCuota from '../../pages/PagoCuota';
 import RepDinamicos from '../../pages/RepDinamicos';
@@ -18,6 +20,8 @@ import {
 	movimientos,
 	pagoCuota,
 	reportexaci,
+	loadExcel,
+	login,
 } from '../url';
 
 export interface meta extends Meta {
@@ -31,6 +35,11 @@ export interface Route {
 }
 
 const RutasNav: Route[] = [
+	{
+		path: login,
+		component: Login,
+		meta: { auth: false },
+	},
 	{
 		path: cancelarCuotas,
 		component: CancelarCuotas,
@@ -74,6 +83,11 @@ const RutasNav: Route[] = [
 	{
 		path: baseUrl,
 		component: Home,
+		meta: { auth: false },
+	},
+	{
+		path: loadExcel,
+		component: LoadExcel,
 		meta: { auth: false },
 	},
 ];

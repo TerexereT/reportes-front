@@ -4,6 +4,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import BuildIcon from '@mui/icons-material/Build';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HardwareIcon from '@mui/icons-material/Hardware';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import MenuIcon from '@mui/icons-material/Menu';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -31,6 +32,8 @@ import {
 	movimientos,
 	pagoCuota,
 	reportexaci,
+	loadExcel,
+	login,
 } from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -147,6 +150,16 @@ const links = [
 		name: 'Pago Cuota',
 		link: pagoCuota,
 		icon: <ReceiptLongIcon />,
+	},
+	{
+		name: 'Cargar Neto',
+		link: loadExcel,
+		icon: <CloudUploadIcon />,
+	},
+	{
+		name: 'Iniciar Sesion',
+		link: login,
+		icon: <CloudUploadIcon />,
 	},
 ];
 const MainMenu = () => {
