@@ -3,6 +3,8 @@ import useAxios from '../../config';
 import { createContext, ReactChild, useEffect, useState } from 'react';
 //
 import { ContextAuth, User } from './interface';
+import { login } from '../../router/url';
+import { existRoutePublic, isPrivate } from '../../router/utilis/Functions';
 
 interface Props {
 	children: ReactChild;
@@ -41,8 +43,10 @@ export const AuthContextProvider = ({ children }: Props) => {
 				console.log('user', user);
 			}
 		} else {
-			console.log('redirect login');
-			//history(login)
+			if (isPrivate() || !existRoutePublic()) {
+				console.log('redirect login');
+				//window.location.replace(login);
+			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
