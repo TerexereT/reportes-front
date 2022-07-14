@@ -32,6 +32,7 @@ import {
 	movimientos,
 	pagoCuota,
 	reportexaci,
+	transaccional,
 	loadExcel,
 	login,
 } from '../../router/url';
@@ -161,6 +162,11 @@ const links = [
 		link: login,
 		icon: <CloudUploadIcon />,
 	},
+	// {
+	// 	name: 'Transaccional',
+	// 	link: transaccional,
+	// 	icon: <HandshakeIcon />,
+	// },
 ];
 const MainMenu = () => {
 	const classes = useStyles();
@@ -204,6 +210,8 @@ const MainMenu = () => {
 				return 'Libre Pago';
 			case pagoCuota:
 				return 'Pago Cuota';
+			case transaccional:
+				return 'Transaccional';
 			default:
 				return 'Inicio';
 		}

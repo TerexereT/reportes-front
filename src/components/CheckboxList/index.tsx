@@ -12,7 +12,7 @@ import {
 	SelectChangeEvent,
 } from '@mui/material';
 // import Card from '@mui/material/Card';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { useStylesDT } from '../DateTime';
 
 interface CBListProps {
@@ -20,26 +20,40 @@ interface CBListProps {
 	setState: (val: any) => void;
 	Sponsor?: any;
 	setSponsor?: (val: any) => void;
+	exclusive?: boolean;
 }
 
-const CheckboxList: FC<CBListProps> = ({ state, setState, Sponsor, setSponsor }) => {
+const CheckboxList: FC<CBListProps> = ({ state, setState, Sponsor, setSponsor, exclusive = false }) => {
 	const classes = useStylesDT();
-	const [options, setOptions] = useState(true);
+	// const [options, setOptions] = useState(true);
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		if (exclusive) {
+			setState((prev: any) => {
+				let res: any = {};
+				for (const key in prev) {
+					res[key] = false;
+				}
+				res = { ...res, [event.target.name]: event.target.checked };
+				return res;
+			});
+			setState((prevState: any) => ({ ...prevState, [event.target.name]: event.target.checked }));
+		}
 		if (event.target.name !== 'TERMINAL') {
-			setState({ ...state, [event.target.name]: event.target.checked });
+			setState((prevState: any) => ({ ...prevState, [event.target.name]: event.target.checked }));
 		}
 	};
 	const handleSelectAll = async () => {
-		await setOptions(false);
 		setState((prev: any) => {
 			let res: any = {};
 			for (const key in prev) {
-				res[key] = true;
+				if (key === 'TERMINAL') {
+					res[key] = true;
+					continue;
+				}
+				res[key] = !prev[key];
 			}
 			return res;
 		});
-		setOptions(true);
 	};
 
 	const handleChangeSelect = (event: SelectChangeEvent) => {
@@ -55,7 +69,7 @@ const CheckboxList: FC<CBListProps> = ({ state, setState, Sponsor, setSponsor })
 					className={classes.title}
 				/>
 				<CardActions>
-					<Button size='small' onClick={handleSelectAll} className={classes.Button}>
+					<Button size='small' onClick={handleSelectAll} className={classes.Button} disabled={exclusive}>
 						Seleccionar todos
 					</Button>
 				</CardActions>
@@ -69,19 +83,17 @@ const CheckboxList: FC<CBListProps> = ({ state, setState, Sponsor, setSponsor })
 				)}
 			</div>
 			<CardContent className='m-px-2 m-pb-2' style={{ paddingTop: 0 }}>
-				{options && (
-					<FormGroup row style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr' }}>
-						{Object.keys(state).map((key: any) => {
-							return (
-								<FormControlLabel
-									control={<Checkbox checked={state[key]} onChange={handleChange} name={key} color='primary' />}
-									label={key.replaceAll('_', ' ')}
-									key={key}
-								/>
-							);
-						})}
-					</FormGroup>
-				)}
+				<FormGroup row style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr' }}>
+					{Object.keys(state).map((key: any) => {
+						return (
+							<FormControlLabel
+								control={<Checkbox checked={state[key]} onChange={handleChange} name={key} color='primary' />}
+								label={key.replaceAll('_', ' ')}
+								key={key}
+							/>
+						);
+					})}
+				</FormGroup>
 			</CardContent>
 		</>
 	);
