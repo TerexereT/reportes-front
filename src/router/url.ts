@@ -1,4 +1,6 @@
 export const baseUrl = '/';
+export const loadExcel = `${baseUrl}load-excel/`;
+export const login = `${baseUrl}auth/login`;
 export const movimientos = `${baseUrl}movimientos/`;
 export const cuotas = `${baseUrl}cuotas/`;
 export const cuotasR = `${baseUrl}cuotas-resumen/`;
