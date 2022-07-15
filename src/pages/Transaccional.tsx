@@ -94,7 +94,7 @@ const Transaccional: FC = () => {
 									onChange={(newValue: Date | null) => {
 										setFecha(newValue!);
 									}}
-									renderInput={(params) => <TextField {...params} />}
+									renderInput={(params: any) => <TextField {...params} />}
 								/>
 							</div>
 						</div>

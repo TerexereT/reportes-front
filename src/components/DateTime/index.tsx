@@ -72,7 +72,7 @@ const MaterialUIPickers: FC<MaterialUIPickersProps> = ({ initDate, endDate, setI
 					Fecha Final
 				</Typography>
 				<DatePicker
-					renderInput={(props) => <TextField label='Date' value={endDate?.toLocaleString()} {...props} />}
+					renderInput={(props: any) => <TextField label='Date' value={endDate?.toLocaleString()} {...props} />}
 					className={classes.datePicker}
 					inputFormat='dd/MM/yyyy'
 					label='Ingrese la fecha de fin'
