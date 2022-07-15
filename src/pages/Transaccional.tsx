@@ -1,7 +1,7 @@
-import { Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { DatePicker } from '@mui/lab';
+import { Card, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import classnames from 'classnames';
-import { DateTime } from 'luxon';
-import { FC, useLayoutEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import { useStylesDT } from '../components/DateTime';
 import TableReports from '../components/table';
@@ -14,38 +14,19 @@ export interface options {
 	code?: string;
 }
 
-const mes = [
-	{ name: 'Enero', value: 0 },
-	{ name: 'Febrero', value: 1 },
-	{ name: 'Marzo', value: 2 },
-	{ name: 'Abril', value: 3 },
-	{ name: 'Mayo', value: 4 },
-	{ name: 'Junio', value: 5 },
-	{ name: 'Julio', value: 6 },
-	{ name: 'Agosto', value: 7 },
-	{ name: 'Septiembre', value: 8 },
-	{ name: 'Octubre', value: 9 },
-	{ name: 'Noviembre', value: 10 },
-	{ name: 'Diciembre', value: 11 },
-];
-
 const Transaccional: FC = () => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
-	const lastMonth = Number(DateTime.now().month - 2);
 
 	const [state, setState] = useState({});
-	// const [show, setShow] = useState(false);
 	const [option, setOption] = useState(0);
-	const [monthoption, setMonthOption] = useState(lastMonth);
+	const [monthoption, setMonthOption] = useState('');
+	const [fecha, setFecha] = useState<Date | null>(new Date());
 	const [options, setOptions] = useState<options[]>([]);
 	const [transType, setTransType] = useState<options[]>([]);
 
 	const handleChange = (event: SelectChangeEvent<number>) => {
 		setOption(event.target.value as number);
-	};
-	const handleMonthChange = (event: SelectChangeEvent<number>) => {
-		setMonthOption(event.target.value as number);
 	};
 
 	useLayoutEffect(() => {
@@ -63,6 +44,10 @@ const Transaccional: FC = () => {
 		};
 		getdata();
 	}, []);
+
+	useEffect(() => {
+		setMonthOption(`${fecha!.getFullYear()}-${fecha!.getMonth() + 1}`);
+	}, [fecha]);
 
 	return (
 		<>
@@ -96,27 +81,27 @@ const Transaccional: FC = () => {
 								style={{ marginRight: '1rem', marginBottom: 0 }}
 								color='textSecondary'
 								gutterBottom>
-								Seleccione mes:
+								Seleccione la fecha:
 							</Typography>
-							<Select
-								labelId='Seleccione tipo de reporte'
-								id='Seleccione tipo de reporte'
-								value={monthoption}
-								onChange={handleMonthChange}>
-								{mes.map((val, i) => {
-									return (
-										<MenuItem key={i} value={val.value}>
-											{val.name}
-										</MenuItem>
-									);
-								})}
-							</Select>
+							<div className={classes.datePicker}>
+								<DatePicker
+									views={['month', 'year']}
+									// label={'Elija la fecha'}
+									minDate={new Date('2000-01-01')}
+									// maxDate={new Date('2023-06-01')}
+									value={fecha}
+									disableFuture
+									onChange={(newValue: Date | null) => {
+										setFecha(newValue!);
+									}}
+									renderInput={(params) => <TextField {...params} />}
+								/>
+							</div>
 						</div>
 						<CheckboxList state={transType} setState={setTransType} exclusive />
 					</Card>
 				</div>
 				<div className='ed-item s-to-center s-py-2'>
-					{/* {show && ( */}
 					<TableReports
 						state={state}
 						from='Transaccional'
@@ -124,7 +109,6 @@ const Transaccional: FC = () => {
 						transOption={option}
 						monthoption={monthoption}
 					/>
-					{/* )} */}
 				</div>
 			</div>
 		</>
