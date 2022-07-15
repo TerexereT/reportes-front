@@ -1,5 +1,5 @@
-import { DatePicker } from '@mui/lab';
 import { Card, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import classnames from 'classnames';
 import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import CheckboxList from '../components/CheckboxList';
