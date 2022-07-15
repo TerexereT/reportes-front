@@ -80,7 +80,7 @@ interface TableReportsProps {
 	Sponsor?: number;
 	transType?: options[];
 	transOption?: number;
-	monthoption?: number;
+	monthoption?: string;
 	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen' | 'PagoCuota' | 'Transaccional';
 }
 
@@ -193,7 +193,7 @@ const TableReports: FC<TableReportsProps> = ({
 				setData(resp.data.info);
 			}
 			if (from === 'Transaccional') {
-				resp = await useAxios.post(`/transaccional?transOption=${transOption}&monthoption=${monthoption! + 1}`, {
+				resp = await useAxios.post(`/transaccional?transOption=${transOption}&monthoption=${monthoption}`, {
 					transType,
 				});
 				setData(resp.data.info);
