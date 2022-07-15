@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DatePicker } from '@mui/lab';
 import { TextField, TextFieldProps, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import { DatePicker } from '@mui/x-date-pickers';
 import classnames from 'classnames';
 import 'date-fns';
 import { FC } from 'react';
