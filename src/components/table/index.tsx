@@ -17,6 +17,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import useAxios from '../../config';
 import formatData from '../../functions/FormatData';
 import { opciones } from '../../pages/Mantenimiento';
+import { options } from '../../pages/Transaccional';
 import { useStylesDT } from '../DateTime';
 
 export const useStyles = makeStyles((styles) => ({
@@ -77,16 +78,22 @@ interface TableReportsProps {
 	initDate?: Date | null;
 	mantOption?: number;
 	Sponsor?: number;
-	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen' | 'PagoCuota';
+	transType?: options[];
+	transOption?: number;
+	monthoption?: string;
+	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen' | 'PagoCuota' | 'Transaccional';
 }
 
 const TableReports: FC<TableReportsProps> = ({
-	initDate = new Date(Date.now()),
-	endDate,
 	state,
-	from,
+	endDate,
+	initDate = new Date(Date.now()),
 	mantOption,
 	Sponsor,
+	transType,
+	transOption,
+	monthoption,
+	from,
 }) => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
@@ -183,6 +190,12 @@ const TableReports: FC<TableReportsProps> = ({
 				resp = await useAxios.post(
 					`/pago-cuota?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`
 				);
+				setData(resp.data.info);
+			}
+			if (from === 'Transaccional') {
+				resp = await useAxios.post(`/transaccional?transOption=${transOption}&monthoption=${monthoption}`, {
+					transType,
+				});
 				setData(resp.data.info);
 			}
 			fieldRef.current?.scrollIntoView({

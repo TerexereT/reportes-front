@@ -3,6 +3,9 @@ import { esES as coreesES } from '@mui/material/locale';
 import { StyledEngineProvider, Theme, ThemeProvider } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { esES } from '@mui/x-data-grid';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AuthContextProvider } from './context/auth/AuthContext';
 import Routes from './router/Routes';
 import './scss/index.scss';
 
@@ -43,9 +46,13 @@ function App() {
 	return (
 		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
-				<div className={classes.app}>
-					<Routes />
-				</div>
+				<LocalizationProvider dateAdapter={AdapterDateFns}>
+					<AuthContextProvider>
+						<div className={classes.app}>
+							<Routes />
+						</div>
+					</AuthContextProvider>
+				</LocalizationProvider>
 			</ThemeProvider>
 		</StyledEngineProvider>
 	);
