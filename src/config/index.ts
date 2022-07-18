@@ -1,6 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import LRU from 'lru-cache';
+import axios, { AxiosResponse } from 'axios';
 import { configure } from 'axios-hooks';
+import LRU from 'lru-cache';
 
 // Set config defaults when creating the instance
 
