@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import useAxios from '../../config';
 //
 import { createContext, ReactChild, useEffect, useState } from 'react';
 //
-import { ContextAuth, User } from './interface';
-import { login } from '../../router/url';
 import { existRoutePublic, isPrivate } from '../../router/utilis/Functions';
+import { ContextAuth, User } from './interface';
 
 interface Props {
 	children: ReactChild;
