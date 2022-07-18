@@ -26,6 +26,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
 		padding: '1rem',
 		display: 'flex',
 	},
+	datePicker: {
+		maxWidth: '18%',
+		alignSelf: 'center',
+	},
 }));
 
 export interface ISponsor {

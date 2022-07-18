@@ -1,21 +1,19 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
-import * as XLSX from 'xlsx';
 import { Button } from '@mui/material';
-import React, { useEffect } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
+import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
 import LoaderLine from '../components/loader/LoaderLine';
 import useAxios from '../config';
-import Swal from 'sweetalert2';
 //import { useStyles } from './RepDinamicos';
 // import SelectList from '../components/DateTime';
 
-const LoadExcel: React.FC = () => {
+const LoadExcel: FC = () => {
 	//const classes = useStyles();
 
-	//const [state, setState] = React.useState({});
-	const [load, setLoad] = React.useState(false);
-	const [data, setData] = React.useState<any>(null);
-	const [file, setFile] = React.useState<File | null>(null);
+	//const [state, setState] = .useState({});
+	const [load, setLoad] = useState(false);
+	const [data, setData] = useState<any>(null);
+	const [file, setFile] = useState<File | null>(null);
 
 	/*
 	useEffect(() => {
@@ -47,7 +45,7 @@ const LoadExcel: React.FC = () => {
 		});
 	};
 
-	const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event?.target?.files && event.target.files[0]) {
 			let file_aux: File = event.target.files[0];
 			transFile(file_aux);

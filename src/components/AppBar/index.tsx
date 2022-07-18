@@ -3,8 +3,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import BuildIcon from '@mui/icons-material/Build';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import HardwareIcon from '@mui/icons-material/Hardware';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import HardwareIcon from '@mui/icons-material/Hardware';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import MenuIcon from '@mui/icons-material/Menu';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -28,13 +29,13 @@ import {
 	cuotas,
 	cuotasR,
 	librePago,
+	loadExcel,
+	// login,
 	mantenimientos,
 	movimientos,
 	pagoCuota,
 	reportexaci,
 	transaccional,
-	loadExcel,
-	login,
 } from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -153,19 +154,19 @@ const links = [
 		icon: <ReceiptLongIcon />,
 	},
 	{
+		name: 'Transaccional',
+		link: transaccional,
+		icon: <HandshakeIcon />,
+	},
+	{
 		name: 'Cargar Neto',
 		link: loadExcel,
 		icon: <CloudUploadIcon />,
 	},
-	{
-		name: 'Iniciar Sesion',
-		link: login,
-		icon: <CloudUploadIcon />,
-	},
 	// {
-	// 	name: 'Transaccional',
-	// 	link: transaccional,
-	// 	icon: <HandshakeIcon />,
+	// 	name: 'Iniciar Sesion',
+	// 	link: login,
+	// 	icon: <CloudUploadIcon />,
 	// },
 ];
 const MainMenu = () => {

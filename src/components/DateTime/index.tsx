@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DatePicker, LocalizationProvider } from '@mui/lab';
 import { TextField, TextFieldProps, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers';
 import classnames from 'classnames';
 import 'date-fns';
 import { FC } from 'react';
@@ -53,37 +52,35 @@ const MaterialUIPickers: FC<MaterialUIPickersProps> = ({ initDate, endDate, setI
 
 	return (
 		<>
-			<LocalizationProvider dateAdapter={AdapterDateFns}>
-				<div className={classes.row}>
-					<Typography className={classes.title} color='textSecondary' gutterBottom>
-						Fecha de inicio
-					</Typography>
-					<DatePicker
-						renderInput={(props: TextFieldProps) => (
-							<TextField label='Date' value={initDate?.toLocaleString()} {...props} />
-						)}
-						className={classes.datePicker}
-						inputFormat='dd/MM/yyyy'
-						label='Ingrese la fecha de inicio'
-						value={initDate}
-						onChange={handleInitDateChange}
-						disableFuture={true}
-						maxDate={endDate}
-					/>
-					<Typography className={classnames(classes.title)} color='textSecondary' gutterBottom>
-						Fecha Final
-					</Typography>
-					<DatePicker
-						renderInput={(props: any) => <TextField label='Date' value={endDate?.toLocaleString()} {...props} />}
-						className={classes.datePicker}
-						inputFormat='dd/MM/yyyy'
-						label='Ingrese la fecha de fin'
-						value={endDate}
-						onChange={handleEndDateChange}
-						disableFuture={true}
-					/>
-				</div>
-			</LocalizationProvider>
+			<div className={classes.row}>
+				<Typography className={classes.title} color='textSecondary' gutterBottom>
+					Fecha de inicio
+				</Typography>
+				<DatePicker
+					renderInput={(props: TextFieldProps) => (
+						<TextField label='Date' value={initDate?.toLocaleString()} {...props} />
+					)}
+					className={classes.datePicker}
+					inputFormat='dd/MM/yyyy'
+					label='Ingrese la fecha de inicio'
+					value={initDate}
+					onChange={handleInitDateChange}
+					disableFuture={true}
+					maxDate={endDate}
+				/>
+				<Typography className={classnames(classes.title)} color='textSecondary' gutterBottom>
+					Fecha Final
+				</Typography>
+				<DatePicker
+					renderInput={(props: any) => <TextField label='Date' value={endDate?.toLocaleString()} {...props} />}
+					className={classes.datePicker}
+					inputFormat='dd/MM/yyyy'
+					label='Ingrese la fecha de fin'
+					value={endDate}
+					onChange={handleEndDateChange}
+					disableFuture={true}
+				/>
+			</div>
 		</>
 	);
 };
