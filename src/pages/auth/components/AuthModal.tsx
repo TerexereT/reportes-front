@@ -1,7 +1,8 @@
-import { Button, Card, CardContent } from '@mui/material';
-import Logo from '../../../images/tranred-logo.png';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Card, CardContent } from '@mui/material';
 import React, { useLayoutEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Logo from '../../../images/tranred-logo.png';
 //import { urlNewPassword, urlRestorePassword } from 'routers/url';
 import { useStylesModalUser } from './styles';
 
