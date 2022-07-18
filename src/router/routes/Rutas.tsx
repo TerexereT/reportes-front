@@ -38,11 +38,6 @@ export interface Route {
 
 const RutasNav: Route[] = [
 	{
-		path: login,
-		component: Login,
-		meta: { auth: false },
-	},
-	{
 		path: cancelarCuotas,
 		component: CancelarCuotas,
 		meta: { auth: true },

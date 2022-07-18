@@ -44,7 +44,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 			}
 		} else {
 			if (isPrivate() || !existRoutePublic()) {
-				console.log('redirect login');
+				console.log('redirect login 3 ', isPrivate(), !existRoutePublic());
 				//window.location.replace(login);
 			}
 		}
