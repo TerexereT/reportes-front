@@ -30,7 +30,7 @@ import {
 	cuotasR,
 	librePago,
 	loadExcel,
-	login,
+	// login,
 	mantenimientos,
 	movimientos,
 	pagoCuota,
@@ -163,11 +163,11 @@ const links = [
 		link: loadExcel,
 		icon: <CloudUploadIcon />,
 	},
-	{
-		name: 'Iniciar Sesion',
-		link: login,
-		icon: <CloudUploadIcon />,
-	},
+	// {
+	// 	name: 'Iniciar Sesion',
+	// 	link: login,
+	// 	icon: <CloudUploadIcon />,
+	// },
 ];
 const MainMenu = () => {
 	const classes = useStyles();
