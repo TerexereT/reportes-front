@@ -7,6 +7,8 @@ export interface User {
 
 export interface ContextAuth {
 	user: UserInterface | null;
-	views: Views | {};
+	views: String[] | [];
 	permiss: Permissions[] | [];
+	handleLogin: (user: String, password: String) => void;
+	handleLogout: () => void;
 }

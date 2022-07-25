@@ -6,22 +6,13 @@ import LoaderLine from '../components/loader/LoaderLine';
 import AuthContext from '../context/auth/AuthContext';
 import { Views } from '../interfaces/auth';
 import { Lock, PrivGuard } from './guards';
-import PublicNav from './routes/PublicRutas';
-import RutasNav from './routes/Rutas';
+import Public from './routes/Public';
+import Private from './routes/Private';
 import { login } from './url';
 import { existRoutePublic, isPrivate } from './utilis/Functions';
 
 export const Routes: React.FC = () => {
 	const { user, views } = React.useContext(AuthContext);
-
-	/*
-	React.useEffect(() => {
-		if (!localStorage.getItem('token') && (isPrivate() || !existRoutePublic())) {
-			console.log('redirect login');
-			window.location.replace(login);
-		}
-	}, []);
-	*/
 
 	const [checking, setChecking] = React.useState<boolean>(true);
 	const [menu, setMenu] = React.useState<Views>({});
@@ -29,7 +20,9 @@ export const Routes: React.FC = () => {
 	React.useLayoutEffect(() => {
 		//dispatch(FinishLoading());
 		let token = localStorage.getItem('token');
-		if (token !== null) console.log('refrest login');
+		if (token !== null) {
+			console.log('refrest login');
+		}
 		setChecking(false);
 	}, []);
 
@@ -43,8 +36,8 @@ export const Routes: React.FC = () => {
 	}, []);
 
 	React.useEffect(() => {
-		if (user) {
-			setMenu(views);
+		if (user && views) {
+			//setMenu(views);
 		}
 	}, [user]);
 
@@ -58,7 +51,7 @@ export const Routes: React.FC = () => {
 				<Switch>
 					{!user ? (
 						<>
-							{PublicNav.map(({ path, component, meta }, i) => {
+							{Public.map(({ path, component, meta }, i) => {
 								return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
 							})}
 						</>
@@ -66,7 +59,7 @@ export const Routes: React.FC = () => {
 						<>
 							<AppBar />
 							<GuardProvider guards={[(to, from, next): void => PrivGuard(to, from, next, user)]}>
-								{RutasNav.map(({ path, component, meta }, i) => {
+								{Private.map(({ path, component, meta }, i) => {
 									console.log(path, 'aqui');
 									return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
 								})}
