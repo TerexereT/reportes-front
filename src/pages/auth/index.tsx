@@ -38,6 +38,7 @@ const Login: React.FC = () => {
 		if (user && password) {
 			try {
 				const resp = await useAxios.post('/auth/login', { user, password });
+				console.log(resp.data);
 				localStorage.setItem('token', resp.data.access_token);
 				console.log(resp);
 			} catch (error: any) {
