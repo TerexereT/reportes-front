@@ -9,6 +9,7 @@ import { Permissions, UserInterface, Views } from '../../interfaces/auth';
 import { baseUrl, login } from '../../router/url';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
+import { swalLoading } from '../../components/swal/handleLoagin';
 
 interface Props {
 	children: ReactChild;
@@ -27,9 +28,6 @@ export const AuthContextProvider = ({ children }: Props) => {
 	const [views, setViews] = useState<String[] | []>([]);
 	const [permiss, setPermiss] = useState<Permissions[] | []>([]);
 
-	//
-	const history = useHistory();
-
 	const resetUser = (): void => {
 		setUser(null);
 		setViews([]);
@@ -44,16 +42,18 @@ export const AuthContextProvider = ({ children }: Props) => {
 			setViews(res.data.views);
 			setPermiss(res.data.permiss);
 			console.log('reset', res);
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error);
 			Swal.fire({
-				title: 'Vuelva a Iniciar Session',
+				title: error.response.data.code === 401 ? `Tu sesión expiró.` : `Vuelva a Iniciar Session`,
 				icon: 'info',
 				showConfirmButton: false,
 				timer: 1500,
 			});
 			resetUser();
-			history.push(login);
+			setTimeout(() => {
+				window.location.replace(login);
+			}, 1500);
 		}
 	};
 
@@ -61,10 +61,8 @@ export const AuthContextProvider = ({ children }: Props) => {
 		if (localStorage.getItem('token')) {
 			console.log('yaa tengo token');
 			if (!user) {
-				getUser();
 				console.log('get user');
-			} else {
-				console.log('user', user);
+				getUser();
 			}
 		} else {
 			if (isPrivate() || !existRoutePublic()) {
@@ -76,7 +74,8 @@ export const AuthContextProvider = ({ children }: Props) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const handleLogin = async (user: String, password: String) => {
+	const handleLogin = async (user: String, password: String, historyA?: any) => {
+		swalLoading();
 		try {
 			console.log('entrer');
 			const res = await useAxios.post('/auth/login', { user, password });
@@ -84,17 +83,20 @@ export const AuthContextProvider = ({ children }: Props) => {
 			setUser(res.data.user);
 			setViews(res.data.views);
 			setPermiss(res.data.permiss);
+			Swal.close();
 			Swal.fire({
 				title: 'Bienvenido',
 				text: res.data.user.name,
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			///localStorage.setItem('token', res.data.access_token);
-			return true;
+			//window.location.replace(baseUrl);
+			historyA.push(baseUrl);
+			//return true;
 		} catch (error: any) {
 			console.log('err', error);
-			Swal.fire('Error', error?.response?.data?.message || 'error', 'error');
+			Swal.close();
+			Swal.fire('Error', error?.response?.data?.message || 'Error intentado ingresar', 'error');
 			return false;
 		}
 	};
@@ -107,7 +109,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 				timer: 1500,
 			});
 			resetUser();
-			history.push(login);
+			window.location.replace(login);
 		}
 	};
 

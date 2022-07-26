@@ -9,6 +9,6 @@ export interface ContextAuth {
 	user: UserInterface | null;
 	views: String[] | [];
 	permiss: Permissions[] | [];
-	handleLogin: (user: String, password: String) => void;
+	handleLogin: (user: String, password: String, historyA?: any) => void;
 	handleLogout: () => void;
 }

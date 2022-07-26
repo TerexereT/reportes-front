@@ -1,5 +1,4 @@
 import { Meta } from 'react-router-guards/dist/types';
-import Login from '../../pages/auth';
 import CancelarCuotas from '../../pages/CancelarCuotas';
 import Cuotas from '../../pages/Cuotas';
 import CuotasResumido from '../../pages/CuotasResumido';

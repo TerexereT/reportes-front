@@ -181,10 +181,10 @@ const MainMenu = () => {
 	useEffect(() => {
 		if (user && views.length && !links.length) {
 			const listLink = auxLink.filter((link) => views.find((view) => view === link.name));
-			console.log('list', listLink);
+			//console.log('list', listLink);
 			setLink(auxLink);
 		}
-	}, [user, views]);
+	}, [user, views, links]);
 
 	const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);

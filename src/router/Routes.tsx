@@ -4,7 +4,6 @@ import { GuardedRoute, GuardProvider } from 'react-router-guards';
 import AppBar from '../components/AppBar';
 import LoaderLine from '../components/loader/LoaderLine';
 import AuthContext from '../context/auth/AuthContext';
-import { Views } from '../interfaces/auth';
 import { Lock, PrivGuard } from './guards';
 import Public from './routes/Public';
 import Private from './routes/Private';
@@ -15,7 +14,7 @@ export const Routes: React.FC = () => {
 	const { user, views } = React.useContext(AuthContext);
 
 	const [checking, setChecking] = React.useState<boolean>(true);
-	const [menu, setMenu] = React.useState<Views>({});
+	//const [menu, setMenu] = React.useState<Views>({});
 
 	React.useLayoutEffect(() => {
 		//dispatch(FinishLoading());
@@ -35,12 +34,6 @@ export const Routes: React.FC = () => {
 		}
 	}, []);
 
-	React.useEffect(() => {
-		if (user && views) {
-			//setMenu(views);
-		}
-	}, [user]);
-
 	if (checking) {
 		return <LoaderLine />;
 	}
@@ -58,9 +51,9 @@ export const Routes: React.FC = () => {
 					) : (
 						<>
 							<AppBar />
-							<GuardProvider guards={[(to, from, next): void => PrivGuard(to, from, next, user)]}>
+							<GuardProvider guards={[(to, from, next): void => PrivGuard(to, from, next, views)]}>
+								{console.log(window.location.pathname)}
 								{Private.map(({ path, component, meta }, i) => {
-									console.log(path, 'aqui');
 									return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
 								})}
 							</GuardProvider>

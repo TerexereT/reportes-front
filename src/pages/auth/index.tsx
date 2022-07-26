@@ -39,12 +39,7 @@ const Login: React.FC = () => {
 	const handleGetLogin = (e: any) => {
 		e.preventDefault();
 		if (user && password) {
-			console.log('call');
-			const login: any = handleLogin(user, password);
-			if (login.ok) {
-				console.log('login ok', login);
-				history.push(baseUrl);
-			}
+			const login: any = handleLogin(user, password, history);
 		}
 	};
 
