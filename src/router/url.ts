@@ -10,3 +10,18 @@ export const reportexaci = `${baseUrl}mantenimiento-aci/`;
 export const librePago = `${baseUrl}libre-pago/`;
 export const pagoCuota = `${baseUrl}pago-cuota/`;
 export const transaccional = `${baseUrl}transaccional/`;
+
+export const urlPrivate = [
+	loadExcel,
+	movimientos,
+	cuotas,
+	cuotasR,
+	mantenimientos,
+	cancelarCuotas,
+	reportexaci,
+	librePago,
+	pagoCuota,
+	transaccional,
+];
+
+export const urlPublic = [login];

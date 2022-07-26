@@ -1,17 +1,19 @@
 // File to add reutilizable functions
-import PublicNav from '../routes/PublicRutas';
-import PrivateNav from '../routes/Rutas';
+import Public from '../routes/Public';
+import Private from '../routes/Private';
 
 export const isPrivate = () => {
-	const is = PrivateNav.findIndex((val: any) => {
-		return val === window.location.pathname;
+	const is = Private.findIndex((val: any) => {
+		console.log(val.path, window.location.pathname);
+		return val.path === window.location.pathname;
 	});
 	return is !== -1;
 };
 
 export const existRoutePublic = () => {
-	const is = PublicNav.findIndex((val: any) => {
-		return val === window.location.pathname;
+	const is = Public.findIndex((val: any) => {
+		console.log(val.path, window.location.pathname);
+		return val.path === window.location.pathname;
 	});
 	return is !== -1;
 };

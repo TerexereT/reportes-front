@@ -3,10 +3,12 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 //Material
 import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useAxios from '../../config';
+import AuthContext from '../../context/auth/AuthContext';
+import { baseUrl } from '../../router/url';
 //import { startLogin } from 'store/actions/auth/auth';
 import AuthModal from './components/AuthModal';
 import { styledMui, useStylesModalUser } from './components/styles';
@@ -14,6 +16,8 @@ import { styledMui, useStylesModalUser } from './components/styles';
 const Login: React.FC = () => {
 	const classes = useStylesModalUser();
 	const history = useHistory();
+
+	const { handleLogin } = useContext(AuthContext);
 
 	const [showPassword, setShowPassword] = React.useState<boolean>(false);
 	const [password, setPass] = useState<string>('');
@@ -32,25 +36,17 @@ const Login: React.FC = () => {
 		//console.log(e.target.value);
 	};
 
-	const handleLogin = async (e: any) => {
+	const handleGetLogin = (e: any) => {
 		e.preventDefault();
-		// history.push(baseUrl);
 		if (user && password) {
-			try {
-				const resp = await useAxios.post('/auth/login', { user, password });
-				localStorage.setItem('token', resp.data.access_token);
-				console.log(resp);
-			} catch (error: any) {
-				console.log('err', error);
-				Swal.fire('Error', error?.response?.data?.message || 'error', 'error');
-			}
+			const login: any = handleLogin(user, password, history);
 		}
 	};
 
 	return (
 		<>
 			<AuthModal>
-				<form onSubmit={handleLogin} autoComplete='off'>
+				<form onSubmit={handleGetLogin} autoComplete='off'>
 					<div className={classes.containerLogin}>
 						<TextField
 							sx={styledMui.inputStyle}

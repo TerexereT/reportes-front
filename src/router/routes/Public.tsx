@@ -12,7 +12,7 @@ export interface Route {
 	meta: meta;
 }
 
-const PublicNav: Route[] = [
+const Public: Route[] = [
 	{
 		path: login,
 		component: Login,
@@ -20,4 +20,4 @@ const PublicNav: Route[] = [
 	},
 ];
 
-export default PublicNav;
+export default Public;

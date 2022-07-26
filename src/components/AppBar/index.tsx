@@ -20,8 +20,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/auth/AuthContext';
 import TranredLogo from '../../images/tranred-logo.png';
 import {
 	baseUrl,
@@ -117,14 +118,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 }));
 
-const links = [
+const auxLink = [
 	{
 		name: 'Movimientos',
 		link: movimientos,
 		icon: <ImportExportIcon />,
 	},
 	{
-		name: 'Cuotas',
+		name: 'Cuotas Vencidas',
 		link: cuotas,
 		icon: <AttachMoneyIcon />,
 	},
@@ -163,12 +164,8 @@ const links = [
 		link: loadExcel,
 		icon: <CloudUploadIcon />,
 	},
-	// {
-	// 	name: 'Iniciar Sesion',
-	// 	link: login,
-	// 	icon: <CloudUploadIcon />,
-	// },
 ];
+
 const MainMenu = () => {
 	const classes = useStyles();
 	const [auth, setAuth] = useState(false);
@@ -176,6 +173,18 @@ const MainMenu = () => {
 	const [section, setSection] = useState('Inicio');
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const openM = Boolean(anchorEl);
+
+	const [links, setLink] = useState<any[]>([]);
+
+	const { user, views, handleLogout } = useContext(AuthContext);
+
+	useEffect(() => {
+		if (user && views.length && !links.length) {
+			const listLink = auxLink.filter((link) => views.find((view) => view === link.name));
+			//console.log('list', listLink);
+			setLink(auxLink);
+		}
+	}, [user, views, links]);
 
 	const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -248,7 +257,7 @@ const MainMenu = () => {
 						<Typography variant='h6' className={classes.title}>
 							Reportes Dinámicos: {section}
 						</Typography>
-						{auth ? (
+						{user ? (
 							<div>
 								<IconButton
 									aria-label='account of current user'
@@ -257,6 +266,7 @@ const MainMenu = () => {
 									onClick={handleMenu}
 									color='inherit'
 									size='large'>
+									<span style={{ fontSize: '1rem' }}>{user.name}</span>
 									<AccountCircle />
 								</IconButton>
 								<Menu
@@ -273,8 +283,10 @@ const MainMenu = () => {
 									}}
 									open={openM}
 									onClose={handleClose}>
+									{/*
 									<MenuItem onClick={handleClose}>Perfil</MenuItem>
-									<MenuItem onClick={handleClose}>Cerrar Sesión</MenuItem>
+										*/}
+									<MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
 								</Menu>
 							</div>
 						) : (

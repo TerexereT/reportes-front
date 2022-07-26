@@ -1,5 +1,4 @@
 import { Meta } from 'react-router-guards/dist/types';
-import Login from '../../pages/auth';
 import CancelarCuotas from '../../pages/CancelarCuotas';
 import Cuotas from '../../pages/Cuotas';
 import CuotasResumido from '../../pages/CuotasResumido';
@@ -23,7 +22,6 @@ import {
 	reportexaci,
 	transaccional,
 	loadExcel,
-	login,
 } from '../url';
 
 export interface meta extends Meta {
@@ -36,11 +34,11 @@ export interface Route {
 	meta: meta;
 }
 
-const RutasNav: Route[] = [
+const Private: Route[] = [
 	{
-		path: login,
-		component: Login,
-		meta: { auth: false },
+		path: baseUrl,
+		component: Home,
+		meta: { auth: true },
 	},
 	{
 		path: cancelarCuotas,
@@ -50,53 +48,48 @@ const RutasNav: Route[] = [
 	{
 		path: transaccional,
 		component: Transaccional,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 	{
 		path: librePago,
 		component: LibrePago,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 	{
 		path: pagoCuota,
 		component: PagoCuota,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 	{
 		path: reportexaci,
 		component: ReporteXACI,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 	{
 		path: cuotas,
 		component: Cuotas,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 	{
 		path: cuotasR,
 		component: CuotasResumido,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 	{
 		path: mantenimientos,
 		component: Mantenimiento,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 	{
 		path: movimientos,
 		component: RepDinamicos,
-		meta: { auth: false },
-	},
-	{
-		path: baseUrl,
-		component: Home,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 	{
 		path: loadExcel,
 		component: LoadExcel,
-		meta: { auth: false },
+		meta: { auth: true },
 	},
 ];
 
-export default RutasNav;
+export default Private;

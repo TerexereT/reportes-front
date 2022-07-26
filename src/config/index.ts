@@ -19,16 +19,16 @@ const useAxios = axios.create({
 useAxios.defaults.headers['Content-Type'] = 'application/json';
 
 useAxios.interceptors.response.use((resp: AxiosResponse<any>): AxiosResponse<any> => {
-	if (resp.data.token) {
-		console.log('token', resp.data.token);
-		localStorage.setItem('token', resp.data.token);
-		resp.headers.Authorization = resp.data.token;
+	if (resp.data.access_token) {
+		console.log('entre', resp.data.access_token);
+		localStorage.setItem('token', resp.data.access_token);
+		resp.headers.Authorization = resp.data.access_token;
 	}
 	return resp;
 });
 
-useAxios.interceptors.request.use(async (config: any) => {
-	config.headers.Authorization = localStorage.getItem('token');
+useAxios.interceptors.request.use((config: any) => {
+	//config.headers.Authorization = localStorage.getItem('token');
 	return config;
 });
 
