@@ -37,6 +37,7 @@ import {
 	pagoCuota,
 	reportexaci,
 	transaccional,
+	seguridad,
 } from '../../router/url';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -164,6 +165,11 @@ const auxLink = [
 		link: loadExcel,
 		icon: <CloudUploadIcon />,
 	},
+	{
+		name: 'Gestion de Seguridad',
+		link: seguridad,
+		icon: <BuildIcon />,
+	},
 ];
 
 const MainMenu = () => {
@@ -222,6 +228,8 @@ const MainMenu = () => {
 				return 'Pago Cuota';
 			case transaccional:
 				return 'Transaccional';
+			case seguridad:
+				return 'Gestion de Seguridad';
 			default:
 				return 'Inicio';
 		}

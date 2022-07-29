@@ -8,7 +8,7 @@ export interface Permissions {
 	};
 }
 
-export interface Views {
+export interface InterfaceObject {
 	[key: string]: number;
 }
 
@@ -29,6 +29,6 @@ export interface UserInterface {
 
 export interface AuthUser {
 	data: UserInterface;
-	views: Views | {};
-	permiss: Permissions[] | [];
+	views: String[] | [];
+	permiss: InterfaceObject | {};
 }

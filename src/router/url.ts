@@ -10,6 +10,7 @@ export const reportexaci = `${baseUrl}mantenimiento-aci/`;
 export const librePago = `${baseUrl}libre-pago/`;
 export const pagoCuota = `${baseUrl}pago-cuota/`;
 export const transaccional = `${baseUrl}transaccional/`;
+export const seguridad = `${baseUrl}seguridad/`;
 
 export const urlPrivate = [
 	loadExcel,
@@ -22,6 +23,7 @@ export const urlPrivate = [
 	librePago,
 	pagoCuota,
 	transaccional,
+	seguridad,
 ];
 
 export const urlPublic = [login];

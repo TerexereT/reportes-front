@@ -39,7 +39,7 @@ const Login: React.FC = () => {
 	const handleGetLogin = (e: any) => {
 		e.preventDefault();
 		if (user && password) {
-			const login: any = handleLogin(user, password, history);
+			handleLogin(user, password, history);
 		}
 	};
 
