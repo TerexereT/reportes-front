@@ -73,6 +73,7 @@ const LoadExcel: FC = () => {
 			setFile(null);
 			setData(null);
 		} catch (error: any) {
+			setFile(null);
 			console.log('err', error);
 			Swal.fire('Error', error?.response?.data?.message || 'error', 'error');
 			setLoad(false);
@@ -89,27 +90,30 @@ const LoadExcel: FC = () => {
 						display: 'flex',
 						justifyContent: 'center',
 					}}>
-					<div
-						style={{
-							margin: '2px',
-							width: '20rem',
-						}}>
-						<Button size='small' variant='outlined' component='label'>
-							Seleccionar Archivo
-							<input type='file' accept='.xlsx, .xls, .csv' hidden onChange={handleFile} />
-						</Button>
-						<p style={{ margin: '2px' }}>{file ? file.name : ''}</p>
-					</div>
-					<Button size='small' variant='contained' onClick={handleUpFile} disabled={file ? false : true}>
-						Cargar
-					</Button>
+					{!load ? (
+						<>
+							<div
+								style={{
+									margin: '2px',
+									width: '20rem',
+								}}>
+								<Button size='small' variant='outlined' component='label'>
+									Seleccionar Archivo
+									<input type='file' accept='.xlsx, .xls, .csv' hidden onChange={handleFile} />
+								</Button>
+								<p style={{ margin: '2px' }}>{file ? file.name : ''}</p>
+							</div>
+							<Button size='small' variant='contained' onClick={handleUpFile} disabled={file ? false : true}>
+								Cargar
+							</Button>
+						</>
+					) : (
+						<div style={{ width: '50%', marginLeft: '5rem' }}>
+							<LoaderLine />
+						</div>
+					)}
 				</div>
 			</div>
-			{load && (
-				<div style={{ width: '50%', marginLeft: '5rem' }}>
-					<LoaderLine />
-				</div>
-			)}
 		</>
 	);
 };
