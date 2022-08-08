@@ -4,12 +4,11 @@ import useAxios from '../../config';
 import { createContext, ReactChild, useEffect, useState } from 'react';
 //
 import { existRoutePublic, isPrivate } from '../../router/utilis/Functions';
-import { ContextAuth, User } from './interface';
-import { Permissions, UserInterface, Views } from '../../interfaces/auth';
+import { ContextAuth } from './interface';
+import { InterfaceObject, UserInterface } from '../../interfaces/auth';
 import { baseUrl, login } from '../../router/url';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom';
-import { swalLoading } from '../../components/swal/handleLoagin';
+import { swalLoading } from '../../components/swal/alerts';
 
 interface Props {
 	children: ReactChild;
@@ -18,7 +17,7 @@ interface Props {
 const AuthContext = createContext<ContextAuth>({
 	user: null,
 	views: [],
-	permiss: [],
+	permiss: {},
 	handleLogin: () => {},
 	handleLogout: () => {},
 });
@@ -26,7 +25,7 @@ const AuthContext = createContext<ContextAuth>({
 export const AuthContextProvider = ({ children }: Props) => {
 	const [user, setUser] = useState<UserInterface | null>(null);
 	const [views, setViews] = useState<String[] | []>([]);
-	const [permiss, setPermiss] = useState<Permissions[] | []>([]);
+	const [permiss, setPermiss] = useState<InterfaceObject | {}>({});
 
 	const resetUser = (): void => {
 		setUser(null);

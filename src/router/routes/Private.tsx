@@ -9,6 +9,7 @@ import Mantenimiento from '../../pages/Mantenimiento';
 import PagoCuota from '../../pages/PagoCuota';
 import RepDinamicos from '../../pages/RepDinamicos';
 import ReporteXACI from '../../pages/ReporteXACI';
+import Seguridad from '../../pages/seguridad';
 import Transaccional from '../../pages/Transaccional';
 import {
 	baseUrl,
@@ -22,6 +23,7 @@ import {
 	reportexaci,
 	transaccional,
 	loadExcel,
+	seguridad,
 } from '../url';
 
 export interface meta extends Meta {
@@ -88,6 +90,11 @@ const Private: Route[] = [
 	{
 		path: loadExcel,
 		component: LoadExcel,
+		meta: { auth: true },
+	},
+	{
+		path: seguridad,
+		component: Seguridad,
 		meta: { auth: true },
 	},
 ];

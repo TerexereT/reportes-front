@@ -1,4 +1,4 @@
-import { UserInterface, Views, Permissions } from '../../interfaces/auth';
+import { UserInterface, InterfaceObject } from '../../interfaces/auth';
 
 export interface User {
 	email: string;
@@ -8,7 +8,7 @@ export interface User {
 export interface ContextAuth {
 	user: UserInterface | null;
 	views: String[] | [];
-	permiss: Permissions[] | [];
+	permiss: InterfaceObject | {};
 	handleLogin: (user: String, password: String, historyA?: any) => void;
 	handleLogout: () => void;
 }
