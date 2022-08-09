@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import CloseIcon from '@mui/icons-material/Close';
-import { Autocomplete, Avatar, Button, Grid, Paper, TextField } from '@mui/material';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+//import CloseIcon from '@mui/icons-material/Close';
+//import { Autocomplete, Avatar, Button, Grid, Paper, TextField } from '@mui/material';
+import { Grid } from '@mui/material';
 import { DataGrid, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
-import classnames from 'classnames';
 import axios from '../../../../config';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { sxStyled, useStyles } from '../../styles';
-import { handleError, handleNotAccess } from '../../../../components/swal/alerts';
+import { useStyles } from '../../styles';
+import { handleError } from '../../../../components/swal/alerts';
 import { columnsGestionUsuario } from './columnsGrid';
 import { Department, Roles } from '../../interfaces';
-import LoaderLine from '../../../../components/loader/LoaderLine';
 
 interface Props {
 	listDepartment: Department[];
