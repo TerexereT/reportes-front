@@ -18,7 +18,7 @@ interface Props {
 
 const EditarDepartments: React.FC<Props> = ({ listDepartment, setListDepartment }) => {
 	const classes = useStyles();
-	const { user, permiss } = useContext(AuthContext);
+	const { permiss } = useContext(AuthContext);
 
 	const [update, setUpdate] = useState(true);
 

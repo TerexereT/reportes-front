@@ -36,6 +36,7 @@ export async function getAllListSeguridad() {
 
 		return multiGetterAxios(routes)
 			.then((responses) => {
+				console.log('res', responses);
 				return {
 					ok: true,
 					departments: responses[0].data.info,

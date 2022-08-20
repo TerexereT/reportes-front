@@ -35,7 +35,7 @@ export const useStyles = makeStyles((styles: Theme) => ({
 		},
 	},
 	wrapper: {
-		marginTop: '-1rem',
+		marginTop: '.7rem',
 		flexGrow: 1,
 	},
 	tabPanel: {

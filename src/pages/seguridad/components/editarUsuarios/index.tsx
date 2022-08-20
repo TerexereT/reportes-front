@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-//import CloseIcon from '@mui/icons-material/Close';
-//import { Autocomplete, Avatar, Button, Grid, Paper, TextField } from '@mui/material';
-import { Grid } from '@mui/material';
 import { DataGrid, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
+import CloseIcon from '@mui/icons-material/Close';
+import { Autocomplete, Avatar, Button, Grid, Paper, TextField } from '@mui/material';
 import axios from '../../../../config';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
@@ -11,6 +10,7 @@ import { useStyles } from '../../styles';
 import { handleError } from '../../../../components/swal/alerts';
 import { columnsGestionUsuario } from './columnsGrid';
 import { Department, Roles } from '../../interfaces';
+import LoaderLine from '../../../../components/loader/LoaderLine';
 
 interface Props {
 	listDepartment: Department[];
@@ -29,7 +29,9 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 
 	const [userID, setUserID] = useState<number>(0);
 	const [name, setName] = useState<string>('');
-	const [lname, setLName] = useState<string>('');
+	const [login, setLogin] = useState<string>('');
+	//
+	const [disabledSelect, setDisabledSelect] = useState<boolean>(false);
 
 	const customToolbar: () => JSX.Element = () => {
 		return (
@@ -46,7 +48,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 
 	const resetUser = () => {
 		setUserBlocked(false);
-		setLName('');
+		setLogin('');
 		setName('');
 		setUserDep(null);
 		setUserRol(null);
@@ -56,29 +58,34 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 
 	const handleRow = (event: any) => {
 		resetUser();
+		if (disabledSelect) return;
 		/*
 		if (!permiss['Ver Usuarios']) {
 			handleNotAccess();
 			return;
 		}
 		*/
-		getuserRol(event.row.id);
+		getUserData(event.row);
 		setUserView(true);
 	};
 
-	const getuserRol = async (id: number) => {
+	const getUserData = async (user: any) => {
+		setDisabledSelect(true);
 		try {
-			const resp = await axios.get(`seguridad/worker/${id}`);
+			console.log(user);
+			const resp = await axios.get(`seguridad/workerSecurity/${user.id}`);
+			console.log(resp.data.info);
 			const data = resp.data.info;
-			setUserBlocked(data.active === 0 ? false : true);
-			setLName(data.last_name);
-			setName(data.name);
+			setUserBlocked(data.active === 0 ? true : false);
+			setLogin(user.login);
+			setName(user.nombre);
 			setUserDep(data.id_department);
 			setUserRol(data.id_rol);
-			setUserID(data.id);
+			setUserID(user.id);
 		} catch (error) {
-			console.log('error getuserRol', error);
+			console.log('error getUserData', error);
 		}
+		setDisabledSelect(false);
 	};
 
 	const handleSelect = (event: any, value: any, item: string) => {
@@ -108,7 +115,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				try {
-					await axios.put(`/worker/${userID}`, {
+					await axios.put(`/seguridad/workerSecurity/${userID}`, {
 						//update
 						id_rol: userRol.id,
 						id_department: userDep.id,
@@ -142,18 +149,17 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 						}
 					</div>
 				</Grid>
-				{/*
 				<Grid item xs={7}>
-					{openUserView && name && name ? (
+					{openUserView && name && login ? (
 						<Paper variant='outlined'>
 							<div className={classes.card}>
-								<Button sx={sxStyled.closeBtn} onClick={handleCloseRow}>
+								<Button /*sx={sxStyled.closeBtn}*/ onClick={handleCloseRow}>
 									<CloseIcon />
 								</Button>
 								<form className={classes.form}>
 									<div className={classes.grid}>
 										<div className={classes.img}>
-											<Avatar sx={sxStyled.avatarLetter}>{`${name.slice(0, 1)}${lname.slice(0, 1)}`}</Avatar>
+											<Avatar /*sx={sxStyled.avatarLetter}*/>{`${name.slice(0, 1)}`}</Avatar>
 										</div>
 										<div>
 											<div className={classes.textFields}>
@@ -165,48 +171,53 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 													label='Nombre Completo'
 													variant='outlined'
 													type='text'
-													value={name + ' ' + lname}
+													value={name}
 												/>
-												{userDep && userRol ? (
-													<>
-														<Autocomplete
-															className={classes.inputText}
-															onChange={(event, value) =>
-																value ? handleSelect(event, value, 'department') : null
-															}
-															value={userDep}
-															getOptionLabel={(option: any) => (option.name ? option.name : '')}
-															isOptionEqualToValue={(option: any) => option.id === userDep.id}
-															options={listDepartment}
-															renderInput={(params: any) => (
-																<TextField {...params} name='department' label='Departamento' variant='outlined' />
-															)}
-														/>
-														<Autocomplete
-															className={classes.inputText}
-															onChange={(event, value) => (value ? handleSelect(event, value, 'rol') : null)}
-															value={userRol}
-															getOptionLabel={(option: any) => option.name}
-															isOptionEqualToValue={(option, value) => option.id === value.id}
-															options={listRoles}
-															renderInput={(params: any) => (
-																<TextField {...params} name='rol' label='Cargo' variant='outlined' />
-															)}
-														/>
-													</>
-												) : null}
+												<>
+													<Autocomplete
+														className={classes.inputText}
+														onChange={(event, value) => (value ? handleSelect(event, value, 'department') : null)}
+														value={userDep}
+														getOptionLabel={(option: any) => (option.name ? option.name : '')}
+														isOptionEqualToValue={(option: any) => option.id === userDep.id}
+														options={listDepartment}
+														renderInput={(params: any) => (
+															<TextField
+																{...params}
+																name='department'
+																label='Seleciona un Departmento'
+																variant='outlined'
+															/>
+														)}
+													/>
+													<Autocomplete
+														className={classes.inputText}
+														onChange={(event, value) => (value ? handleSelect(event, value, 'rol') : null)}
+														value={userRol}
+														getOptionLabel={(option: any) => option.name}
+														isOptionEqualToValue={(option, value) => option.id === value.id}
+														options={listRoles}
+														renderInput={(params: any) => (
+															<TextField {...params} name='rol' label='Selecciona un Cargo' variant='outlined' />
+														)}
+													/>
+												</>
+												{/*
 												<Button
 													onClick={() => setUserBlocked(!userBlocked)}
-													sx={!userBlocked ? sxStyled.blockedButtonOff : sxStyled.blockedButtonOn}>
+													variant='contained'
+													//sx={!userBlocked ? sxStyled.blockedButtonOff : sxStyled.blockedButtonOn}
+												>
 													{userBlocked ? `Desbloquear` : `Bloquear`}
 												</Button>
+												*/}
 											</div>
-											<div className={classnames(classes.row, classes.column)}>
+											<div>
 												<div className={classes.cardTitles}>Permisos</div>
 											</div>
 										</div>
 										<div className=''></div>
-										<Button sx={sxStyled.buttonSaveData} onClick={handleSaveData}>
+										<Button /*sx={sxStyled.buttonSaveData}*/ variant='contained' onClick={handleSaveData}>
 											Guardar
 										</Button>
 									</div>
@@ -217,7 +228,6 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 						<LoaderLine />
 					) : null}
 				</Grid>
-					*/}
 			</Grid>
 		</>
 	);

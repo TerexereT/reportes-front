@@ -43,8 +43,11 @@ const Seguridad: FC = () => {
 	};
 
 	useLayoutEffect(() => {
-		getList();
-		getData();
+		const init = async () => {
+			await getList();
+			await getData();
+		};
+		init();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -107,9 +110,7 @@ const Seguridad: FC = () => {
 					*/}
 					</TabPanel>
 					<TabPanel value={'gestionDepartments'} classes={{ root: classes.tabPanel }}>
-						{/* 
 						<EditarDepartments listDepartment={listDepartment} setListDepartment={setListDepartment} />
-					*/}
 					</TabPanel>
 				</TabContext>
 			)}
