@@ -1,14 +1,15 @@
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import BuildIcon from '@mui/icons-material/Build';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import HardwareIcon from '@mui/icons-material/Hardware';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
-
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import {
 	cancelarCuotas,
+	contracargo,
 	contraCargo,
 	cuotas,
 	cuotasR,
@@ -73,10 +74,17 @@ export const auxLink = [
 		link: seguridad,
 		icon: <BuildIcon />,
 	},
+	{
+		name: 'Contracargos',
+		link: contracargo,
+		icon: <CurrencyExchangeIcon />,
+	},
 ];
 
 export const handleTitleSection = (seccion: string) => {
 	switch (seccion) {
+		case contracargo:
+			return 'Contracargos';
 		case cuotas:
 			return 'Cuotas Vencidas';
 		case movimientos:
