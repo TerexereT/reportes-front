@@ -27,7 +27,7 @@ build:
   - yarn install
   - REACT_APP_APIURL=10.198.73.15:4040
   - REACT_APP_PSWD=$REACT_APP_PSWD
-  - yarn build 
+  - yarn build:qa 
   stage: build
   artifacts:
     paths:
@@ -52,7 +52,7 @@ build_pro:
   - node -v
   - yarn install
   - REACT_APP_APIURL=10.198.71.36:4040
-  - yarn build
+  - yarn build:production
   stage: build
   artifacts:
     paths:
