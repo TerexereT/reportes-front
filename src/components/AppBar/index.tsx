@@ -30,7 +30,7 @@ import {
 	cuotas,
 	cuotasR,
 	librePago,
-	loadExcel,
+	contraCargo,
 	// login,
 	mantenimientos,
 	movimientos,
@@ -161,8 +161,8 @@ const auxLink = [
 		icon: <HandshakeIcon />,
 	},
 	{
-		name: 'Cargar Neto',
-		link: loadExcel,
+		name: 'Archivo ContraCargo',
+		link: contraCargo,
 		icon: <CloudUploadIcon />,
 	},
 	{
@@ -185,12 +185,14 @@ const MainMenu = () => {
 	const { user, views, handleLogout } = useContext(AuthContext);
 
 	useEffect(() => {
-		if (user && views.length && !links.length) {
+		console.log(views);
+		if (user && views.length) {
 			const listLink = auxLink.filter((link) => views.find((view) => view === link.name));
-			//console.log('list', listLink);
-			setLink(auxLink);
+			console.log('listx', listLink);
+			console.log('listd', auxLink);
+			setLink(listLink);
 		}
-	}, [user, views, links]);
+	}, [user, views]);
 
 	const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);

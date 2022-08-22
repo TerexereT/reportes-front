@@ -7,7 +7,7 @@ import useAxios from '../config';
 //import { useStyles } from './RepDinamicos';
 // import SelectList from '../components/DateTime';
 
-const LoadExcel: FC = () => {
+const ContraCargoUpFile: FC = () => {
 	//const classes = useStyles();
 
 	//const [state, setState] = .useState({});
@@ -59,6 +59,7 @@ const LoadExcel: FC = () => {
 		const formData: FormData = new FormData();
 		try {
 			formData.append('lote', JSON.stringify(data));
+			formData.append('nameFile', file.name);
 			console.log('datax', data);
 			//
 			const resp = await useAxios.post('/1000pagos/up/leto', formData);
@@ -118,4 +119,4 @@ const LoadExcel: FC = () => {
 	);
 };
 
-export default LoadExcel;
+export default ContraCargoUpFile;

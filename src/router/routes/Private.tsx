@@ -4,7 +4,7 @@ import Cuotas from '../../pages/Cuotas';
 import CuotasResumido from '../../pages/CuotasResumido';
 import Home from '../../pages/Home';
 import LibrePago from '../../pages/LibrePago';
-import LoadExcel from '../../pages/LoadExcel';
+import ContraCargoUpFile from '../../pages/ContraCargoUpFile';
 import Mantenimiento from '../../pages/Mantenimiento';
 import PagoCuota from '../../pages/PagoCuota';
 import RepDinamicos from '../../pages/RepDinamicos';
@@ -22,7 +22,7 @@ import {
 	pagoCuota,
 	reportexaci,
 	transaccional,
-	loadExcel,
+	contraCargo,
 	seguridad,
 } from '../url';
 
@@ -88,8 +88,8 @@ const Private: Route[] = [
 		meta: { auth: true },
 	},
 	{
-		path: loadExcel,
-		component: LoadExcel,
+		path: contraCargo,
+		component: ContraCargoUpFile,
 		meta: { auth: true },
 	},
 	{
