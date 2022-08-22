@@ -1,5 +1,5 @@
 export const baseUrl = '/';
-export const loadExcel = `${baseUrl}load-excel/`;
+export const contraCargo = `${baseUrl}contracargo-up/`;
 export const login = `${baseUrl}auth/login`;
 export const movimientos = `${baseUrl}movimientos/`;
 export const cuotas = `${baseUrl}cuotas/`;
@@ -13,7 +13,7 @@ export const transaccional = `${baseUrl}transaccional/`;
 export const seguridad = `${baseUrl}seguridad/`;
 
 export const urlPrivate = [
-	loadExcel,
+	contraCargo,
 	movimientos,
 	cuotas,
 	cuotasR,
