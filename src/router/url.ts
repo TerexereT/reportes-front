@@ -11,6 +11,7 @@ export const librePago = `${baseUrl}libre-pago/`;
 export const pagoCuota = `${baseUrl}pago-cuota/`;
 export const transaccional = `${baseUrl}transaccional/`;
 export const seguridad = `${baseUrl}seguridad/`;
+export const contracargo = `${baseUrl}contracargo/`;
 
 export const urlPrivate = [
 	loadExcel,
