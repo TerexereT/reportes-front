@@ -1,176 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import BuildIcon from '@mui/icons-material/Build';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import HandshakeIcon from '@mui/icons-material/Handshake';
-import HardwareIcon from '@mui/icons-material/Hardware';
-import ImportExportIcon from '@mui/icons-material/ImportExport';
 import MenuIcon from '@mui/icons-material/Menu';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Theme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
+
 import classNames from 'classnames';
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/AuthContext';
 import TranredLogo from '../../images/tranred-logo.png';
-import {
-	baseUrl,
-	cancelarCuotas,
-	cuotas,
-	cuotasR,
-	librePago,
-	contraCargo,
-	// login,
-	mantenimientos,
-	movimientos,
-	pagoCuota,
-	reportexaci,
-	transaccional,
-	seguridad,
-} from '../../router/url';
-const drawerWidth = 240;
-const useStyles = makeStyles((theme: Theme) => ({
-	root: {
-		flexGrow: 1,
-	},
-	menuButton: {
-		marginRight: theme.spacing(2),
-	},
-	title: {
-		flexGrow: 1,
-	},
-	drawer: {
-		width: drawerWidth,
-		flexShrink: 0,
-		whiteSpace: 'nowrap',
-	},
-	drawerPaper: {
-		width: drawerWidth,
-	},
-	drawerContainer: {
-		overflow: 'auto',
-	},
-	drawerOpen: {
-		width: drawerWidth,
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-	drawerClose: {
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		overflowX: 'hidden',
-		width: theme.spacing(7) + 1,
-		[theme.breakpoints.up('sm')]: {
-			width: theme.spacing(9) + 1,
-		},
-	},
-	appBar: {
-		zIndex: theme.zIndex.drawer + 1,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-	},
-	appBarShift: {
-		marginLeft: drawerWidth,
-		width: `calc(100% - ${drawerWidth}px)`,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-	toolbar: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		padding: theme.spacing(0, 1),
-		// necessary for content to be below app bar
-		...theme.mixins.toolbar,
-	},
-	hide: {
-		display: 'none',
-	},
-	img: {
-		'& img': {
-			maxWidth: 176,
-		},
-	},
-	link: {
-		textDecoration: 'none',
-		color: theme.palette.secondary.contrastText,
-	},
-	icon: {
-		minWidth: 40,
-	},
-}));
-
-const auxLink = [
-	{
-		name: 'Movimientos',
-		link: movimientos,
-		icon: <ImportExportIcon />,
-	},
-	{
-		name: 'Cuotas Vencidas',
-		link: cuotas,
-		icon: <AttachMoneyIcon />,
-	},
-	{
-		name: 'Cuotas Resumidas',
-		link: cuotasR,
-		icon: <AttachMoneyIcon />,
-	},
-	{
-		name: 'Mantenimiento',
-		link: mantenimientos,
-		icon: <BuildIcon />,
-	},
-	{
-		name: 'Mantenimiento por ACI',
-		link: reportexaci,
-		icon: <HardwareIcon />,
-	},
-	{
-		name: 'Libre Pago',
-		link: librePago,
-		icon: <ReceiptIcon />,
-	},
-	{
-		name: 'Pago Cuota',
-		link: pagoCuota,
-		icon: <ReceiptLongIcon />,
-	},
-	{
-		name: 'Transaccional',
-		link: transaccional,
-		icon: <HandshakeIcon />,
-	},
-	{
-		name: 'Archivo ContraCargo',
-		link: contraCargo,
-		icon: <CloudUploadIcon />,
-	},
-	{
-		name: 'Gestion de Seguridad',
-		link: seguridad,
-		icon: <BuildIcon />,
-	},
-];
+import { baseUrl } from '../../router/url';
+import { drawerWidth, useStyles } from './styles';
+import { auxLink, handleTitleSection } from './tabs';
 
 const MainMenu = () => {
 	const classes = useStyles();
@@ -208,33 +55,6 @@ const MainMenu = () => {
 
 	const handleDrawerClose = () => {
 		setOpen(false);
-	};
-
-	const handleTitleSection = (seccion: string) => {
-		switch (seccion) {
-			case cuotas:
-				return 'Cuotas Vencidas';
-			case movimientos:
-				return 'Movimientos';
-			case mantenimientos:
-				return 'Mantenimiento';
-			case cuotasR:
-				return 'Cuotas Resumidas';
-			case cancelarCuotas:
-				return 'Cancelar Cuotas';
-			case reportexaci:
-				return 'Mantenimiento por ACI';
-			case librePago:
-				return 'Libre Pago';
-			case pagoCuota:
-				return 'Pago Cuota';
-			case transaccional:
-				return 'Transaccional';
-			case seguridad:
-				return 'Gestion de Seguridad';
-			default:
-				return 'Inicio';
-		}
 	};
 
 	let path = window.location.pathname;
