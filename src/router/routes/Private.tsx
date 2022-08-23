@@ -22,7 +22,7 @@ import {
 	pagoCuota,
 	reportexaci,
 	transaccional,
-	contraCargo,
+	contraCargoUp,
 	seguridad,
 } from '../url';
 
@@ -88,7 +88,7 @@ const Private: Route[] = [
 		meta: { auth: true },
 	},
 	{
-		path: contraCargo,
+		path: contraCargoUp,
 		component: ContraCargoUpFile,
 		meta: { auth: true },
 	},

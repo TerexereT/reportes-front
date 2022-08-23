@@ -109,7 +109,7 @@ const ContraCargoUpFile: FC = () => {
 							</Button>
 						</>
 					) : (
-						<div style={{ width: '50%', marginLeft: '5rem' }}>
+						<div style={{ width: '50%', marginLeft: '5rem', marginTop: '5rem' }}>
 							<LoaderLine />
 						</div>
 					)}

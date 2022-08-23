@@ -10,7 +10,7 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import {
 	cancelarCuotas,
 	contracargo,
-	contraCargo,
+	contraCargoUp,
 	cuotas,
 	cuotasR,
 	librePago,
@@ -66,7 +66,7 @@ export const auxLink = [
 	},
 	{
 		name: 'Archivo ContraCargo',
-		link: contraCargo,
+		link: contraCargoUp,
 		icon: <CloudUploadIcon />,
 	},
 	{

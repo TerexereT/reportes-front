@@ -1,5 +1,5 @@
 export const baseUrl = '/';
-export const contraCargo = `${baseUrl}contracargo-up/`;
+export const contraCargoUp = `${baseUrl}contracargo-up/`;
 export const login = `${baseUrl}auth/login`;
 export const movimientos = `${baseUrl}movimientos/`;
 export const cuotas = `${baseUrl}cuotas/`;
@@ -14,7 +14,7 @@ export const seguridad = `${baseUrl}seguridad/`;
 export const contracargo = `${baseUrl}contracargo/`;
 
 export const urlPrivate = [
-	contraCargo,
+	contraCargoUp,
 	movimientos,
 	cuotas,
 	cuotasR,
