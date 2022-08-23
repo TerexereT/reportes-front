@@ -81,7 +81,14 @@ interface TableReportsProps {
 	transType?: options[];
 	transOption?: number;
 	monthoption?: string;
-	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen' | 'PagoCuota' | 'Transaccional';
+	from:
+		| 'CuotasVencidas'
+		| 'Movimientos'
+		| 'Mantenimiento'
+		| 'CuotasResumen'
+		| 'PagoCuota'
+		| 'Transaccional'
+		| 'Contracargo';
 }
 
 const TableReports: FC<TableReportsProps> = ({
@@ -151,6 +158,12 @@ const TableReports: FC<TableReportsProps> = ({
 				resp = await useAxios.post(`/aboterminal`, {
 					keys,
 				});
+				setData(resp.data.info);
+			}
+			if (from === 'Contracargo') {
+				resp = await useAxios.get(
+					`/contracargo?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`
+				);
 				setData(resp.data.info);
 			}
 			if (from === 'Mantenimiento') {
