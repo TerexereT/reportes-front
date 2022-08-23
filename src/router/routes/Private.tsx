@@ -1,10 +1,11 @@
 import { Meta } from 'react-router-guards/dist/types';
 import CancelarCuotas from '../../pages/CancelarCuotas';
+import Contracargo from '../../pages/Contracargo';
+import ContraCargoUpFile from '../../pages/ContraCargoUpFile';
 import Cuotas from '../../pages/Cuotas';
 import CuotasResumido from '../../pages/CuotasResumido';
 import Home from '../../pages/Home';
 import LibrePago from '../../pages/LibrePago';
-import ContraCargoUpFile from '../../pages/ContraCargoUpFile';
 import Mantenimiento from '../../pages/Mantenimiento';
 import PagoCuota from '../../pages/PagoCuota';
 import RepDinamicos from '../../pages/RepDinamicos';
@@ -14,6 +15,7 @@ import Transaccional from '../../pages/Transaccional';
 import {
 	baseUrl,
 	cancelarCuotas,
+	contracargo,
 	cuotas,
 	cuotasR,
 	librePago,
@@ -95,6 +97,11 @@ const Private: Route[] = [
 	{
 		path: seguridad,
 		component: Seguridad,
+		meta: { auth: true },
+	},
+	{
+		path: contracargo,
+		component: Contracargo,
 		meta: { auth: true },
 	},
 ];
