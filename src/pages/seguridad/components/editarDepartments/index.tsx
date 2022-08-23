@@ -24,7 +24,7 @@ const EditarDepartments: React.FC<Props> = ({ listDepartment, setListDepartment 
 
 	const [create, setCreate] = useState(true);
 
-	const [department, setDepartment] = useState<any>(null);
+	const [department, setDepartment] = useState<string>('');
 
 	const [sortModel, setSortModel] = useState<GridSortModel>([
 		{

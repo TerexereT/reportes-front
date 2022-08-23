@@ -137,9 +137,9 @@ export async function updateDepartments(deps: any) {
 	}
 }
 
-export async function createDepartment(department: Department) {
+export async function createDepartment(department: string) {
 	try {
-		const res: any = await useAxios.post(`/seguridad/department/create`, { department });
+		const res: any = await useAxios.post(`/seguridad/department/create`, { nameDep: department });
 		return {
 			ok: true,
 			newDepartment: res.data.info,
