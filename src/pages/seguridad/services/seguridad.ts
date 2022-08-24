@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import useAxios from '../../../config';
 import Swal from 'sweetalert2';
-import { Department } from '../interfaces';
 import { multiGetterAxios } from '../../../utilis/multiGetterAxios';
 
 export const seguridad = {

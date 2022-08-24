@@ -57,3 +57,18 @@ export const handleError = (error: any) => {
 		showConfirmButton: true,
 	});
 };
+
+export const handleLoading = () => {
+	Swal.fire({
+		icon: 'info',
+		title: 'Cargando...',
+		text: 'Por favor, espere',
+		showConfirmButton: false,
+		customClass: { container: 'swal2-validated' },
+		allowOutsideClick: false,
+		allowEscapeKey: false,
+		didOpen: () => {
+			Swal.showLoading();
+		},
+	});
+};
