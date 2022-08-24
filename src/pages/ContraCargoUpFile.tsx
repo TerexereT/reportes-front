@@ -62,7 +62,7 @@ const ContraCargoUpFile: FC = () => {
 			formData.append('nameFile', file.name);
 			console.log('datax', data);
 			//
-			const resp = await useAxios.post('/1000pagos/up/leto', formData);
+			await useAxios.post('/1000pagos/up/leto', formData);
 			//
 			Swal.fire({
 				icon: 'success',

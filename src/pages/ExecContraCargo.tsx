@@ -1,50 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from '@mui/material';
-import { ChangeEvent, FC, useState } from 'react';
+import { FC, useState } from 'react';
 import Swal from 'sweetalert2';
-import * as XLSX from 'xlsx';
-import LoaderLine from '../components/loader/LoaderLine';
 import { handleError, handleLoading } from '../components/swal/alerts';
 import useAxios from '../config';
-//import { useStyles } from './RepDinamicos';
-// import SelectList from '../components/DateTime';
 
 const ExecContraCargo: FC = () => {
 	//const classes = useStyles();
 
 	//const [state, setState] = .useState({});
 	const [load, setLoad] = useState(false);
-	const [data, setData] = useState<any>(null);
-	const [file, setFile] = useState<File | null>(null);
-
-	const transFile = async (filex: File) => {
-		const promise = new Promise((resolve, reject) => {
-			const fileReader = new FileReader();
-			fileReader.readAsArrayBuffer(filex!);
-			fileReader.onload = (e: any) => {
-				const bufferArray = e.target.result;
-				const wb = XLSX.read(bufferArray, { type: 'buffer' });
-				const wsname = wb.SheetNames[0];
-				const ws = wb.Sheets[wsname];
-				const data = XLSX.utils.sheet_to_json(ws);
-				resolve(data);
-			};
-			fileReader.onerror = (error) => {
-				reject(error);
-			};
-		});
-		await promise.then((d) => {
-			console.log('dd', d);
-			setData(d);
-		});
-	};
-
-	const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
-		if (event?.target?.files && event.target.files[0]) {
-			let file_aux: File = event.target.files[0];
-			transFile(file_aux);
-			setFile(file_aux);
-		}
-	};
 
 	const handleExecContraCargo = async () => {
 		Swal.fire({
@@ -58,14 +23,17 @@ const ExecContraCargo: FC = () => {
 				denyButton: 'order-3',
 			},
 		}).then(async (result) => {
+			setLoad(true);
 			if (result.isConfirmed) {
 				try {
 					handleLoading();
 					const res = await useAxios.get(`/contracargo/exec`);
 					if (res.data.info.ok)
 						Swal.fire('Listo', `Contracargo finalizado Total de registros: ${res.data.info.line}`, 'success');
+					setLoad(false);
 				} catch (error) {
 					handleError(error);
+					setLoad(false);
 				}
 			}
 		});
