@@ -7,7 +7,7 @@ import useAxios from '../config';
 //import { useStyles } from './RepDinamicos';
 // import SelectList from '../components/DateTime';
 
-const LoadExcel: FC = () => {
+const ContraCargoUpFile: FC = () => {
 	//const classes = useStyles();
 
 	//const [state, setState] = .useState({});
@@ -59,6 +59,7 @@ const LoadExcel: FC = () => {
 		const formData: FormData = new FormData();
 		try {
 			formData.append('lote', JSON.stringify(data));
+			formData.append('nameFile', file.name);
 			console.log('datax', data);
 			//
 			const resp = await useAxios.post('/1000pagos/up/leto', formData);
@@ -68,7 +69,7 @@ const LoadExcel: FC = () => {
 				title: 'Documento Guardado',
 				text: 'lote cargado!',
 			});
-			console.log(resp);
+			//console.log(resp);
 			setLoad(false);
 			setFile(null);
 			setData(null);
@@ -108,7 +109,7 @@ const LoadExcel: FC = () => {
 							</Button>
 						</>
 					) : (
-						<div style={{ width: '50%', marginLeft: '5rem' }}>
+						<div style={{ width: '50%', marginLeft: '5rem', marginTop: '5rem' }}>
 							<LoaderLine />
 						</div>
 					)}
@@ -118,4 +119,4 @@ const LoadExcel: FC = () => {
 	);
 };
 
-export default LoadExcel;
+export default ContraCargoUpFile;

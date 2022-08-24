@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Checkbox, TextField } from '@mui/material';
-import { useContext, useState } from 'react';
-import { seguridad } from '../../services/seguridad';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { handleInfoText, handleLoadingSave, handleNotAccess } from '../../../../components/swal/alerts';
+import { Button, Checkbox, TextField } from '@mui/material';
 import { DataGrid, GridColDef, GridSortModel } from '@mui/x-data-grid';
-import { useStyles } from '../editarViews/styles/styles';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { Department } from '../../interfaces';
 import LoaderLine from '../../../../components/loader/LoaderLine';
-import AuthContext from '../../../../context/auth/AuthContext';
+import { handleInfoText, handleLoadingSave } from '../../../../components/swal/alerts';
+// import AuthContext from '../../../../context/auth/AuthContext';
+import { Department } from '../../interfaces';
+import { seguridad } from '../../services/seguridad';
+import { useStyles } from '../editarViews/styles/styles';
 
 interface Props {
 	listDepartment: Department[];
@@ -18,13 +18,13 @@ interface Props {
 
 const EditarDepartments: React.FC<Props> = ({ listDepartment, setListDepartment }) => {
 	const classes = useStyles();
-	const { user, permiss } = useContext(AuthContext);
+	// const { permiss } = useContext(AuthContext);
 
 	const [update, setUpdate] = useState(true);
 
 	const [create, setCreate] = useState(true);
 
-	const [department, setDepartment] = useState<any>(null);
+	const [department, setDepartment] = useState<string>('');
 
 	const [sortModel, setSortModel] = useState<GridSortModel>([
 		{

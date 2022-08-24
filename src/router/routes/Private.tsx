@@ -1,10 +1,12 @@
 import { Meta } from 'react-router-guards/dist/types';
 import CancelarCuotas from '../../pages/CancelarCuotas';
+import Contracargo from '../../pages/Contracargo';
+import ContraCargoUpFile from '../../pages/ContraCargoUpFile';
 import Cuotas from '../../pages/Cuotas';
 import CuotasResumido from '../../pages/CuotasResumido';
+import ExecContraCargo from '../../pages/ExecContraCargo';
 import Home from '../../pages/Home';
 import LibrePago from '../../pages/LibrePago';
-import LoadExcel from '../../pages/LoadExcel';
 import Mantenimiento from '../../pages/Mantenimiento';
 import PagoCuota from '../../pages/PagoCuota';
 import RepDinamicos from '../../pages/RepDinamicos';
@@ -14,6 +16,7 @@ import Transaccional from '../../pages/Transaccional';
 import {
 	baseUrl,
 	cancelarCuotas,
+	contracargo,
 	cuotas,
 	cuotasR,
 	librePago,
@@ -22,8 +25,9 @@ import {
 	pagoCuota,
 	reportexaci,
 	transaccional,
-	loadExcel,
+	contraCargoUp,
 	seguridad,
+	execContracargo,
 } from '../url';
 
 export interface meta extends Meta {
@@ -88,13 +92,23 @@ const Private: Route[] = [
 		meta: { auth: true },
 	},
 	{
-		path: loadExcel,
-		component: LoadExcel,
+		path: contraCargoUp,
+		component: ContraCargoUpFile,
 		meta: { auth: true },
 	},
 	{
 		path: seguridad,
 		component: Seguridad,
+		meta: { auth: true },
+	},
+	{
+		path: contracargo,
+		component: Contracargo,
+		meta: { auth: true },
+	},
+	{
+		path: execContracargo,
+		component: ExecContraCargo,
 		meta: { auth: true },
 	},
 ];

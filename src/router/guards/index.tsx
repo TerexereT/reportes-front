@@ -25,7 +25,7 @@ export const PrivGuard: any = (to: GuardToRoute, from: GuardFunctionRouteProps, 
 	//
 	let isWorker = 1;
 	let userDep = views[to.location.pathname.split('/')[1]];
-	console.log('voyy', userDep);
+	//console.log('voyy', userDep);
 
 	next.props({ isWorker });
 

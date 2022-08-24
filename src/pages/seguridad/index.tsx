@@ -43,8 +43,11 @@ const Seguridad: FC = () => {
 	};
 
 	useLayoutEffect(() => {
-		getList();
-		getData();
+		const init = async () => {
+			await getList();
+			await getData();
+		};
+		init();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -97,19 +100,13 @@ const Seguridad: FC = () => {
 						<GestionUsuarios listDepartment={listDepartment} listRoles={listRoles} allUser={allUser} />
 					</TabPanel>
 					<TabPanel value={'gestionPermisos'} classes={{ root: classes.tabPanel }}>
-						{/* 
 						<EditarPermisos listDepartment={listDepartment} listRoles={listRoles} />
-						*/}
 					</TabPanel>
 					<TabPanel value={'gestionViews'} classes={{ root: classes.tabPanel }}>
-						{/* 
 						<EditarViews listDepartment={listDepartment} />
-					*/}
 					</TabPanel>
 					<TabPanel value={'gestionDepartments'} classes={{ root: classes.tabPanel }}>
-						{/* 
 						<EditarDepartments listDepartment={listDepartment} setListDepartment={setListDepartment} />
-					*/}
 					</TabPanel>
 				</TabContext>
 			)}

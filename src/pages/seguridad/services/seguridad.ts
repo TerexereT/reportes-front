@@ -36,6 +36,7 @@ export async function getAllListSeguridad() {
 
 		return multiGetterAxios(routes)
 			.then((responses) => {
+				console.log('res', responses);
 				return {
 					ok: true,
 					departments: responses[0].data.info,
@@ -136,9 +137,9 @@ export async function updateDepartments(deps: any) {
 	}
 }
 
-export async function createDepartment(department: Department) {
+export async function createDepartment(department: string) {
 	try {
-		const res: any = await useAxios.post(`/seguridad/department/create`, { department });
+		const res: any = await useAxios.post(`/seguridad/department/create`, { nameDep: department });
 		return {
 			ok: true,
 			newDepartment: res.data.info,
