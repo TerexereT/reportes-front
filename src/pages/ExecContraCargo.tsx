@@ -3,25 +3,18 @@ import { ChangeEvent, FC, useState } from 'react';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import LoaderLine from '../components/loader/LoaderLine';
+import { handleError, handleLoading } from '../components/swal/alerts';
 import useAxios from '../config';
 //import { useStyles } from './RepDinamicos';
 // import SelectList from '../components/DateTime';
 
-const ContraCargoUpFile: FC = () => {
+const ExecContraCargo: FC = () => {
 	//const classes = useStyles();
 
 	//const [state, setState] = .useState({});
 	const [load, setLoad] = useState(false);
 	const [data, setData] = useState<any>(null);
 	const [file, setFile] = useState<File | null>(null);
-
-	/*
-	useEffect(() => {
-		if (data) {
-			console.log(data);
-		}
-	}, [data]);
-	*/
 
 	const transFile = async (filex: File) => {
 		const promise = new Promise((resolve, reject) => {
@@ -53,32 +46,29 @@ const ContraCargoUpFile: FC = () => {
 		}
 	};
 
-	const handleUpFile = async () => {
-		setLoad(true);
-		if (!file || !data) return;
-		const formData: FormData = new FormData();
-		try {
-			formData.append('lote', JSON.stringify(data));
-			formData.append('nameFile', file.name);
-			console.log('datax', data);
-			//
-			const resp = await useAxios.post('/1000pagos/up/leto', formData);
-			//
-			Swal.fire({
-				icon: 'success',
-				title: 'Documento Guardado',
-				text: 'lote cargado!',
-			});
-			//console.log(resp);
-			setLoad(false);
-			setFile(null);
-			setData(null);
-		} catch (error: any) {
-			setFile(null);
-			console.log('err', error);
-			Swal.fire('Error', error?.response?.data?.message || 'error', 'error');
-			setLoad(false);
-		}
+	const handleExecContraCargo = async () => {
+		Swal.fire({
+			title: '¿Ejecutar contracargo?',
+			showDenyButton: true,
+			confirmButtonText: 'Si',
+			denyButtonText: 'No',
+			customClass: {
+				actions: 'my-actions',
+				confirmButton: 'order-2',
+				denyButton: 'order-3',
+			},
+		}).then(async (result) => {
+			if (result.isConfirmed) {
+				try {
+					handleLoading();
+					const res = await useAxios.get(`/contracargo/exec`);
+					if (res.data.info.ok)
+						Swal.fire('Listo', `Contracargo finalizado Total de registros: ${res.data.info.line}`, 'success');
+				} catch (error) {
+					handleError(error);
+				}
+			}
+		});
 	};
 
 	return (
@@ -87,36 +77,22 @@ const ContraCargoUpFile: FC = () => {
 				<div
 					className='ed-item s-py-2'
 					style={{
-						marginTop: '2rem',
+						marginTop: '5rem',
 						display: 'flex',
 						justifyContent: 'center',
 					}}>
-					{!load ? (
-						<>
-							<div
-								style={{
-									margin: '2px',
-									width: '20rem',
-								}}>
-								<Button size='small' variant='outlined' component='label'>
-									Seleccionar Archivo
-									<input type='file' accept='.xlsx, .xls, .csv' hidden onChange={handleFile} />
-								</Button>
-								<p style={{ margin: '2px' }}>{file ? file.name : ''}</p>
-							</div>
-							<Button size='small' variant='contained' onClick={handleUpFile} disabled={file ? false : true}>
-								Cargar
-							</Button>
-						</>
-					) : (
-						<div style={{ width: '50%', marginLeft: '5rem', marginTop: '5rem' }}>
-							<LoaderLine />
-						</div>
-					)}
+					<Button
+						style={{ fontSize: '2rem', padding: '2rem', borderRadius: '1rem' }}
+						color='success'
+						variant='contained'
+						onClick={handleExecContraCargo}
+						disabled={load}>
+						Ejecutar ContraCargo
+					</Button>
 				</div>
 			</div>
 		</>
 	);
 };
 
-export default ContraCargoUpFile;
+export default ExecContraCargo;

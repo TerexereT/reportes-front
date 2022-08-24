@@ -13,6 +13,7 @@ import {
 	contraCargoUp,
 	cuotas,
 	cuotasR,
+	execContracargo,
 	librePago,
 	// login,
 	mantenimientos,
@@ -77,6 +78,11 @@ export const auxLink = [
 	{
 		name: 'Contracargos',
 		link: contracargo,
+		icon: <CurrencyExchangeIcon />,
+	},
+	{
+		name: 'Ejecutar Contracargos',
+		link: execContracargo,
 		icon: <CurrencyExchangeIcon />,
 	},
 ];

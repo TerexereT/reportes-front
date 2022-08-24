@@ -4,6 +4,7 @@ import Contracargo from '../../pages/Contracargo';
 import ContraCargoUpFile from '../../pages/ContraCargoUpFile';
 import Cuotas from '../../pages/Cuotas';
 import CuotasResumido from '../../pages/CuotasResumido';
+import ExecContraCargo from '../../pages/ExecContraCargo';
 import Home from '../../pages/Home';
 import LibrePago from '../../pages/LibrePago';
 import Mantenimiento from '../../pages/Mantenimiento';
@@ -26,6 +27,7 @@ import {
 	transaccional,
 	contraCargoUp,
 	seguridad,
+	execContracargo,
 } from '../url';
 
 export interface meta extends Meta {
@@ -102,6 +104,11 @@ const Private: Route[] = [
 	{
 		path: contracargo,
 		component: Contracargo,
+		meta: { auth: true },
+	},
+	{
+		path: execContracargo,
+		component: ExecContraCargo,
 		meta: { auth: true },
 	},
 ];

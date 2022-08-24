@@ -12,6 +12,7 @@ export const pagoCuota = `${baseUrl}pago-cuota/`;
 export const transaccional = `${baseUrl}transaccional/`;
 export const seguridad = `${baseUrl}seguridad/`;
 export const contracargo = `${baseUrl}contracargo/`;
+export const execContracargo = `${baseUrl}exec-contracargo/`;
 
 export const urlPrivate = [
 	contraCargoUp,
@@ -25,6 +26,7 @@ export const urlPrivate = [
 	pagoCuota,
 	transaccional,
 	seguridad,
+	execContracargo,
 ];
 
 export const urlPublic = [login];
