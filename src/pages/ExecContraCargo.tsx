@@ -13,10 +13,10 @@ const ExecContraCargo: FC = () => {
 
 	const handleExecContraCargo = async () => {
 		Swal.fire({
-			title: '¿Ejecutar contracargo?',
+			title: '¿Contracargo?',
 			showDenyButton: true,
-			confirmButtonText: 'Si',
-			denyButtonText: 'No',
+			confirmButtonText: 'Ejecutar',
+			denyButtonText: 'Cancelar',
 			customClass: {
 				actions: 'my-actions',
 				confirmButton: 'order-2',
@@ -29,7 +29,8 @@ const ExecContraCargo: FC = () => {
 					handleLoading();
 					const res = await useAxios.get(`/contracargo/exec`);
 					if (res.data.info.ok)
-						Swal.fire('Listo', `Contracargo finalizado Total de registros: ${res.data.info.line}`, 'success');
+						//Swal.fire('Listo', `Contracargo finalizado Total de registros: ${res.data.info.line}`, 'success');
+						Swal.fire('Listo', `Contracargo finalizado`, 'success');
 					setLoad(false);
 				} catch (error) {
 					handleError(error);

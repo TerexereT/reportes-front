@@ -3,6 +3,7 @@ import { ChangeEvent, FC, useState } from 'react';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import LoaderLine from '../components/loader/LoaderLine';
+import { handleLoading } from '../components/swal/alerts';
 import useAxios from '../config';
 //import { useStyles } from './RepDinamicos';
 // import SelectList from '../components/DateTime';
@@ -62,6 +63,7 @@ const ContraCargoUpFile: FC = () => {
 			formData.append('nameFile', file.name);
 			console.log('datax', data);
 			//
+			handleLoading();
 			await useAxios.post('/1000pagos/up/leto', formData);
 			//
 			Swal.fire({
