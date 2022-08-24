@@ -7,9 +7,18 @@ import Logo from '../../../images/tranred-logo.png';
 import { useStylesModalUser } from './styles';
 
 const sxStyles = {
+	// minWidth: '100%',
+	// maxWidth: '40rem',
+	// marginTop: '2rem',
 	borderRadius: '2rem',
-	maxWidth: '80rem',
-	marginTop: '2rem',
+	boxShadow: '10px 10px 15px 0px rgba(0,0,0,0.09)',
+	display: 'grid',
+	gridTemplateColumns: '1fr 1fr',
+	alignItems: 'center',
+	justifyItems: 'center',
+	padding: 0,
+	position: 'absolute',
+	top: '25vh',
 } as const;
 
 const AuthModal: React.FC<any> = ({ children }) => {
@@ -35,21 +44,18 @@ const AuthModal: React.FC<any> = ({ children }) => {
 	}, [history.location.pathname, url]);
 
 	return (
-		<div className='ed-container'>
-			<img
-				src={Logo}
-				alt='Logo'
-				style={{
-					position: 'absolute',
-					top: '10rem',
-					padding: 0,
-					margin: 0,
-					width: '400px',
-					height: '100x',
-					objectFit: 'cover',
-				}}
-			/>
+		<div className={classes.loginPage}>
 			<Card sx={sxStyles}>
+				<img
+					src={Logo}
+					alt='Logo'
+					style={{
+						width: '400px',
+						height: '100x',
+						objectFit: 'cover',
+					}}
+				/>
+
 				<CardContent>
 					<div className={classes.containerAuthModal}>
 						<div>{children}</div>
