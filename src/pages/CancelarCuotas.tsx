@@ -17,7 +17,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import makeStyles from '@mui/styles/makeStyles';
 import { DataGrid, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
 import classNames from 'classnames';
-import { FC, useEffect, useLayoutEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useStyles as useStylesT } from '../components/table';
 import useAxios from '../config';
 import Round from '../functions/Round';
@@ -143,7 +143,7 @@ const CancelarCuotas: FC = () => {
 		MONTOTOTAL: 0,
 	});
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setTerminal(event.target.value);
 	};
 
@@ -257,7 +257,7 @@ const CancelarCuotas: FC = () => {
 	return (
 		<>
 			<>
-				<div className='ed-container'>
+				<div className={classes.base}>
 					<div className={classes.base}>
 						<Card className={classesT.root} style={{ width: '100%', height: '100%', paddingBottom: '2rem' }}>
 							<div className={classes.row}>

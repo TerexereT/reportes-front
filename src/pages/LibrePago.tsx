@@ -15,6 +15,7 @@ import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import SelectList from '../components/DateTime';
 import { useStyles as useStylesT } from '../components/table';
 import useAxios from '../config';
+import { useStyles as useStylesRD } from '../pages/RepDinamicos';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	base: {
@@ -124,6 +125,7 @@ interface DicomSelectedInt {
 const LibrePago: FC = () => {
 	const classes = useStyles();
 	const classesT = useStylesT();
+	const classesRD = useStylesRD();
 
 	const today = new Date();
 	const lastMonth = new Date(today);
@@ -285,9 +287,9 @@ const LibrePago: FC = () => {
 
 	return (
 		<>
-			<div className='ed-container'>
+			<div className={classesRD.base}>
 				<div className={classes.base}>
-					<div className='ed-item s-py-2'>
+					<div className={classesRD.cards}>
 						<Card className={classesT.root} style={{ width: '100%', height: '100%' }}>
 							<SelectList
 								initDate={initDate}
@@ -322,7 +324,7 @@ const LibrePago: FC = () => {
 							</div>
 						</Card>
 					</div>
-					<div className='ed-item s-to-center s-py-2'>
+					<div className={classesRD.cards}>
 						<Card className={classesT.root} style={{ width: '100%', height: '95vh' }}>
 							<DataGrid
 								components={{

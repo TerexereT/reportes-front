@@ -280,7 +280,7 @@ const ReporteXACI: FC = () => {
 
 	return (
 		<>
-			<div className={classNames('ed-container', classes.base)}>
+			<div className={classNames(classes.base)}>
 				<Card className={classesT.root} style={{ width: '100%', position: 'relative' }}>
 					{loading ? (
 						<>
