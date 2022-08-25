@@ -51,8 +51,8 @@ const Transaccional: FC = () => {
 
 	return (
 		<>
-			<div className='ed-container'>
-				<div className='ed-item s-py-2'>
+			<div className={classes.base}>
+				<div className={classes.cards}>
 					<Card className={classes.card}>
 						{/* <SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} /> */}
 						<div className={classes.row}>
@@ -101,7 +101,7 @@ const Transaccional: FC = () => {
 						<CheckboxList state={transType} setState={setTransType} exclusive />
 					</Card>
 				</div>
-				<div className='ed-item s-to-center s-py-2'>
+				<div className={classes.cards}>
 					<TableReports
 						state={state}
 						from='Transaccional'

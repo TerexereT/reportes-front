@@ -24,13 +24,13 @@ const Contracargo: FC = () => {
 		getdata();
 	}, []);
 	return (
-		<div className='ed-container'>
-			<div className='ed-item s-py-2'>
+		<div className={classes.base}>
+			<div className={classes.cards}>
 				<Card className={classes.card}>
 					<SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} />
 				</Card>
 			</div>
-			<div className='ed-item s-to-center s-py-2'>
+			<div className={classes.cards}>
 				<TableReports initDate={initDate} endDate={endDate} state={state} from='Contracargo' />
 			</div>
 		</div>

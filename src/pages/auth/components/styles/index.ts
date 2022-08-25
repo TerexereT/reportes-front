@@ -25,7 +25,7 @@ export const useStylesModalUser = makeStyles((styles: Theme) => ({
 		borderRadius: '2.5rem',
 	},
 	containerLogin: {
-		margin: '2rem',
+		margin: '2rem 0',
 	},
 	containerNewPass: {
 		margin: '2rem',

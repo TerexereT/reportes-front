@@ -7,11 +7,8 @@ import Logo from '../../../images/tranred-logo.png';
 import { useStylesModalUser } from './styles';
 
 const sxStyles = {
-	// minWidth: '100%',
-	// maxWidth: '40rem',
-	// marginTop: '2rem',
-	borderRadius: '2rem',
-	boxShadow: '10px 10px 15px 0px rgba(0,0,0,0.09)',
+	borderRadius: '1.5rem',
+	boxShadow: '10px 10px 15px 0px rgba(0,0,0,0.4)',
 	display: 'grid',
 	gridTemplateColumns: '1fr 1fr',
 	alignItems: 'center',

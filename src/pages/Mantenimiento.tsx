@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import classnames from 'classnames';
-import React from 'react';
+import { FC, useEffect, useState } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import { useStylesDT } from '../components/DateTime';
 import TableReports from '../components/table';
@@ -15,15 +15,15 @@ export const opciones = [
 	// 'Plan de Comisión Inactivo',
 ];
 
-const Mantenimiento: React.FC = () => {
+const Mantenimiento: FC = () => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
 
-	const [state, setState] = React.useState({});
-	const [show, setShow] = React.useState(false);
-	const [option, setOption] = React.useState(0);
+	const [state, setState] = useState({});
+	const [show, setShow] = useState(false);
+	const [option, setOption] = useState(0);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const getdata = async () => {
 			try {
 				await setShow(false);
@@ -39,10 +39,9 @@ const Mantenimiento: React.FC = () => {
 	};
 	return (
 		<>
-			<div className='ed-container'>
-				<div className='ed-item s-py-2'>
+			<div className={classes.base}>
+				<div className={classes.cards}>
 					<Card className={classes.card}>
-						{/* <SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} /> */}
 						<div className={classes.row}>
 							<Typography
 								className={classnames(classesDT.title, 'm-cross-end')}
@@ -68,7 +67,7 @@ const Mantenimiento: React.FC = () => {
 						{show && <CheckboxList state={state} setState={setState} />}
 					</Card>
 				</div>
-				<div className='ed-item s-to-center s-py-2'>
+				<div className={classes.cards}>
 					{show && <TableReports state={state} from='Mantenimiento' mantOption={option} />}
 				</div>
 			</div>
