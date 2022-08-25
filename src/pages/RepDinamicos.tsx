@@ -30,6 +30,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
 		maxWidth: '18%',
 		alignSelf: 'center',
 	},
+	base: {
+		margin: '0 8%',
+	},
+	cards: {
+		padding: '1rem',
+	},
 }));
 
 export interface ISponsor {
@@ -59,15 +65,15 @@ const RepDinamicos: FC = () => {
 	}, []);
 	return (
 		<Fragment>
-			<div className='ed-container'>
-				<div className='ed-item s-py-2'>
+			<div className={classes.base}>
+				<div className={classes.cards}>
 					<Card className={classes.card}>
 						<SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} />
 
 						<CheckboxList state={state} setState={setState} Sponsor={Sponsor} setSponsor={setSponsor} />
 					</Card>
 				</div>
-				<div className='ed-item s-to-center s-py-2'>
+				<div className={classes.cards}>
 					<TableReports initDate={initDate} endDate={endDate} state={state} Sponsor={Sponsor} from='Movimientos' />
 				</div>
 			</div>

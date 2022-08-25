@@ -13,12 +13,19 @@ export const HtmlTooltip = withStyles(() => ({
 }))(Tooltip);
 
 export const useStylesModalUser = makeStyles((styles: Theme) => ({
+	loginPage: {
+		background: 'linear-gradient(152deg, rgba(0,212,255,1) 0%, rgba(55,36,106,1) 43%, rgba(55,36,106,1) 100%)',
+		height: '100vh',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	root: {
 		maxWidth: '80vw',
 		borderRadius: '2.5rem',
 	},
 	containerLogin: {
-		margin: '2rem',
+		margin: '2rem 0',
 	},
 	containerNewPass: {
 		margin: '2rem',
@@ -60,15 +67,7 @@ export const useStylesModalUser = makeStyles((styles: Theme) => ({
 		width: '70%',
 	},
 	containerAuthModal: {
-		display: 'flex',
-		width: '100%',
-		height: '100vh',
-		padding: '2rem',
-		position: 'absolute',
 		overflow: 'hidden',
-		maxWidth: '100%',
-		minHeight: '360px',
-		maxHeight: '360px',
 		textAlign: 'center',
 		flexWrap: 'wrap',
 		justifyContent: 'center',

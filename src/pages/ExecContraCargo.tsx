@@ -4,9 +4,10 @@ import { FC, useState } from 'react';
 import Swal from 'sweetalert2';
 import { handleError, handleLoading } from '../components/swal/alerts';
 import useAxios from '../config';
+import { useStyles } from './RepDinamicos';
 
 const ExecContraCargo: FC = () => {
-	//const classes = useStyles();
+	const classes = useStyles();
 
 	//const [state, setState] = .useState({});
 	const [load, setLoad] = useState(false);
@@ -42,9 +43,9 @@ const ExecContraCargo: FC = () => {
 
 	return (
 		<>
-			<div className='ed-container'>
+			<div className={classes.base}>
 				<div
-					className='ed-item s-py-2'
+					className={classes.cards}
 					style={{
 						marginTop: '5rem',
 						display: 'flex',

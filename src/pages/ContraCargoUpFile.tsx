@@ -5,11 +5,11 @@ import * as XLSX from 'xlsx';
 import LoaderLine from '../components/loader/LoaderLine';
 import { handleLoading } from '../components/swal/alerts';
 import useAxios from '../config';
-//import { useStyles } from './RepDinamicos';
+import { useStyles } from './RepDinamicos';
 // import SelectList from '../components/DateTime';
 
 const ContraCargoUpFile: FC = () => {
-	//const classes = useStyles();
+	const classes = useStyles();
 
 	//const [state, setState] = .useState({});
 	const [load, setLoad] = useState(false);
@@ -85,9 +85,9 @@ const ContraCargoUpFile: FC = () => {
 
 	return (
 		<>
-			<div className='ed-container'>
+			<div className={classes.base}>
 				<div
-					className='ed-item s-py-2'
+					className={classes.cards}
 					style={{
 						marginTop: '2rem',
 						display: 'flex',

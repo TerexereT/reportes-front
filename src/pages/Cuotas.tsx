@@ -28,18 +28,13 @@ const Cuotas: React.FC = () => {
 
 	return (
 		<Fragment>
-			<div className='ed-container'>
-				{/* <div className='ed-item m-cross-end m-main-justify s-py-2'>
-					<div className={classes.headerTitle}>Reportes Dinámicos de Cuotas Vencidas</div>
-				</div> */}
-				<div className='ed-item s-py-2'>
+			<div className={classes.base}>
+				<div className={classes.cards}>
 					<Card className={classes.card}>
-						{/* <SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} /> */}
-
 						<CheckboxList state={state} setState={setState} />
 					</Card>
 				</div>
-				<div className='ed-item s-to-center s-py-2'>
+				<div className={classes.cards}>
 					<TableReports state={state} from='CuotasVencidas' />
 				</div>
 			</div>
