@@ -34,12 +34,12 @@ export const ThemeContextProvider = ({ children }: Props) => {
 
 	useLayoutEffect(() => {
 		const value = localStorage.getItem('mode');
-		if (!value) {
-			prefersDarkMode ? setMode('dark') : setMode('light');
-			localStorage.setItem('mode', mode!);
-		} else {
+		if (value) {
 			localStorage.getItem('mode') === 'light' ? setMode('light') : setMode('dark');
+		} else {
+			prefersDarkMode ? setMode('dark') : setMode('light');
 		}
+		localStorage.setItem('mode', mode!);
 	}, [mode, prefersDarkMode]);
 
 	return (
