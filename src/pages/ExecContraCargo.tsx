@@ -53,7 +53,7 @@ const ExecContraCargo: FC = () => {
 					}}>
 					<Button
 						style={{ fontSize: '2rem', padding: '2rem', borderRadius: '1rem' }}
-						color='success'
+						// color='success'
 						variant='contained'
 						onClick={handleExecContraCargo}
 						disabled={load}>

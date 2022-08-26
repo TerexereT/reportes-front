@@ -1,5 +1,5 @@
-import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 export const useStyles = makeStyles((styles: Theme) => ({
 	tab: {
@@ -163,7 +163,7 @@ export const sxStyled = {
 	}),
 	buttonSaveData: (styles: Theme) => ({
 		backgroundColor: styles.palette.primary.light,
-		color: styles.palette.primary.contrastText,
+		color: styles.palette.common.white,
 		'&:hover': {
 			backgroundColor: styles.palette.primary.main,
 		},

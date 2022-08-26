@@ -11,10 +11,16 @@ import useAxios from '../config';
 
 export const useStyles = makeStyles((theme: Theme) => ({
 	headerTitle: {
-		color: '#37256b',
+		color: theme.palette.primary.main,
 		fontWeight: 600,
 		fontSize: 40,
 		padding: 0,
+	},
+	title: {
+		fontWeight: 600,
+		fontSize: '2rem',
+		padding: 0,
+		color: theme.palette.text.primary,
 	},
 	card: {
 		minWidth: 275,
@@ -26,6 +32,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
 		padding: '1rem',
 		display: 'flex',
 	},
+	rowItem: {
+		marginTop: '1rem',
+	},
 	datePicker: {
 		maxWidth: '18%',
 		alignSelf: 'center',
@@ -35,6 +44,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
 	},
 	cards: {
 		padding: '1rem',
+	},
+	inputText: {
+		color: theme.palette.text.primary,
+		fontSize: '1.5rem',
 	},
 }));
 

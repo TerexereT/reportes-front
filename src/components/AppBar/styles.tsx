@@ -74,7 +74,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 	},
 	link: {
 		textDecoration: 'none',
-		color: theme.palette.secondary.contrastText,
+		color: theme.palette.text.primary,
 	},
 	icon: {
 		minWidth: 40,

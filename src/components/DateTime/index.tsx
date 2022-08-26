@@ -9,17 +9,17 @@ import { FC } from 'react';
 export const useStylesDT = makeStyles((styles) => ({
 	title: {
 		fontSize: 24,
-		color: styles.palette.primary.main,
+		color: styles.palette.text.secondary,
 		marginBottom: 0,
 		padding: 16,
 	},
 	Button: {
 		background: styles.palette.primary.main,
-		color: styles.palette.primary.contrastText,
+		color: styles.palette.common.white,
 		marginRight: '1rem',
 		'&:hover': {
 			background: styles.palette.primary.light,
-			color: styles.palette.primary.contrastText,
+			color: styles.palette.common.white,
 		},
 	},
 	row: {

@@ -74,6 +74,7 @@ const Seguridad: FC = () => {
 							wrapped
 							classes={{ root: classes.tabLabel }}
 						/>
+						{/* 
 						<Tab
 							sx={sxStyled.tabName}
 							label='Permisos'
@@ -81,6 +82,7 @@ const Seguridad: FC = () => {
 							wrapped
 							classes={{ root: classes.tabLabel }}
 						/>
+						*/}
 						<Tab
 							sx={sxStyled.tabName}
 							label='Modulos'
@@ -99,9 +101,11 @@ const Seguridad: FC = () => {
 					<TabPanel value={'gestionUsuarios'} classes={{ root: classes.tabPanel }}>
 						<GestionUsuarios listDepartment={listDepartment} listRoles={listRoles} allUser={allUser} />
 					</TabPanel>
+					{/* 
 					<TabPanel value={'gestionPermisos'} classes={{ root: classes.tabPanel }}>
 						<EditarPermisos listDepartment={listDepartment} listRoles={listRoles} />
 					</TabPanel>
+					*/}
 					<TabPanel value={'gestionViews'} classes={{ root: classes.tabPanel }}>
 						<EditarViews listDepartment={listDepartment} />
 					</TabPanel>
