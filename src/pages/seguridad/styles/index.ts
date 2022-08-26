@@ -163,7 +163,7 @@ export const sxStyled = {
 	}),
 	buttonSaveData: (styles: Theme) => ({
 		backgroundColor: styles.palette.primary.light,
-		color: styles.palette.text.primary,
+		color: styles.palette.common.white,
 		'&:hover': {
 			backgroundColor: styles.palette.primary.main,
 		},

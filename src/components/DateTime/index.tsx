@@ -15,11 +15,11 @@ export const useStylesDT = makeStyles((styles) => ({
 	},
 	Button: {
 		background: styles.palette.primary.main,
-		color: styles.palette.text.primary,
+		color: styles.palette.common.white,
 		marginRight: '1rem',
 		'&:hover': {
 			background: styles.palette.primary.light,
-			color: styles.palette.text.primary,
+			color: styles.palette.common.white,
 		},
 	},
 	row: {
