@@ -40,11 +40,11 @@ export const useStyles = makeStyles((styles) => ({
 	},
 	Button: {
 		background: styles.palette.primary.main,
-		color: styles.palette.primary.contrastText,
+		color: styles.palette.text.primary,
 		textTransform: 'none',
 		'&:hover': {
 			background: styles.palette.primary.light,
-			color: styles.palette.primary.contrastText,
+			color: styles.palette.text.primary,
 		},
 	},
 	row: {

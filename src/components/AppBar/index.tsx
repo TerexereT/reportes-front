@@ -19,6 +19,10 @@ import { baseUrl } from '../../router/url';
 import { drawerWidth, useStyles } from './styles';
 import { auxLink, handleTitleSection } from './tabs';
 
+const sxStyles = {
+	borderRadius: '0.25rem',
+} as const;
+
 const MainMenu = () => {
 	const classes = useStyles();
 	const [auth, setAuth] = useState(false);
@@ -90,14 +94,14 @@ const MainMenu = () => {
 						{user ? (
 							<div>
 								<IconButton
+									sx={sxStyles}
 									aria-label='account of current user'
 									aria-controls='menu-appbar'
-									aria-haspopup='true'
+									aria-haspopup='menu'
 									onClick={handleMenu}
-									color='inherit'
-									size='large'>
-									<span style={{ fontSize: '1rem' }}>{user.name}</span>
+									color='inherit'>
 									<AccountCircle />
+									<span style={{ fontSize: '1.25rem', marginLeft: '0.5rem' }}>{user.name}</span>
 								</IconButton>
 								<Menu
 									id='menu-appbar'
@@ -168,29 +172,6 @@ const MainMenu = () => {
 					</List>
 					<Divider />
 				</Drawer>
-				{/*
-                
-				<SwipeableDrawer
-					anchor='left'
-					open={open}
-					onOpen={() => {
-						setOpen(true);
-						return {};
-					}}
-					onClose={handleDrawerClose}
-					className={classNames(classes.drawer, {
-						[classes.drawerOpen]: open,
-						[classes.drawerClose]: !open,
-					})}
-					classes={{
-						paper: classNames({
-							[classes.drawerOpen]: open,
-							[classes.drawerClose]: !open,
-						}),
-					}}>
-				</SwipeableDrawer>
-                
-                */}
 			</div>
 		</>
 	);

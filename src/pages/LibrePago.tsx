@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		height: 50,
 		margin: '1rem 0',
 		background: theme.palette.primary.main,
-		color: theme.palette.primary.contrastText,
+		color: theme.palette.text.primary,
 		'&:hover': {
 			background: theme.palette.primary.light,
 		},
@@ -87,11 +87,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 	Button: {
 		background: theme.palette.primary.main,
-		color: theme.palette.primary.contrastText,
+		color: theme.palette.text.primary,
 		textTransform: 'none',
 		'&:hover': {
 			background: theme.palette.primary.light,
-			color: theme.palette.primary.contrastText,
+			color: theme.palette.text.primary,
 		},
 	},
 }));

@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import classNames from 'classnames';
 import { ChangeEvent, FC, useState } from 'react';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
@@ -8,21 +9,23 @@ import useAxios from '../config';
 import { useStyles } from './RepDinamicos';
 // import SelectList from '../components/DateTime';
 
+const sxStylesCarga = {
+	width: '120px',
+	height: '40px',
+	marginTop: '1rem',
+} as const;
+const sxStylesPick = {
+	maxWidth: '240px',
+	height: '40px',
+	marginTop: '1rem',
+} as const;
+
 const ContraCargoUpFile: FC = () => {
 	const classes = useStyles();
 
-	//const [state, setState] = .useState({});
 	const [load, setLoad] = useState(false);
 	const [data, setData] = useState<any>(null);
 	const [file, setFile] = useState<File | null>(null);
-
-	/*
-	useEffect(() => {
-		if (data) {
-			console.log(data);
-		}
-	}, [data]);
-	*/
 
 	const transFile = async (filex: File) => {
 		const promise = new Promise((resolve, reject) => {
@@ -84,40 +87,42 @@ const ContraCargoUpFile: FC = () => {
 	};
 
 	return (
-		<>
-			<div className={classes.base}>
-				<div
-					className={classes.cards}
-					style={{
-						marginTop: '2rem',
-						display: 'flex',
-						justifyContent: 'center',
-					}}>
-					{!load ? (
-						<>
-							<div
-								style={{
-									margin: '2px',
-									width: '20rem',
-								}}>
-								<Button size='small' variant='outlined' component='label'>
-									Seleccionar Archivo
-									<input type='file' accept='.xlsx, .xls, .csv' hidden onChange={handleFile} />
-								</Button>
-								<p style={{ margin: '2px' }}>{file ? file.name : ''}</p>
-							</div>
-							<Button size='small' variant='contained' onClick={handleUpFile} disabled={file ? false : true}>
-								Cargar
-							</Button>
-						</>
-					) : (
-						<div style={{ width: '50%', marginLeft: '5rem', marginTop: '5rem' }}>
-							<LoaderLine />
+		<div className={classes.base}>
+			<div
+				className={classes.cards}
+				style={{
+					marginTop: '2rem',
+					display: 'flex',
+					justifyContent: 'center',
+					flexDirection: 'column',
+					alignItems: 'center',
+				}}>
+				{!load ? (
+					<>
+						<div className={classNames(classes.title, classes.rowItem)}>
+							A continuación elija el archivo Excel para el contra cargo
 						</div>
-					)}
-				</div>
+						{file ? <div className={classNames(classes.rowItem, classes.inputText)}>{file.name}</div> : null}
+						<Button size='small' sx={sxStylesPick} variant={'contained'} component='label'>
+							Seleccionar Archivo
+							<input type='file' accept='.xlsx, .xls, .csv' hidden onChange={handleFile} />
+						</Button>
+						<Button
+							sx={sxStylesCarga}
+							size='small'
+							variant='contained'
+							onClick={handleUpFile}
+							disabled={file ? false : true}>
+							Cargar
+						</Button>
+					</>
+				) : (
+					<div style={{ width: '50%', marginLeft: '5rem', marginTop: '5rem' }}>
+						<LoaderLine />
+					</div>
+				)}
 			</div>
-		</>
+		</div>
 	);
 };
 

@@ -8,14 +8,12 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import {
-	cancelarCuotas,
 	contracargo,
 	contraCargoUp,
 	cuotas,
 	cuotasR,
 	execContracargo,
 	librePago,
-	// login,
 	mantenimientos,
 	movimientos,
 	pagoCuota,
@@ -88,30 +86,6 @@ export const auxLink = [
 ];
 
 export const handleTitleSection = (seccion: string) => {
-	switch (seccion) {
-		case contracargo:
-			return 'Contracargos';
-		case cuotas:
-			return 'Cuotas Vencidas';
-		case movimientos:
-			return 'Movimientos';
-		case mantenimientos:
-			return 'Mantenimiento';
-		case cuotasR:
-			return 'Cuotas Resumidas';
-		case cancelarCuotas:
-			return 'Cancelar Cuotas';
-		case reportexaci:
-			return 'Mantenimiento por ACI';
-		case librePago:
-			return 'Libre Pago';
-		case pagoCuota:
-			return 'Pago Cuota';
-		case transaccional:
-			return 'Transaccional';
-		case seguridad:
-			return 'Gestion de Seguridad';
-		default:
-			return 'Inicio';
-	}
+	const section = auxLink.filter((val) => val.link === seccion);
+	return section.length > 0 ? section[0].name : 'Inicio';
 };

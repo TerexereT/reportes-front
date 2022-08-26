@@ -17,7 +17,6 @@ import formatData from '../functions/FormatData';
 const useStyles = makeStyles((theme: Theme) => ({
 	base: {
 		display: 'flex',
-		width: '100%',
 		height: '100vh',
 		padding: '2rem',
 	},
@@ -64,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		height: 50,
 		margin: '1rem 0',
 		background: theme.palette.primary.main,
-		color: theme.palette.primary.contrastText,
+		color: theme.palette.text.primary,
 		'&:hover': {
 			background: theme.palette.primary.light,
 		},

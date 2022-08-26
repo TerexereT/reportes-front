@@ -8,7 +8,6 @@ interface HomeInt {}
 const useStyles = makeStyles((theme: Theme) => ({
 	base: {
 		display: 'flex',
-		width: '100%',
 		flexDirection: 'column',
 		alignItems: 'center',
 		padding: '2rem',
@@ -16,10 +15,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 	title: {
 		fontSize: 40,
 		padding: '1rem 0',
+		color: theme.palette.text.primary,
 	},
 	subtitle: {
 		fontSize: 24,
 		padding: '1rem',
+		color: theme.palette.text.secondary,
 	},
 }));
 const Home: React.FC<HomeInt> = () => {

@@ -1,22 +1,37 @@
-import * as React from 'react';
+import { Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { FC, useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { GuardedRoute, GuardProvider } from 'react-router-guards';
 import AppBar from '../components/AppBar';
 import LoaderLine from '../components/loader/LoaderLine';
 import AuthContext from '../context/auth/AuthContext';
 import { Lock, PrivGuard } from './guards';
-import Public from './routes/Public';
 import Private from './routes/Private';
+import Public from './routes/Public';
 import { login } from './url';
 import { existRoutePublic, isPrivate } from './utilis/Functions';
 
-export const Routes: React.FC = () => {
-	const { user, views } = React.useContext(AuthContext);
+const useStyles = makeStyles((theme: Theme) => ({
+	app: {},
+	background: {
+		position: 'fixed',
+		top: 0,
+		background: theme.palette.background.paper,
+		width: '100vw',
+		height: '100vh',
+		zIndex: -2,
+	},
+}));
 
-	const [checking, setChecking] = React.useState<boolean>(true);
+export const Routes: FC = () => {
+	const classes = useStyles();
+	const { user, views } = useContext(AuthContext);
+
+	const [checking, setChecking] = useState<boolean>(true);
 	//const [menu, setMenu] = React.useState<Views>({});
 
-	React.useLayoutEffect(() => {
+	useLayoutEffect(() => {
 		//dispatch(FinishLoading());
 		let token = localStorage.getItem('token');
 		if (token !== null) {
@@ -25,7 +40,7 @@ export const Routes: React.FC = () => {
 		setChecking(false);
 	}, []);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (localStorage.getItem('token') === null && isPrivate()) {
 			window.location.replace(login);
 		}
@@ -44,19 +59,25 @@ export const Routes: React.FC = () => {
 				<Switch>
 					{!user ? (
 						<>
-							{Public.map(({ path, component, meta }, i) => {
-								return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
-							})}
+							<div className={classes.app}>
+								<div className={classes.background} />
+								{Public.map(({ path, component, meta }, i) => {
+									return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
+								})}
+							</div>
 						</>
 					) : (
 						<>
-							<AppBar />
-							<GuardProvider guards={[(to, from, next): void => PrivGuard(to, from, next, views)]}>
-								{console.log(window.location.pathname)}
-								{Private.map(({ path, component, meta }, i) => {
-									return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
-								})}
-							</GuardProvider>
+							<div className={classes.app}>
+								<div className={classes.background} />
+								<AppBar />
+								<GuardProvider guards={[(to, from, next): void => PrivGuard(to, from, next, views)]}>
+									{console.log(window.location.pathname)}
+									{Private.map(({ path, component, meta }, i) => {
+										return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
+									})}
+								</GuardProvider>
+							</div>
 						</>
 					)}
 				</Switch>
