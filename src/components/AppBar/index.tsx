@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
@@ -14,6 +16,7 @@ import classNames from 'classnames';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/AuthContext';
+import ThemeContext from '../../context/auth/ThemeContext';
 import TranredLogo from '../../images/tranred-logo.png';
 import { baseUrl } from '../../router/url';
 import { drawerWidth, useStyles } from './styles';
@@ -34,13 +37,14 @@ const MainMenu = () => {
 	const [links, setLink] = useState<any[]>([]);
 
 	const { user, views, handleLogout } = useContext(AuthContext);
+	const { mode, toggleDarkMode } = useContext(ThemeContext);
 
 	useEffect(() => {
 		//console.log('views', views);
 		if (user && views.length) {
 			const listLink = auxLink.filter((link) => views.find((view) => view === link.name));
-			console.log('listx', listLink);
-			console.log('listd', auxLink);
+			// console.log('listx', listLink);
+			// console.log('listd', auxLink);
 			setLink(listLink);
 		}
 	}, [user, views]);
@@ -120,6 +124,10 @@ const MainMenu = () => {
 									{/*
 									<MenuItem onClick={handleClose}>Perfil</MenuItem>
 										*/}
+									<MenuItem onClick={toggleDarkMode} style={{ justifyContent: 'center' }}>
+										{mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+									</MenuItem>
+									<Divider />
 									<MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
 								</Menu>
 							</div>
