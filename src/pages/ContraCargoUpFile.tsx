@@ -44,7 +44,7 @@ const ContraCargoUpFile: FC = () => {
 			};
 		});
 		await promise.then((d) => {
-			console.log('dd', d);
+			// console.log('dd', d);
 			setData(d);
 		});
 	};
@@ -64,7 +64,7 @@ const ContraCargoUpFile: FC = () => {
 		try {
 			formData.append('lote', JSON.stringify(data));
 			formData.append('nameFile', file.name);
-			console.log('datax', data);
+			// console.log('datax', data);
 			//
 			handleLoading();
 			await useAxios.post('/1000pagos/up/leto', formData);
@@ -80,7 +80,7 @@ const ContraCargoUpFile: FC = () => {
 			setData(null);
 		} catch (error: any) {
 			setFile(null);
-			console.log('err', error);
+			// console.log('err', error);
 			Swal.fire('Error', error?.response?.data?.message || 'error', 'error');
 			setLoad(false);
 		}

@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { DataGrid, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
 import CloseIcon from '@mui/icons-material/Close';
 import { Autocomplete, Avatar, Button, Grid, Paper, TextField } from '@mui/material';
-import axios from '../../../../config';
+import { DataGrid, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { useStyles } from '../../styles';
-import { handleError } from '../../../../components/swal/alerts';
-import { columnsGestionUsuario } from './columnsGrid';
-import { Department, Roles } from '../../interfaces';
 import LoaderLine from '../../../../components/loader/LoaderLine';
+import { handleError } from '../../../../components/swal/alerts';
+import axios from '../../../../config';
+import { Department, Roles } from '../../interfaces';
+import { useStyles } from '../../styles';
+import { columnsGestionUsuario } from './columnsGrid';
 
 interface Props {
 	listDepartment: Department[];
@@ -72,9 +72,9 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 	const getUserData = async (user: any) => {
 		setDisabledSelect(true);
 		try {
-			console.log(user);
+			// console.log(user);
 			const resp = await axios.get(`seguridad/workerSecurity/${user.id}`);
-			console.log(resp.data.info);
+			// console.log(resp.data.info);
 			const data = resp.data.info;
 			setUserBlocked(data.active === 0 ? true : false);
 			setLogin(user.login);

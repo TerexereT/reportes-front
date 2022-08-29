@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
-import useAxios from '../../../config';
 import Swal from 'sweetalert2';
+import useAxios from '../../../config';
 import { multiGetterAxios } from '../../../utilis/multiGetterAxios';
 
 export const seguridad = {
@@ -35,7 +35,7 @@ export async function getAllListSeguridad() {
 
 		return multiGetterAxios(routes)
 			.then((responses) => {
-				console.log('res', responses);
+				// console.log('res', responses);
 				return {
 					ok: true,
 					departments: responses[0].data.info,
@@ -121,7 +121,7 @@ export async function saveViews(dep: number, views: any[]) {
 }
 
 export async function updateDepartments(deps: any) {
-	console.log(deps);
+	// console.log(deps);
 	try {
 		await useAxios.put(`/seguridad/departments`, { listDeps: deps });
 		return {
