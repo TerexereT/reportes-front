@@ -35,7 +35,7 @@ export const Routes: FC = () => {
 		//dispatch(FinishLoading());
 		let token = localStorage.getItem('token');
 		if (token !== null) {
-			console.log('refrest login');
+			// console.log('refrest login');
 		}
 		setChecking(false);
 	}, []);
@@ -72,7 +72,6 @@ export const Routes: FC = () => {
 								<div className={classes.background} />
 								<AppBar />
 								<GuardProvider guards={[(to, from, next): void => PrivGuard(to, from, next, views)]}>
-									{console.log(window.location.pathname)}
 									{Private.map(({ path, component, meta }, i) => {
 										return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
 									})}

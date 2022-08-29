@@ -3,12 +3,12 @@ import useAxios from '../../config';
 //
 import { createContext, ReactChild, useEffect, useState } from 'react';
 //
-import { existRoutePublic, isPrivate } from '../../router/utilis/Functions';
-import { ContextAuth } from './interface';
-import { InterfaceObject, UserInterface } from '../../interfaces/auth';
-import { baseUrl, login } from '../../router/url';
 import Swal from 'sweetalert2';
 import { swalLoading } from '../../components/swal/alerts';
+import { InterfaceObject, UserInterface } from '../../interfaces/auth';
+import { baseUrl, login } from '../../router/url';
+import { existRoutePublic, isPrivate } from '../../router/utilis/Functions';
+import { ContextAuth } from './interface';
 
 interface Props {
 	children: ReactChild;
@@ -40,7 +40,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 			setUser(res.data.user);
 			setViews(res.data.views);
 			setPermiss(res.data.permiss);
-			console.log('reset', res);
+			// console.log('reset', res);
 		} catch (error: any) {
 			console.log(error);
 			Swal.fire({
@@ -58,17 +58,17 @@ export const AuthContextProvider = ({ children }: Props) => {
 
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
-			console.log('yaa tengo token');
+			// console.log('yaa tengo token');
 			if (!user) {
-				console.log('get user');
+				// console.log('get user');
 				getUser();
 			}
 		} else {
 			if (isPrivate() || !existRoutePublic()) {
-				console.log('redirect login 3 ', isPrivate(), !existRoutePublic());
+				// console.log('redirect login 3 ', isPrivate(), !existRoutePublic());
 				window.location.replace(login);
 			}
-			console.log('no tengo token');
+			// console.log('no tengo token');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -76,9 +76,9 @@ export const AuthContextProvider = ({ children }: Props) => {
 	const handleLogin = async (user: String, password: String, historyA?: any) => {
 		swalLoading();
 		try {
-			console.log('entrer');
+			// console.log('entrer');
 			const res = await useAxios.post('/auth/login', { user, password });
-			console.log('ress', res.data);
+			// console.log('ress', res.data);
 			setUser(res.data.user);
 			setViews(res.data.views);
 			setPermiss(res.data.permiss);

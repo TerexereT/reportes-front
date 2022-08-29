@@ -18,7 +18,7 @@ const ThemeContext = createContext<IThemeContext>({
 
 export const ThemeContextProvider = ({ children }: Props) => {
 	const prefersDarkMode: boolean = useMediaQuery('(prefers-color-scheme: dark)');
-	const [mode, setMode] = useState<PaletteMode | undefined>('light');
+	const [mode, setMode] = useState<PaletteMode | undefined>(undefined);
 
 	const toggleDarkMode = () => {
 		setMode((prev) => {
@@ -34,13 +34,12 @@ export const ThemeContextProvider = ({ children }: Props) => {
 
 	useLayoutEffect(() => {
 		const value = localStorage.getItem('mode');
-		if (value) {
-			localStorage.getItem('mode') === 'light' ? setMode('light') : setMode('dark');
-		} else {
+		if (value === null) {
 			prefersDarkMode ? setMode('dark') : setMode('light');
+		} else {
+			value === 'light' ? setMode('light') : setMode('dark');
 		}
-		localStorage.setItem('mode', mode!);
-	}, [mode, prefersDarkMode]);
+	}, [prefersDarkMode]);
 
 	return (
 		<ThemeContext.Provider
