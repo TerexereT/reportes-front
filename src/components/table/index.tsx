@@ -413,7 +413,7 @@ const TableReports: FC<TableReportsProps> = ({
 					</div>
 				</div>
 				<CardContent>
-					<div style={{ height: 400, width: '100%' }}>
+					<div style={{ height: 440, width: '100%' }}>
 						<DataGrid
 							ref={fieldRef}
 							components={{
