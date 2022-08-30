@@ -10,10 +10,8 @@ const useAxios = axios.create({
 	//
 	baseURL: process.env.REACT_APP_APIURL ? process.env.REACT_APP_APIURL : dev,
 	headers: {
-		common: {
-			token: localStorage.getItem('token'),
-			Authorization: `${localStorage.getItem('token')}`,
-		},
+		token: localStorage.getItem('token'),
+		Authorization: `${localStorage.getItem('token')}`,
 	},
 });
 
@@ -29,7 +27,7 @@ useAxios.interceptors.response.use((resp: AxiosResponse<any>): AxiosResponse<any
 });
 
 useAxios.interceptors.request.use((config: any) => {
-	//config.headers.Authorization = localStorage.getItem('token');
+	config.headers.Authorization = localStorage.getItem('token');
 	return config;
 });
 
