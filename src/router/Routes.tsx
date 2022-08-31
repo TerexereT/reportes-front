@@ -9,7 +9,7 @@ import AuthContext from '../context/auth/AuthContext';
 import { Lock, PrivGuard } from './guards';
 import Private from './routes/Private';
 import Public from './routes/Public';
-import { login } from './url';
+import { baseUrl, login } from './url';
 import { existRoutePublic, isPrivate } from './utilis/Functions';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -43,10 +43,12 @@ export const Routes: FC = () => {
 	useEffect(() => {
 		if (localStorage.getItem('token') === null && isPrivate()) {
 			window.location.replace(login);
-		}
-		if (localStorage.getItem('token') === null && !existRoutePublic()) {
+		} else if (localStorage.getItem('token') === null && !existRoutePublic()) {
 			window.location.replace(login);
+		} else if (localStorage.getItem('token') !== null && !isPrivate()) {
+			window.location.replace(baseUrl);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (checking) {
@@ -57,7 +59,7 @@ export const Routes: FC = () => {
 		<Router>
 			<GuardProvider guards={[Lock]}>
 				<Switch>
-					{!user ? (
+					{!user || !views.length ? (
 						<>
 							<div className={classes.app}>
 								<div className={classes.background} />

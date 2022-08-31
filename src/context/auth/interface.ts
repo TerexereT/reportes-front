@@ -5,9 +5,15 @@ export interface User {
 	login: string;
 }
 
+export interface Views {
+	name: string;
+	key: number;
+	root: string;
+}
+
 export interface ContextAuth {
 	user: UserInterface | null;
-	views: String[] | [];
+	views: Views[] | [];
 	permiss: InterfaceObject | {};
 	handleLogin: (user: String, password: String, historyA?: any) => void;
 	handleLogout: () => void;
