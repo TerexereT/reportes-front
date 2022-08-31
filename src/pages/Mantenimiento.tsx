@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
-import classnames from 'classnames';
 import { FC, useEffect, useState } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import { useStylesDT } from '../components/DateTime';
@@ -44,7 +43,7 @@ const Mantenimiento: FC = () => {
 					<Card className={classes.card}>
 						<div className={classes.row}>
 							<Typography
-								className={classnames(classesDT.title, 'm-cross-end')}
+								className={classesDT.title}
 								style={{ marginRight: '1rem', marginBottom: 0 }}
 								color='textSecondary'
 								gutterBottom>
