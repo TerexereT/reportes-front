@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		right: 8,
 		padding: 0,
 		minWidth: 'unset',
-		borderRadius: 20,
+		borderRadius: theme.shape.borderRadius,
 	},
 	textField: {
 		margin: '1rem',

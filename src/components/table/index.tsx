@@ -254,7 +254,7 @@ const TableReports: FC<TableReportsProps> = ({
 					field: key,
 					headerName: key,
 					type: 'string',
-					width: 25,
+					width: 0,
 				};
 			}
 			if (key === 'TERMINAL') {
@@ -325,7 +325,7 @@ const TableReports: FC<TableReportsProps> = ({
 						field: key,
 						headerName: key,
 						type: 'string',
-						width: 25,
+						width: 0,
 					};
 				}
 				if (key === 'TERMINAL') {

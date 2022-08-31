@@ -24,61 +24,73 @@ import {
 
 export const auxLink = [
 	{
+		key: 2,
 		name: 'Movimientos',
 		link: movimientos,
 		icon: <ImportExportIcon />,
 	},
 	{
+		key: 3,
 		name: 'Cuotas Vencidas',
 		link: cuotas,
 		icon: <AttachMoneyIcon />,
 	},
 	{
+		key: 4,
 		name: 'Cuotas Resumidas',
 		link: cuotasR,
 		icon: <AttachMoneyIcon />,
 	},
 	{
+		key: 5,
 		name: 'Mantenimiento',
 		link: mantenimientos,
 		icon: <BuildIcon />,
 	},
 	{
+		key: 6,
 		name: 'Mantenimiento por ACI',
 		link: reportexaci,
 		icon: <HardwareIcon />,
 	},
 	{
+		key: 7,
 		name: 'Libre Pago',
 		link: librePago,
 		icon: <ReceiptIcon />,
 	},
 	{
+		key: 8,
 		name: 'Pago Cuota',
 		link: pagoCuota,
 		icon: <ReceiptLongIcon />,
 	},
 	{
+		key: 9,
 		name: 'Transaccional',
 		link: transaccional,
 		icon: <HandshakeIcon />,
 	},
 	{
+		key: 10,
 		name: 'Archivo ContraCargo',
 		link: contraCargoUp,
 		icon: <CloudUploadIcon />,
 	},
 	{
+		key: 11,
 		name: 'Gestion de Seguridad',
 		link: seguridad,
 		icon: <BuildIcon />,
 	},
 	{
-		name: 'Contracargos',
+		key: 12,
+		name: 'Contracargo Descontado',
 		link: contracargo,
 		icon: <CurrencyExchangeIcon />,
 	},
 	{
+		key: 13,
 		name: 'Ejecutar Contracargos',
 		link: execContracargo,
 		icon: <CurrencyExchangeIcon />,
