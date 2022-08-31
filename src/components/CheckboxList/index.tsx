@@ -82,7 +82,7 @@ const CheckboxList: FC<CBListProps> = ({ state, setState, Sponsor, setSponsor, e
 					</CardActions>
 				)}
 			</div>
-			<CardContent className='m-px-2 m-pb-2' style={{ paddingTop: 0 }}>
+			<CardContent style={{ paddingTop: 0 }}>
 				<FormGroup row style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr' }}>
 					{Object.keys(state).map((key: any) => {
 						return (

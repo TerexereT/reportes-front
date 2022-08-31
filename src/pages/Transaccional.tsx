@@ -1,6 +1,5 @@
 import { Card, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import classnames from 'classnames';
 import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import { useStylesDT } from '../components/DateTime';
@@ -57,7 +56,7 @@ const Transaccional: FC = () => {
 						{/* <SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} /> */}
 						<div className={classes.row}>
 							<Typography
-								className={classnames(classesDT.title, 'm-cross-end')}
+								className={classesDT.title}
 								style={{ marginRight: '1rem', marginBottom: 0 }}
 								color='textSecondary'
 								gutterBottom>
@@ -77,7 +76,7 @@ const Transaccional: FC = () => {
 								})}
 							</Select>
 							<Typography
-								className={classnames(classesDT.title, 'm-cross-end')}
+								className={classesDT.title}
 								style={{ marginRight: '1rem', marginBottom: 0 }}
 								color='textSecondary'
 								gutterBottom>

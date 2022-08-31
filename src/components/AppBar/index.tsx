@@ -40,7 +40,6 @@ const MainMenu = () => {
 	const { mode, toggleDarkMode } = useContext(ThemeContext);
 
 	useEffect(() => {
-		//console.log('views', views);
 		if (user && views.length) {
 			const listLink = auxLink.filter((link) => views.find((view) => view === link.name));
 			// console.log('listx', listLink);
