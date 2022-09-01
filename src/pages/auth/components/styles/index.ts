@@ -138,7 +138,7 @@ export const useStylesModalUser = makeStyles((styles: Theme) => ({
 		fontSize: '1rem',
 		color: '#ffffff',
 		padding: '.6rem 4rem',
-		borderRadius: '0.25rem',
+		borderRadius: styles.shape.borderRadius,
 		//backgroundColor: styles.palette.success.main,
 		'&:hover': {
 			//backgroundColor: styles.palette.success.light,
