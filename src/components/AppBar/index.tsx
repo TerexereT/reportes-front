@@ -43,7 +43,6 @@ const MainMenu = () => {
 	useEffect(() => {
 		if (user && views.length) {
 			const listLink = auxLink.filter((link) => views.find((view: Views) => view.key === link.key));
-			//console.log(listLink);
 			setLink(listLink);
 		}
 	}, [user, views]);
@@ -68,8 +67,8 @@ const MainMenu = () => {
 
 	useEffect(() => {
 		const seccion = window.location.pathname;
-		setSection(handleTitleSection(seccion));
-	}, [path]);
+		setSection(handleTitleSection(seccion, views));
+	}, [path, views]);
 
 	return (
 		<>
