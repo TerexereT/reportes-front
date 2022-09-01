@@ -2,6 +2,7 @@ import { GuardFunction } from 'react-router-guards';
 import { GuardFunctionRouteProps, GuardToRoute, Next } from 'react-router-guards/dist/types';
 import { Views } from '../../context/auth/interface';
 import { baseUrl, login } from '../url';
+import { isPrivate } from '../utilis/Functions';
 
 export const Lock: GuardFunction = (to, from, next) => {
 	// console.log('publicc guarddx', to.location.pathname);
@@ -26,6 +27,11 @@ export const PrivGuard: any = (
 	next: Next,
 	views: Views[] | []
 ) => {
+	if (localStorage.getItem('token') !== null && !isPrivate()) {
+		console.log('vete a homes');
+		next.redirect(baseUrl);
+	}
+
 	// console.log('priv guard xxd', to.location.pathname);
 	//console.log('aquii', views);
 	//
@@ -33,13 +39,7 @@ export const PrivGuard: any = (
 	let userDep = views.find((view) => view.root === to.location.pathname.split('/')[1]);
 	//console.log('valid', userDep);
 
-	next.props({ isWorker });
-
 	//
 	if (userDep) next.props({ isWorker });
-	else {
-		//console.log('aquix2');
-		//next.redirect(baseUrl);
-		window.location.replace(baseUrl);
-	}
+	else next.redirect(baseUrl);
 };
