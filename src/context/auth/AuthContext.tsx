@@ -42,9 +42,9 @@ export const AuthContextProvider = ({ children }: Props) => {
 			setPermiss(res.data.permiss);
 			// console.log('reset', res);
 		} catch (error: any) {
-			console.log(error);
+			console.log('expired token', error);
 			Swal.fire({
-				title: error.response.data.code === 401 ? `Tu sesión expiró.` : `Vuelva a Iniciar Session`,
+				title: `Tu sesión expiró. Vuelva a iniciar sesión`,
 				icon: 'info',
 				showConfirmButton: false,
 				timer: 1500,
