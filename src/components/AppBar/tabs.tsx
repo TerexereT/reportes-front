@@ -97,7 +97,9 @@ export const auxLink = [
 	},
 ];
 
-export const handleTitleSection = (seccion: string) => {
+export const handleTitleSection = (seccion: string, views: any[]) => {
 	const section = auxLink.filter((val) => val.link === seccion);
-	return section.length > 0 ? section[0].name : 'Inicio';
+	if (section.length === 0) return 'Inicio';
+	const name_views = views.filter((val) => val.key === section[0].key);
+	return name_views.length > 0 ? name_views[0].name : 'Inicio';
 };

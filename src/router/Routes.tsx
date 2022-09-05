@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { FC, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { GuardedRoute, GuardProvider } from 'react-router-guards';
 import AppBar from '../components/AppBar';
@@ -9,8 +9,6 @@ import AuthContext from '../context/auth/AuthContext';
 import { Lock, PrivGuard } from './guards';
 import Private from './routes/Private';
 import Public from './routes/Public';
-import { login } from './url';
-import { existRoutePublic, isPrivate } from './utilis/Functions';
 
 const useStyles = makeStyles((theme: Theme) => ({
 	app: {},
@@ -29,25 +27,12 @@ export const Routes: FC = () => {
 	const { user, views } = useContext(AuthContext);
 
 	const [checking, setChecking] = useState<boolean>(true);
-	//const [menu, setMenu] = React.useState<Views>({});
-
-	useLayoutEffect(() => {
-		//dispatch(FinishLoading());
-		let token = localStorage.getItem('token');
-		if (token !== null) {
-			// console.log('refrest login');
-		}
-		setChecking(false);
-	}, []);
 
 	useEffect(() => {
-		if (localStorage.getItem('token') === null && isPrivate()) {
-			window.location.replace(login);
+		if (user || localStorage.getItem('token') === null) {
+			setChecking(false);
 		}
-		if (localStorage.getItem('token') === null && !existRoutePublic()) {
-			window.location.replace(login);
-		}
-	}, []);
+	}, [user]);
 
 	if (checking) {
 		return <LoaderLine />;
@@ -57,7 +42,7 @@ export const Routes: FC = () => {
 		<Router>
 			<GuardProvider guards={[Lock]}>
 				<Switch>
-					{!user ? (
+					{!user || !views.length ? (
 						<>
 							<div className={classes.app}>
 								<div className={classes.background} />

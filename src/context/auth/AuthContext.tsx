@@ -8,7 +8,7 @@ import { swalLoading } from '../../components/swal/alerts';
 import { InterfaceObject, UserInterface } from '../../interfaces/auth';
 import { baseUrl, login } from '../../router/url';
 import { existRoutePublic, isPrivate } from '../../router/utilis/Functions';
-import { ContextAuth } from './interface';
+import { ContextAuth, Views } from './interface';
 
 interface Props {
 	children: ReactChild;
@@ -24,7 +24,7 @@ const AuthContext = createContext<ContextAuth>({
 
 export const AuthContextProvider = ({ children }: Props) => {
 	const [user, setUser] = useState<UserInterface | null>(null);
-	const [views, setViews] = useState<String[] | []>([]);
+	const [views, setViews] = useState<Views[] | []>([]);
 	const [permiss, setPermiss] = useState<InterfaceObject | {}>({});
 
 	const resetUser = (): void => {
@@ -42,9 +42,9 @@ export const AuthContextProvider = ({ children }: Props) => {
 			setPermiss(res.data.permiss);
 			// console.log('reset', res);
 		} catch (error: any) {
-			console.log(error);
+			console.log('expired token', error);
 			Swal.fire({
-				title: error.response.data.code === 401 ? `Tu sesión expiró.` : `Vuelva a Iniciar Session`,
+				title: `Tu sesión expiró. Vuelva a iniciar sesión`,
 				icon: 'info',
 				showConfirmButton: false,
 				timer: 1500,

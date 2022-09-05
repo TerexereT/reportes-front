@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/AuthContext';
+import { Views } from '../../context/auth/interface';
 import ThemeContext from '../../context/auth/ThemeContext';
 import TranredLogo from '../../images/tranred-logo.png';
 import { baseUrl } from '../../router/url';
@@ -41,9 +42,7 @@ const MainMenu = () => {
 
 	useEffect(() => {
 		if (user && views.length) {
-			const listLink = auxLink.filter((link) => views.find((view) => view === link.name));
-			// console.log('listx', listLink);
-			// console.log('listd', auxLink);
+			const listLink = auxLink.filter((link) => views.find((view: Views) => view.key === link.key));
 			setLink(listLink);
 		}
 	}, [user, views]);
@@ -68,8 +67,8 @@ const MainMenu = () => {
 
 	useEffect(() => {
 		const seccion = window.location.pathname;
-		setSection(handleTitleSection(seccion));
-	}, [path]);
+		setSection(handleTitleSection(seccion, views));
+	}, [path, views]);
 
 	return (
 		<>

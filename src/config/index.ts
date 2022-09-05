@@ -19,7 +19,6 @@ useAxios.defaults.headers['Content-Type'] = 'application/json';
 
 useAxios.interceptors.response.use((resp: AxiosResponse<any>): AxiosResponse<any> => {
 	if (resp.data.access_token) {
-		// console.log('entre', resp.data.access_token);
 		localStorage.setItem('token', resp.data.access_token);
 		resp.headers.Authorization = resp.data.access_token;
 	}

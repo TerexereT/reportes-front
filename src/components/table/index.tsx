@@ -79,7 +79,7 @@ interface TableReportsProps {
 	mantOption?: number;
 	Sponsor?: number;
 	transType?: options[];
-	transOption?: number;
+	transOption?: string;
 	monthoption?: string;
 	from:
 		| 'CuotasVencidas'
