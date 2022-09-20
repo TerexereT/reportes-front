@@ -31,7 +31,7 @@ export const auxLink = [
 	},
 	{
 		key: 3,
-		name: 'Cuotas Vencidas',
+		name: 'Cuotas',
 		link: cuotas,
 		icon: <AttachMoneyIcon />,
 	},
