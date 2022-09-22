@@ -7,7 +7,9 @@ import HardwareIcon from '@mui/icons-material/Hardware';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import {
+	contabilidadACI,
 	contracargo,
 	contraCargoUp,
 	cuotas,
@@ -31,7 +33,7 @@ export const auxLink = [
 	},
 	{
 		key: 3,
-		name: 'Cuotas Vencidas',
+		name: 'Cuotas',
 		link: cuotas,
 		icon: <AttachMoneyIcon />,
 	},
@@ -94,6 +96,12 @@ export const auxLink = [
 		name: 'Ejecutar Contracargos',
 		link: execContracargo,
 		icon: <CurrencyExchangeIcon />,
+	},
+	{
+		key: 14,
+		name: 'Contab. de ACI',
+		link: contabilidadACI,
+		icon: <RequestQuoteIcon />,
 	},
 ];
 

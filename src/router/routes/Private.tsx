@@ -1,5 +1,6 @@
 import { Meta } from 'react-router-guards/dist/types';
 import CancelarCuotas from '../../pages/CancelarCuotas';
+import ContabilidadXACI from '../../pages/ContabilidadXACI';
 import Contracargo from '../../pages/Contracargo';
 import ContraCargoUpFile from '../../pages/ContraCargoUpFile';
 import Cuotas from '../../pages/Cuotas';
@@ -16,18 +17,19 @@ import Transaccional from '../../pages/Transaccional';
 import {
 	baseUrl,
 	cancelarCuotas,
+	contabilidadACI,
 	contracargo,
+	contraCargoUp,
 	cuotas,
 	cuotasR,
+	execContracargo,
 	librePago,
 	mantenimientos,
 	movimientos,
 	pagoCuota,
 	reportexaci,
-	transaccional,
-	contraCargoUp,
 	seguridad,
-	execContracargo,
+	transaccional,
 } from '../url';
 
 export interface meta extends Meta {
@@ -109,6 +111,11 @@ const Private: Route[] = [
 	{
 		path: execContracargo,
 		component: ExecContraCargo,
+		meta: { auth: true },
+	},
+	{
+		path: contabilidadACI,
+		component: ContabilidadXACI,
 		meta: { auth: true },
 	},
 ];
