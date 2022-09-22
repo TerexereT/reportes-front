@@ -87,6 +87,9 @@ export const useStyles = makeStyles((styles: Theme) => ({
 		gridTemplateColumns: '1fr 1fr',
 		gridColumnGap: '1%',
 	},
+	base: {
+		margin: '0 8%',
+	},
 }));
 
 export const sxStyled = {

@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// components
 import { Alert, Button, Card, CardActions, CardContent, CardHeader, CircularProgress } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import {
@@ -10,15 +9,12 @@ import {
 	GridToolbarFilterButton,
 } from '@mui/x-data-grid';
 import { AxiosResponse } from 'axios';
-// import * as FileSaver from 'file-saver';
 import { FC, useEffect, useRef, useState } from 'react';
-// import { CSVLink } from 'react-csv';
-// import * as XLSX from 'xlsx';
 import useAxios from '../../config';
 import formatData from '../../functions/FormatData';
 import { opciones } from '../../pages/Mantenimiento';
-import { options } from '../../pages/Transaccional';
 import { useStylesDT } from '../DateTime';
+import { TableReportsProps } from './interfaces';
 
 export const useStyles = makeStyles((styles) => ({
 	root: {
@@ -71,25 +67,6 @@ export const useStyles = makeStyles((styles) => ({
 		fill: '#2f3775',
 	},
 }));
-
-interface TableReportsProps {
-	state: any;
-	endDate?: Date | null;
-	initDate?: Date | null;
-	mantOption?: number;
-	Sponsor?: number;
-	transType?: options[];
-	transOption?: string;
-	monthoption?: string;
-	from:
-		| 'CuotasVencidas'
-		| 'Movimientos'
-		| 'Mantenimiento'
-		| 'CuotasResumen'
-		| 'PagoCuota'
-		| 'Transaccional'
-		| 'Contracargo';
-}
 
 const TableReports: FC<TableReportsProps> = ({
 	state,
@@ -210,6 +187,22 @@ const TableReports: FC<TableReportsProps> = ({
 					transType,
 				});
 				setData(resp.data.info);
+			}
+			if (from === 'DetallexACI') {
+				resp = await useAxios.get(
+					`/contabilidad/detallexaci?init=${initDate?.toISOString().split('T')[0]}&end=${
+						endDate?.toISOString().split('T')[0]
+					}`
+				);
+				setData(resp.data.info);
+			}
+			if (from === 'GeneralCont') {
+				resp = await useAxios.get(
+					`/contabilidad/General?init=${initDate?.toISOString().split('T')[0]}&end=${
+						endDate?.toISOString().split('T')[0]
+					}`
+				);
+				setData(formatData(resp.data.info));
 			}
 			fieldRef.current?.scrollIntoView({
 				behavior: 'smooth',
