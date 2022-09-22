@@ -12,6 +12,7 @@ export const contraCargoUp = `${baseUrl}contracargo-up/`;
 export const seguridad = `${baseUrl}seguridad/`;
 export const contracargo = `${baseUrl}contracargo/`;
 export const execContracargo = `${baseUrl}exec-contracargo/`;
+export const contabilidadACI = `${baseUrl}contabilidadACI/`;
 //
 export const cancelarCuotas = `${baseUrl}cancelacion-cuotas/`;
 
