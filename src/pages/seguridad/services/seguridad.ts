@@ -123,7 +123,7 @@ export async function saveViews(dep: number, views: any[]) {
 export async function updateDepartments(deps: any) {
 	// console.log(deps);
 	try {
-		await useAxios.put(`/seguridad/departments`, { listDeps: deps });
+		await useAxios.put(`/seguridad/departments/update`, { listDeps: deps });
 		return {
 			ok: true,
 		};

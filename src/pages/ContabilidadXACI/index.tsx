@@ -23,7 +23,7 @@ const ContabilidadXACI: FC = () => {
 					onChange={handleChange}
 					aria-label='pestañas de modulo contabilidad'
 					indicatorColor='primary'
-					textColor='secondary'>
+					textColor='primary'>
 					<Tab
 						sx={sxStyled.tabName}
 						label='Detalle por ACI'
