@@ -2,6 +2,9 @@ import { Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 export const useStyles = makeStyles((styles: Theme) => ({
+	base: {
+		margin: '0 8%',
+	},
 	tab: {
 		textTransform: 'none',
 		fontSize: '.5rem',
