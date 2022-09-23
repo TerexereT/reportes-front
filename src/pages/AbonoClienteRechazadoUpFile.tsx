@@ -63,11 +63,10 @@ const AbonoClienteRechazadoUpFile: FC = () => {
 		try {
 			formData.append('lote', JSON.stringify(data));
 			formData.append('nameFile', file.name);
-			// console.log('datax', data);
-			//
+
 			handleLoading();
 			await useAxios.post('/abonocliente/rechazado/up', formData);
-			//
+
 			Swal.fire({
 				icon: 'success',
 				title: 'Documento Guardado',
