@@ -22,6 +22,7 @@ import {
 	reportexaci,
 	seguridad,
 	transaccional,
+	abonoClienteRechazado,
 } from '../../router/url';
 
 export const auxLink = [
@@ -102,6 +103,12 @@ export const auxLink = [
 		name: 'Contab. de ACI',
 		link: contabilidadACI,
 		icon: <RequestQuoteIcon />,
+	},
+	{
+		key: 15,
+		name: 'Archivo AC Rechazado',
+		link: abonoClienteRechazado,
+		icon: <CloudUploadIcon />,
 	},
 ];
 
