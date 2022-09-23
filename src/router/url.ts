@@ -13,6 +13,7 @@ export const seguridad = `${baseUrl}seguridad/`;
 export const contracargo = `${baseUrl}contracargo/`;
 export const execContracargo = `${baseUrl}exec-contracargo/`;
 export const contabilidadACI = `${baseUrl}contabilidadACI/`;
+export const abonoClienteRechazado = `${baseUrl}abonoclientes/rechazado/up/`;
 //
 export const cancelarCuotas = `${baseUrl}cancelacion-cuotas/`;
 
@@ -29,6 +30,7 @@ export const urlPrivate = [
 	transaccional,
 	seguridad,
 	execContracargo,
+	abonoClienteRechazado,
 ];
 
 export const urlPublic = [login];

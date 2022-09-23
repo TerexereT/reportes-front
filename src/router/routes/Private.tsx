@@ -1,4 +1,5 @@
 import { Meta } from 'react-router-guards/dist/types';
+import AbonoClienteRechazadoUpFile from '../../pages/AbonoClienteRechazadoUpFile';
 import CancelarCuotas from '../../pages/CancelarCuotas';
 import ContabilidadXACI from '../../pages/ContabilidadXACI';
 import Contracargo from '../../pages/Contracargo';
@@ -15,6 +16,7 @@ import ReporteXACI from '../../pages/ReporteXACI';
 import Seguridad from '../../pages/seguridad';
 import Transaccional from '../../pages/Transaccional';
 import {
+	abonoClienteRechazado,
 	baseUrl,
 	cancelarCuotas,
 	contabilidadACI,
@@ -116,6 +118,11 @@ const Private: Route[] = [
 	{
 		path: contabilidadACI,
 		component: ContabilidadXACI,
+		meta: { auth: true },
+	},
+	{
+		path: abonoClienteRechazado,
+		component: AbonoClienteRechazadoUpFile,
 		meta: { auth: true },
 	},
 ];
