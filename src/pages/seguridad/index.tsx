@@ -3,17 +3,16 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Tab } from '@mui/material';
-import { FC, useState, useLayoutEffect, useContext, useEffect } from 'react';
+import { FC, useContext, useLayoutEffect, useState } from 'react';
 import { sxStyled, useStyles } from './styles';
 
 //redux
-import EditarDepartments from './components/editarDepartments';
-import { Department, Roles } from './interfaces';
 import LoaderLine from '../../components/loader/LoaderLine';
-import EditarViews from './components/editarViews';
-import EditarPermisos from './components/editarPermisos';
-import GestionUsuarios from './components/editarUsuarios';
 import AuthContext from '../../context/auth/AuthContext';
+import EditarDepartments from './components/editarDepartments';
+import GestionUsuarios from './components/editarUsuarios';
+import EditarViews from './components/editarViews';
+import { Department, Roles } from './interfaces';
 import { seguridad } from './services/seguridad';
 
 const Seguridad: FC = () => {
