@@ -17,7 +17,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/AuthContext';
 import { Views } from '../../context/auth/interface';
-import ThemeContext from '../../context/auth/ThemeContext';
+import ThemeContext from '../../context/ThemeContext';
 import TranredLogo from '../../images/tranred-logo.png';
 import { baseUrl } from '../../router/url';
 import { drawerWidth, useStyles } from './styles';
@@ -91,7 +91,7 @@ const MainMenu = () => {
 							<MenuIcon />
 						</IconButton>
 						<Typography variant='h6' className={classes.title}>
-							Reportes Dinámicos: {section}
+							SITRAN: {section}
 						</Typography>
 						{user ? (
 							<div>

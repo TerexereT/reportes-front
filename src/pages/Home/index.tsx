@@ -1,5 +1,6 @@
+import CardSlider from 'components/CardSlider';
+import TranredLogo from 'images/tranred-logo.png';
 import { FC } from 'react';
-import TranredLogo from '../images/tranred-logo.png';
 import { useStyles } from './styles';
 
 interface HomeInt {}
@@ -9,11 +10,10 @@ const Home: FC<HomeInt> = () => {
 	return (
 		<>
 			<div className={classes.base}>
-				<img src={TranredLogo} style={{ width: '30%' }} alt='logo tranred' />
-				<div className={classes.title}>Bienvenido al sistema de Reportes Dinámicos</div>
-				<div className={classes.subtitle}>
-					Haga click en el menu superior izquierdo para navegar entre sistema de reportes
-				</div>
+				<img src={TranredLogo} style={{ width: '25%', marginBottom: '1rem' }} alt='logo tranred' />
+				<CardSlider />
+				<div className={classes.title}>Bienvenido al Sistema Interno de Tranred</div>
+				<div className={classes.subtitle}>Haga click en el agregador que desea consultar sus reportes</div>
 			</div>
 		</>
 	);

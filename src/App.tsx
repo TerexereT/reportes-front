@@ -4,9 +4,10 @@ import { StyledEngineProvider, Theme, ThemeProvider } from '@mui/material/styles
 import { esES } from '@mui/x-data-grid';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AgregadorContextProvider } from 'context/AgregadorContext';
 import { useContext, useMemo } from 'react';
 import { AuthContextProvider } from './context/auth/AuthContext';
-import ThemeContext from './context/auth/ThemeContext';
+import ThemeContext from './context/ThemeContext';
 import Routes from './router/Routes';
 import './scss/index.scss';
 
@@ -50,7 +51,9 @@ function App() {
 			<ThemeProvider theme={theme}>
 				<LocalizationProvider dateAdapter={AdapterDateFns}>
 					<AuthContextProvider>
-						<Routes />
+						<AgregadorContextProvider>
+							<Routes />
+						</AgregadorContextProvider>
 					</AuthContextProvider>
 				</LocalizationProvider>
 			</ThemeProvider>
