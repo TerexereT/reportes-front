@@ -5,7 +5,7 @@ import entradaLibrepago from 'images/fondoLibrepago.jpeg';
 import logo1000pagos from 'images/Logo-1000Pagos-Horizontal.png';
 import logoCarropago from 'images/logo-carropago.png';
 import logoLibrepago from 'images/logo_librePago.png';
-import { FC, useContext, useEffect, useReducer, useRef } from 'react';
+import { CSSProperties, FC, useContext, useEffect, useReducer, useRef } from 'react';
 import { useStyles } from './styles';
 import './styles/index.scss';
 
@@ -103,6 +103,11 @@ const Slide = ({ slide, offset }: any) => {
 	const ref = useTilt(active);
 	const { setAgregador } = useContext(AgregadorContext);
 
+	const style = {
+		'--offset': offset > 1 ? 1 : offset < -1 ? -1 : offset,
+		'--dir': offset === 0 ? 0 : offset > 0 ? 1 : -1,
+	} as CSSProperties;
+
 	return (
 		<div
 			ref={ref}
@@ -111,10 +116,7 @@ const Slide = ({ slide, offset }: any) => {
 			onClick={() => {
 				setAgregador(slide.value);
 			}}
-			style={{
-				'--offset': offset > 1 ? 1 : offset < -1 ? -1 : offset,
-				'--dir': offset === 0 ? 0 : offset > 0 ? 1 : -1,
-			}}>
+			style={style}>
 			<div
 				className='slideContent'
 				style={{
@@ -144,7 +146,6 @@ const Slide = ({ slide, offset }: any) => {
 const CardSlider: FC = () => {
 	const classes = useStyles();
 	const [state, dispatch] = useReducer(slidesReducer, initialState);
-	const { Agregador, setAgregador } = useContext(AgregadorContext);
 	return (
 		<div className={classes.slides}>
 			<button onClick={() => dispatch({ type: 'PREV' })}>‹</button>
