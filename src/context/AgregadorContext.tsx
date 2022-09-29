@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactChild, SetStateAction, useLayoutEffect, useMemo, useState } from 'react';
+import { createContext, Dispatch, ReactChild, SetStateAction, useLayoutEffect, useState } from 'react';
 
 interface Props {
 	children: ReactChild;
@@ -16,9 +16,8 @@ const AgregadorContext = createContext<IAgregadorContext>({ Agregador: undefined
 export const AgregadorContextProvider = ({ children }: Props) => {
 	const [Agregador, setAgregador] = useState<TAgregador>('Milpagos');
 
-	useMemo(() => {
-		if (Agregador) window.localStorage.setItem('agregador', Agregador);
-	}, [Agregador]);
+	// useMemo(() => {
+	// }, [Agregador]);
 
 	useLayoutEffect(() => {
 		const agr = window.localStorage.getItem('agregador') as TAgregador;

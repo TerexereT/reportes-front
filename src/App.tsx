@@ -4,7 +4,7 @@ import { StyledEngineProvider, Theme, ThemeProvider } from '@mui/material/styles
 import { esES } from '@mui/x-data-grid';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AgregadorContextProvider } from 'context/AgregadorContext';
+import AgregadorContext from 'context/AgregadorContext';
 import { useContext, useMemo } from 'react';
 import { AuthContextProvider } from './context/auth/AuthContext';
 import ThemeContext from './context/ThemeContext';
@@ -17,8 +17,8 @@ declare module '@mui/styles/defaultTheme' {
 }
 
 function App() {
-	// const prefersDarkMode: boolean = useMediaQuery('(prefers-color-scheme: dark)');
 	const { mode } = useContext(ThemeContext);
+	const { Agregador } = useContext(AgregadorContext);
 
 	const theme = useMemo(
 		() =>
@@ -27,7 +27,7 @@ function App() {
 					palette: {
 						mode: mode,
 						primary: {
-							main: '#2f3775',
+							main: Agregador === 'Librepago' ? '#008aeb' : Agregador === 'Carropago' ? '#ea5735' : '#2f3775',
 							contrastText: '#ffffff',
 						},
 						secondary: {
@@ -43,7 +43,7 @@ function App() {
 				esES,
 				coreesES
 			),
-		[mode]
+		[mode, Agregador]
 	);
 
 	return (
@@ -51,9 +51,7 @@ function App() {
 			<ThemeProvider theme={theme}>
 				<LocalizationProvider dateAdapter={AdapterDateFns}>
 					<AuthContextProvider>
-						<AgregadorContextProvider>
-							<Routes />
-						</AgregadorContextProvider>
+						<Routes />
 					</AuthContextProvider>
 				</LocalizationProvider>
 			</ThemeProvider>

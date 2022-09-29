@@ -5,7 +5,7 @@ import entradaLibrepago from 'images/fondoLibrepago.jpeg';
 import logo1000pagos from 'images/Logo-1000Pagos-Horizontal.png';
 import logoCarropago from 'images/logo-carropago.png';
 import logoLibrepago from 'images/logo_librePago.png';
-import { CSSProperties, FC, useContext, useEffect, useReducer, useRef } from 'react';
+import { CSSProperties, FC, useContext, useEffect, useLayoutEffect, useReducer, useRef } from 'react';
 import { useStyles } from './styles';
 import './styles/index.scss';
 
@@ -90,6 +90,12 @@ const slidesReducer = (state: any, event: any) => {
 			slideIndex: state.slideIndex === 0 ? slides.length - 1 : state.slideIndex - 1,
 		};
 	}
+	if (event.type === 'SET') {
+		return {
+			...state,
+			slideIndex: event.index,
+		};
+	}
 	if (event.type === 'PREV') {
 		return {
 			...state,
@@ -146,6 +152,14 @@ const Slide = ({ slide, offset }: any) => {
 const CardSlider: FC = () => {
 	const classes = useStyles();
 	const [state, dispatch] = useReducer(slidesReducer, initialState);
+	const { Agregador } = useContext(AgregadorContext);
+
+	useLayoutEffect(() => {
+		let agr = slides.findIndex((val) => val.value === Agregador);
+		dispatch({ type: 'SET', index: agr! });
+		window.localStorage.setItem('agregador', Agregador as string);
+	}, [Agregador]);
+
 	return (
 		<div className={classes.slides}>
 			<button onClick={() => dispatch({ type: 'PREV' })}>‹</button>
