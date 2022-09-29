@@ -10,30 +10,30 @@ import { useStyles } from './styles';
 import './styles/index.scss';
 
 interface ISlide {
-	title: string;
 	description: JSX.Element;
 	image: string;
 	value: TAgregador;
+	key: number;
 }
 
-const slides: ISlide[] = [
+export const slides: ISlide[] = [
 	{
-		title: 'CARROPAGO',
 		description: <img src={logoCarropago} alt='' style={{ width: '65%' }} />,
 		image: entradaCarropago,
 		value: 'Carropago',
+		key: 1,
 	},
 	{
-		title: 'MILPAGOS',
 		description: <img src={logo1000pagos} alt='' style={{ width: '65%' }} />,
 		image: entradaMilpagos,
 		value: 'Milpagos',
+		key: 2,
 	},
 	{
-		title: 'LIBREPAGO',
 		description: <img src={logoLibrepago} alt='' style={{ width: '65%' }} />,
 		image: entradaLibrepago,
 		value: 'Librepago',
+		key: 3,
 	},
 ];
 
