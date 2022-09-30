@@ -5,6 +5,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
 	slides: {
 		display: 'grid',
 		position: 'relative',
+		padding: '24px 0',
 		'& > .slide': {
 			gridArea: '1 / -1',
 		},

@@ -10,12 +10,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
 	},
 	title: {
 		fontSize: 40,
-		padding: '1rem 0',
+		padding: 0,
 		color: theme.palette.text.primary,
 	},
 	subtitle: {
 		fontSize: 24,
-		padding: '1rem',
 		color: theme.palette.text.secondary,
 	},
 }));
