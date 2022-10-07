@@ -2,8 +2,22 @@ import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 export const columnsGestionUsuario: GridColDef[] = [
 	{
-		field: 'nombre',
+		field: 'name',
 		headerName: 'Nombre',
+		width: 200,
+		sortable: false,
+		disableColumnMenu: true,
+	},
+	{
+		field: 'email',
+		headerName: 'Correo',
+		width: 200,
+		sortable: false,
+		disableColumnMenu: true,
+	},
+	{
+		field: 'login',
+		headerName: 'Login',
 		width: 200,
 		sortable: false,
 		disableColumnMenu: true,
