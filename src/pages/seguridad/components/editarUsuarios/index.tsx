@@ -78,7 +78,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 			const data = resp.data.info;
 			setUserBlocked(data.active === 0 ? true : false);
 			setLogin(user.login);
-			setName(user.nombre);
+			setName(user.name);
 			setUserDep(data.id_department);
 			setUserRol(data.id_rol);
 			setUserID(user.id);
@@ -194,7 +194,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 														className={classes.inputText}
 														onChange={(event, value) => (value ? handleSelect(event, value, 'rol') : null)}
 														value={userRol}
-														getOptionLabel={(option: any) => option.name}
+														getOptionLabel={(option: any) => (option.name ? option.name : '')}
 														isOptionEqualToValue={(option, value) => option.id === value.id}
 														options={listRoles}
 														renderInput={(params: any) => (
