@@ -2,7 +2,7 @@ import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 export const columnsGestionUsuario: GridColDef[] = [
 	{
-		field: 'nombre',
+		field: 'name',
 		headerName: 'Nombre',
 		width: 200,
 		sortable: false,
@@ -14,7 +14,7 @@ export const columnsGestionUsuario: GridColDef[] = [
 		sortable: false,
 		width: 160,
 		valueGetter: (params: GridValueGetterParams) => {
-			return `${params.row.tipoIdentificacion}${params.row.identificacion}`;
+			return `${params.row.id_type}${params.row.ident}`;
 		},
 	},
 ];
