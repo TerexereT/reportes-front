@@ -130,7 +130,7 @@ export const sxStyled = {
 		textTransform: 'none',
 		fontSize: '1rem',
 	},
-	closeBtn: {
+	closeBtn: (styles: Theme) => ({
 		width: 40,
 		height: 40,
 		position: 'absolute',
@@ -139,7 +139,8 @@ export const sxStyled = {
 		padding: 0,
 		minWidth: 'unset',
 		borderRadius: '50%',
-	},
+		color: styles.palette.error.main,
+	}),
 	blockedButtonOn: (styles: Theme) => ({
 		fontWeight: 'bold',
 		backgroundColor: styles.palette.success.light,

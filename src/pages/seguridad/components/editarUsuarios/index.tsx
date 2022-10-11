@@ -9,7 +9,7 @@ import LoaderLine from '../../../../components/loader/LoaderLine';
 import { handleError } from '../../../../components/swal/alerts';
 import axios from '../../../../config';
 import { Department, Roles } from '../../interfaces';
-import { useStyles } from '../../styles';
+import { sxStyled, useStyles } from '../../styles';
 import { columnsGestionUsuario } from './columnsGrid';
 
 interface Props {
@@ -149,11 +149,11 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 						}
 					</div>
 				</Grid>
-				<Grid item xs={7}>
+				<Grid item xs={6}>
 					{openUserView && name && login ? (
 						<Paper variant='outlined'>
 							<div className={classes.card}>
-								<Button /*sx={sxStyled.closeBtn}*/ onClick={handleCloseRow}>
+								<Button sx={sxStyled.closeBtn} onClick={handleCloseRow}>
 									<CloseIcon />
 								</Button>
 								<form className={classes.form}>
@@ -225,7 +225,9 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 							</div>
 						</Paper>
 					) : openUserView ? (
-						<LoaderLine />
+						<div style={{ position: 'relative', height: '100%' }}>
+							<LoaderLine component />
+						</div>
 					) : null}
 				</Grid>
 			</Grid>
