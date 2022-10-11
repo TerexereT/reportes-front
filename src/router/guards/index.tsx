@@ -27,21 +27,13 @@ export const PrivGuard: any = (
 	next: Next,
 	views: Views[] | []
 ) => {
-	// console.log('privv guard xxd', to.location.pathname);
 	if (localStorage.getItem('token') !== null && !isPrivate()) {
-		//console.log('vete a homes');
 		next.redirect(baseUrl);
 	}
 
-	// console.log('priv guard xxd', to.location.pathname);
-	//console.log('aquii', views);
-
 	let isWorker = 1;
 	let userDep = route(views, to.location.pathname);
-	// console.log(views);
-	// console.log('valid', userDep);
 
-	//
 	if (userDep) next.props({ isWorker });
 	else next.redirect(baseUrl);
 };
