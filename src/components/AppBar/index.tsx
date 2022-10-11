@@ -13,6 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import classNames from 'classnames';
+import AgregadorContext from 'context/AgregadorContext';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/AuthContext';
@@ -38,6 +39,7 @@ const MainMenu = () => {
 	const [links, setLink] = useState<any[]>([]);
 
 	const { user, views, handleLogout } = useContext(AuthContext);
+	const { Agregador } = useContext(AgregadorContext);
 	const { mode, toggleDarkMode } = useContext(ThemeContext);
 
 	useEffect(() => {
@@ -91,7 +93,7 @@ const MainMenu = () => {
 							<MenuIcon />
 						</IconButton>
 						<Typography variant='h6' className={classes.title}>
-							SITRAN: {section}
+							SITRAN - {Agregador}: {section}
 						</Typography>
 						{user ? (
 							<div>
