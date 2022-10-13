@@ -1,5 +1,6 @@
 import { Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import TranredLogo from 'images/tranred-logo.png';
 import { FC, useContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { GuardedRoute, GuardProvider } from 'react-router-guards';
@@ -19,6 +20,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 		width: '100vw',
 		height: '100vh',
 		zIndex: -2,
+	},
+	TranredLogo: {
+		width: '25%',
+		position: 'fixed',
+		left: 0,
+		bottom: 16,
+		opacity: 0.3,
 	},
 }));
 
@@ -45,7 +53,9 @@ export const Routes: FC = () => {
 					{!user || !views.length ? (
 						<>
 							<div className={classes.app}>
-								<div className={classes.background} />
+								<div className={classes.background}>
+									<img src={TranredLogo} className={classes.TranredLogo} alt='logo tranred' />
+								</div>
 								{Public.map(({ path, component, meta }, i) => {
 									return <GuardedRoute key={i} exact path={path} component={component} meta={meta} />;
 								})}
@@ -54,7 +64,9 @@ export const Routes: FC = () => {
 					) : (
 						<>
 							<div className={classes.app}>
-								<div className={classes.background} />
+								<div className={classes.background}>
+									<img src={TranredLogo} className={classes.TranredLogo} alt='logo tranred' />
+								</div>
 								<AppBar />
 								<GuardProvider guards={[(to, from, next): void => PrivGuard(to, from, next, views)]}>
 									{Private.map(({ path, component, meta }, i) => {

@@ -1,14 +1,17 @@
+import { AgregadorContextProvider } from 'context/AgregadorContext';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { ThemeContextProvider } from './context/auth/ThemeContext';
+import { ThemeContextProvider } from './context/ThemeContext';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
 	<React.StrictMode>
 		<ThemeContextProvider>
-			<App />
+			<AgregadorContextProvider>
+				<App />
+			</AgregadorContextProvider>
 		</ThemeContextProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
