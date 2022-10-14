@@ -31,7 +31,7 @@ export async function getAllUser() {
 
 export async function getAllListSeguridad() {
 	try {
-		const routes = [`seguridad/departments/all`, `seguridad/roles/all`];
+		const routes = [`seguridad/departments/all`, `seguridad/roles/all`, `seguridad/status/all`];
 
 		return multiGetterAxios(routes)
 			.then((responses) => {
@@ -40,6 +40,7 @@ export async function getAllListSeguridad() {
 					ok: true,
 					departments: responses[0].data.info,
 					roles: responses[1].data.info,
+					status: responses[2].data.info,
 				};
 			})
 			.catch((errors) => {

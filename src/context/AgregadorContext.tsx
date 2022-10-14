@@ -14,15 +14,13 @@ interface IAgregadorContext {
 const AgregadorContext = createContext<IAgregadorContext>({ Agregador: undefined, setAgregador: () => {} });
 
 export const AgregadorContextProvider = ({ children }: Props) => {
-	const [Agregador, setAgregador] = useState<TAgregador>('Milpagos');
-
-	// useMemo(() => {
-	// }, [Agregador]);
+	const [Agregador, setAgregador] = useState<TAgregador>(
+		(window.localStorage.getItem('agregador') as TAgregador) || 'Milpagos'
+	);
 
 	useLayoutEffect(() => {
-		const agr = window.localStorage.getItem('agregador') as TAgregador;
-		if (agr) setAgregador(agr);
-	}, []);
+		return () => window.location.reload();
+	}, [Agregador]);
 
 	return (
 		<AgregadorContext.Provider

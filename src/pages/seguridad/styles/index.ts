@@ -52,6 +52,11 @@ export const useStyles = makeStyles((styles: Theme) => ({
 		gridTemplateColumns: '1fr 4fr',
 		gridColumnGap: '1rem',
 	},
+	gridNewUser: {
+		display: 'grid',
+		gridTemplateColumns: '1fr',
+		gridColumnGap: '1rem',
+	},
 	tableTitle: {
 		fontSize: 32,
 		fontWeight: 'bold',
@@ -123,6 +128,20 @@ export const useStyles = makeStyles((styles: Theme) => ({
 			backgroundColor: `${styles.palette.error.light} !important`,
 		},
 	},
+	tableHeader: {
+		display: 'grid',
+		padding: '8px 8px 0',
+		alignItems: 'center',
+		gridTemplateColumns: ' 1fr 1fr 1fr 1fr 1fr',
+		justifyItems: 'center',
+	},
+	createButton: {
+		width: '100%',
+		gridColumn: 5,
+	},
+	saveButton: {
+		marginTop: 16,
+	},
 }));
 
 export const sxStyled = {
@@ -130,7 +149,7 @@ export const sxStyled = {
 		textTransform: 'none',
 		fontSize: '1rem',
 	},
-	closeBtn: {
+	closeBtn: (styles: Theme) => ({
 		width: 40,
 		height: 40,
 		position: 'absolute',
@@ -139,7 +158,8 @@ export const sxStyled = {
 		padding: 0,
 		minWidth: 'unset',
 		borderRadius: '50%',
-	},
+		color: styles.palette.error.main,
+	}),
 	blockedButtonOn: (styles: Theme) => ({
 		fontWeight: 'bold',
 		backgroundColor: styles.palette.success.light,
