@@ -92,7 +92,6 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser, 
 		setUserRol(null);
 		setUserStatus(null);
 		setUserID(0);
-		setName('');
 	};
 
 	const handleRow = (event: any) => {

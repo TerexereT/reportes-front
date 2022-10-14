@@ -9,6 +9,20 @@ export const columnsGestionUsuario: GridColDef[] = [
 		disableColumnMenu: true,
 	},
 	{
+		field: 'email',
+		headerName: 'Correo',
+		width: 200,
+		sortable: false,
+		disableColumnMenu: true,
+	},
+	{
+		field: 'login',
+		headerName: 'Login',
+		width: 200,
+		sortable: false,
+		disableColumnMenu: true,
+	},
+	{
 		field: 'identificacion',
 		headerName: 'Document Ident.',
 		sortable: false,
