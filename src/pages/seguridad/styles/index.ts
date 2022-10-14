@@ -52,6 +52,11 @@ export const useStyles = makeStyles((styles: Theme) => ({
 		gridTemplateColumns: '1fr 4fr',
 		gridColumnGap: '1rem',
 	},
+	gridNewUser: {
+		display: 'grid',
+		gridTemplateColumns: '1fr',
+		gridColumnGap: '1rem',
+	},
 	tableTitle: {
 		fontSize: 32,
 		fontWeight: 'bold',
@@ -122,6 +127,20 @@ export const useStyles = makeStyles((styles: Theme) => ({
 		'&:hover': {
 			backgroundColor: `${styles.palette.error.light} !important`,
 		},
+	},
+	tableHeader: {
+		display: 'grid',
+		padding: '8px 8px 0',
+		alignItems: 'center',
+		gridTemplateColumns: ' 1fr 1fr 1fr 1fr 1fr',
+		justifyItems: 'center',
+	},
+	createButton: {
+		width: '100%',
+		gridColumn: 5,
+	},
+	saveButton: {
+		marginTop: 16,
 	},
 }));
 

@@ -20,6 +20,7 @@ const Seguridad: FC = () => {
 	const classes = useStyles();
 	const [tab, setTab] = useState('gestionUsuarios');
 	const [listDepartment, setListDepartment] = useState<Department[] | []>([]);
+	const [listStatus, setListStatus] = useState<any[] | []>([]);
 	const [listRoles, setListRoles] = useState<Roles[] | []>([]);
 	const [allUser, setUsers] = useState<any[]>([]);
 
@@ -38,6 +39,9 @@ const Seguridad: FC = () => {
 		}
 		if (res.roles.length) {
 			setListRoles(res.roles);
+		}
+		if (res.status.length) {
+			setListStatus(res.status);
 		}
 	};
 
@@ -98,7 +102,12 @@ const Seguridad: FC = () => {
 						/>
 					</TabList>
 					<TabPanel value={'gestionUsuarios'} classes={{ root: classes.tabPanel }}>
-						<GestionUsuarios listDepartment={listDepartment} listRoles={listRoles} allUser={allUser} />
+						<GestionUsuarios
+							listDepartment={listDepartment}
+							listRoles={listRoles}
+							listStatus={listStatus}
+							allUser={allUser}
+						/>
 					</TabPanel>
 					{/* 
 					<TabPanel value={'gestionPermisos'} classes={{ root: classes.tabPanel }}>

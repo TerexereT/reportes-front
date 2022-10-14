@@ -2,7 +2,8 @@
 import { Theme } from '@mui/material';
 import Card from '@mui/material/Card';
 import makeStyles from '@mui/styles/makeStyles';
-import { FC, Fragment, useEffect, useState } from 'react';
+import AgregadorContext from 'context/AgregadorContext';
+import { FC, Fragment, useContext, useEffect, useState } from 'react';
 // ? components
 import CheckboxList from '../components/CheckboxList';
 import SelectList from '../components/DateTime';
@@ -57,15 +58,16 @@ export interface ISponsor {
 }
 
 const RepDinamicos: FC = () => {
-	const [state, setState]: [any, any] = useState({});
-
+	const classes = useStyles();
 	const today = new Date();
 	const lastMonth = new Date();
-	const [initDate, setInitDate] = useState<Date | undefined>(lastMonth);
-	const [endDate, setEndDate] = useState<Date | undefined>(today);
-	const [Sponsor, setSponsor] = useState(720);
 
-	const classes = useStyles();
+	const [Sponsor, setSponsor] = useState(720);
+	const [state, setState]: [any, any] = useState({});
+	const [endDate, setEndDate] = useState<Date | undefined>(today);
+	const [initDate, setInitDate] = useState<Date | undefined>(lastMonth);
+
+	const { Agregador } = useContext(AgregadorContext);
 
 	useEffect(() => {
 		const getdata = async () => {
@@ -83,7 +85,12 @@ const RepDinamicos: FC = () => {
 					<Card className={classes.card}>
 						<SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} />
 
-						<CheckboxList state={state} setState={setState} Sponsor={Sponsor} setSponsor={setSponsor} />
+						<CheckboxList
+							state={state}
+							setState={setState}
+							Sponsor={Agregador === 'Milpagos' ? Sponsor : undefined}
+							setSponsor={Agregador === 'Milpagos' ? setSponsor : undefined}
+						/>
 					</Card>
 				</div>
 				<div className={classes.cards}>
