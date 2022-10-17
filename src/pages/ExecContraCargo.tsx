@@ -63,7 +63,7 @@ const ExecContraCargo: FC = () => {
 			if (result.isConfirmed) {
 				try {
 					handleLoading();
-					const res = await useAxios.post(`/contracargo/exec`, { fecha: fecha });
+					const res = await useAxios.post(`/1000pagos/contracargo/exec`, { fecha: fecha });
 					if (res.data.info.ok) {
 						setLoad(false);
 						if (res.data.info.fecha) {

@@ -139,7 +139,9 @@ const TableReports: FC<TableReportsProps> = ({
 			}
 			if (from === 'Contracargo') {
 				resp = await useAxios.get(
-					`/contracargo?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`
+					`/1000pagos/contracargo?init=${initDate?.toISOString().split('T')[0]}&end=${
+						endDate?.toISOString().split('T')[0]
+					}`
 				);
 				setData(resp.data.info);
 			}
