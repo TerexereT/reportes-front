@@ -17,7 +17,7 @@ const Contracargo: FC = () => {
 	useLayoutEffect(() => {
 		const getdata = async () => {
 			try {
-				const resp = await useAxios.get('/contracargo/keys');
+				const resp = await useAxios.get('/1000pagos/contracargo/keys');
 				setState(resp.data.info);
 			} catch (error) {}
 		};
