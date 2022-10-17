@@ -28,7 +28,7 @@ export const columnsGestionUsuario: GridColDef[] = [
 		sortable: false,
 		width: 160,
 		valueGetter: (params: GridValueGetterParams) => {
-			return `${params.row.tipoIdentificacion}${params.row.identificacion}`;
+			return `${params.row.id_type}${params.row.ident}`;
 		},
 	},
 ];

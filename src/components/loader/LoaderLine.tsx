@@ -3,6 +3,11 @@ import { Theme } from '@mui/material';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { makeStyles } from '@mui/styles';
+import { FC } from 'react';
+
+interface ILoader {
+	component?: boolean;
+}
 
 const useStyles = makeStyles((styles: Theme) => ({
 	loader: {
@@ -18,9 +23,20 @@ const useStyles = makeStyles((styles: Theme) => ({
 	},
 }));
 
-const LoaderLine: React.FC = () => {
+const LoaderLine: FC<ILoader> = ({ component = false }) => {
 	const classes = useStyles();
-	return (
+	return component ? (
+		<div
+			style={{
+				position: 'absolute',
+				top: '50%',
+				width: '100%',
+			}}>
+			<Box sx={{ width: '100%' }}>
+				<LinearProgress className={classes.loader} />
+			</Box>
+		</div>
+	) : (
 		<div className={classes.background}>
 			<div
 				style={{

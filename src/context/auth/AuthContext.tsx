@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import useAxios from '../../config';
-//
-import { createContext, ReactChild, useEffect, useState } from 'react';
-//
+/* eslint-disable react-hooks/exhaustive-deps */
+import AgregadorContext from 'context/AgregadorContext';
+import { createContext, ReactChild, useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { swalLoading } from '../../components/swal/alerts';
+import useAxios from '../../config';
 import { InterfaceObject, UserInterface } from '../../interfaces/auth';
 import { baseUrl, login } from '../../router/url';
 import { existRoutePublic, isPrivate } from '../../router/utilis/Functions';
@@ -26,6 +25,8 @@ export const AuthContextProvider = ({ children }: Props) => {
 	const [user, setUser] = useState<UserInterface | null>(null);
 	const [views, setViews] = useState<Views[] | []>([]);
 	const [permiss, setPermiss] = useState<InterfaceObject | {}>({});
+
+	const { Agregador } = useContext(AgregadorContext);
 
 	const resetUser = (): void => {
 		setUser(null);
@@ -58,11 +59,9 @@ export const AuthContextProvider = ({ children }: Props) => {
 
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
-			// console.log('yaa tengo token');
-			if (!user) {
-				// console.log('get user');
-				getUser();
-			}
+			// if (!user) {
+			getUser();
+			// }
 		} else {
 			if (isPrivate() || !existRoutePublic()) {
 				// console.log('redirect login 3 ', isPrivate(), !existRoutePublic());
@@ -70,8 +69,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 			}
 			// console.log('no tengo token');
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [Agregador]);
 
 	const handleLogin = async (user: String, password: String, historyA?: any) => {
 		swalLoading();

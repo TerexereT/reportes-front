@@ -1,32 +1,63 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import { Autocomplete, Avatar, Button, Grid, Paper, TextField } from '@mui/material';
+import { Autocomplete, Avatar, Button, Grid, MenuItem, Paper, Select, TextField } from '@mui/material';
 import { DataGrid, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import LoaderLine from '../../../../components/loader/LoaderLine';
 import { handleError } from '../../../../components/swal/alerts';
-import axios from '../../../../config';
+import { default as axios, default as useAxios } from '../../../../config';
 import { Department, Roles } from '../../interfaces';
-import { useStyles } from '../../styles';
+import { sxStyled, useStyles } from '../../styles';
 import { columnsGestionUsuario } from './columnsGrid';
 
 interface Props {
 	listDepartment: Department[];
 	listRoles: Roles[];
 	allUser: any[];
+	listStatus: any[];
 }
 
-const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }) => {
+export const listIdentType = [
+	{
+		name: 'V',
+	},
+	{
+		name: 'E',
+	},
+	{
+		name: 'J',
+	},
+	{
+		name: 'R',
+	},
+	{
+		name: 'P',
+	},
+];
+
+const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser, listStatus }) => {
 	const classes = useStyles();
 
 	const [userBlocked, setUserBlocked] = useState<boolean>(false);
+	const [createUser, setCreateUser] = useState<boolean>(false);
 	const [openUserView, setUserView] = useState<boolean>();
 	//
 	const [userRol, setUserRol] = useState<any>(null);
 	const [userDep, setUserDep] = useState<any>(null);
-
+	const [userStatus, setUserStatus] = useState<any>(null);
+	// NewUser
+	const [newUserRol, setnewUserRol] = useState<any>(null);
+	const [newUserDep, setnewUserDep] = useState<any>(null);
+	const [newName, setnewName] = useState('');
+	const [newLogin, setnewLogin] = useState('');
+	const [newNroDocument, setnewNroDocument] = useState('');
+	const [newTypeDoc, setnewTypeDoc] = useState(listIdentType[0].name);
+	const [newEmail, setnewEmail] = useState('');
+	// const [newPassword, setnewPassword] = useState('');
+	//
 	const [userID, setUserID] = useState<number>(0);
 	const [name, setName] = useState<string>('');
 	const [login, setLogin] = useState<string>('');
@@ -35,9 +66,16 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 
 	const customToolbar: () => JSX.Element = () => {
 		return (
-			<GridToolbarContainer className='m-main-justify m-px-2'>
+			<GridToolbarContainer className={classes.tableHeader}>
 				<div className={classes.tableTitle}>Usuarios</div>
-				<GridToolbarFilterButton className='m-px-1' />
+				<GridToolbarFilterButton />
+				<Button
+					variant='contained'
+					onClick={handleCreateUser}
+					className={classes.createButton}
+					startIcon={<AddIcon />}>
+					Crear
+				</Button>
 			</GridToolbarContainer>
 		);
 	};
@@ -52,6 +90,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 		setName('');
 		setUserDep(null);
 		setUserRol(null);
+		setUserStatus(null);
 		setUserID(0);
 	};
 
@@ -66,6 +105,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 		*/
 		getUserData(event.row);
 		setUserView(true);
+		setCreateUser(false);
 	};
 
 	const getUserData = async (user: any) => {
@@ -80,6 +120,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 			setName(user.name);
 			setUserDep(data.id_department);
 			setUserRol(data.id_rol);
+			setUserStatus(data.id_status);
 			setUserID(user.id);
 		} catch (error) {
 			console.log('error getUserData', error);
@@ -94,6 +135,22 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 				break;
 			case 'rol':
 				setUserRol(value);
+				break;
+			case 'status':
+				setUserStatus(value);
+				break;
+			default:
+				break;
+		}
+	};
+
+	const handleNewSelect = (event: any, value: any, item: string) => {
+		switch (item) {
+			case 'department':
+				setnewUserDep(value);
+				break;
+			case 'rol':
+				setnewUserRol(value);
 				break;
 			default:
 				break;
@@ -118,7 +175,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 						//update
 						id_rol: userRol.id,
 						id_department: userDep.id,
-						block: userBlocked ? 1 : 0,
+						id_status: userStatus.id,
 					});
 					Swal.fire('Cambios Guardados', '', 'success');
 				} catch (error) {
@@ -129,6 +186,60 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 			}
 		});
 	};
+
+	const handleCreateUser = () => {
+		setCreateUser(true);
+		setUserView(false);
+	};
+
+	const closeCreateUser = () => {
+		setCreateUser(false);
+	};
+
+	const handleSaveCreatedUser = async () => {
+		const data = {
+			name: newName,
+			login: newLogin,
+			email: newEmail,
+			rol: newUserRol,
+			dep: newUserDep,
+			type_doc: newTypeDoc,
+			doc: newNroDocument,
+		};
+
+		Swal.fire({
+			title: `¿Estas seguro de crear el usuario ${newName}?`,
+			showDenyButton: true,
+			confirmButtonText: 'Si',
+			denyButtonText: 'No',
+			customClass: {
+				actions: 'my-actions',
+				confirmButton: 'order-2',
+				denyButton: 'order-3',
+			},
+		}).then(async (result) => {
+			if (result.isConfirmed) {
+				try {
+					await useAxios.post(`/seguridad/create/user`, data).then((resp) => console.log(resp.data.info));
+					Swal.fire('Usuario creado con éxito.', '', 'success');
+				} catch (error) {
+					// handleError(error);
+				}
+			} else if (result.isDenied) {
+				// Swal.fire('Changes are not saved', '', 'info');
+			}
+		});
+	};
+
+	const validEmail = (value: string): boolean => {
+		let validatedEmail = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(value);
+		if (!validatedEmail) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
 	return (
 		<>
 			<Grid container spacing={4}>
@@ -148,11 +259,11 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 						}
 					</div>
 				</Grid>
-				<Grid item xs={7}>
+				<Grid item xs={6}>
 					{openUserView && name && login ? (
 						<Paper variant='outlined'>
 							<div className={classes.card}>
-								<Button /*sx={sxStyled.closeBtn}*/ onClick={handleCloseRow}>
+								<Button sx={sxStyled.closeBtn} onClick={handleCloseRow}>
 									<CloseIcon />
 								</Button>
 								<form className={classes.form}>
@@ -193,27 +304,34 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 														className={classes.inputText}
 														onChange={(event, value) => (value ? handleSelect(event, value, 'rol') : null)}
 														value={userRol}
-														getOptionLabel={(option: any) => option.name}
+														getOptionLabel={(option: any) => (option.name ? option.name : '')}
 														isOptionEqualToValue={(option, value) => option.id === value.id}
 														options={listRoles}
 														renderInput={(params: any) => (
 															<TextField {...params} name='rol' label='Selecciona un Cargo' variant='outlined' />
 														)}
 													/>
+													<Autocomplete
+														className={classes.inputText}
+														onChange={(event, value) => (value ? handleSelect(event, value, 'status') : null)}
+														value={userStatus}
+														getOptionLabel={(option: any) => (option.name ? option.name : '')}
+														isOptionEqualToValue={(option, value) => option.id === value.id}
+														options={listStatus}
+														renderInput={(params: any) => (
+															<TextField
+																{...params}
+																name='Estatus'
+																label='Seleccione el estatus'
+																variant='outlined'
+															/>
+														)}
+													/>
 												</>
-												{/*
-												<Button
-													onClick={() => setUserBlocked(!userBlocked)}
-													variant='contained'
-													//sx={!userBlocked ? sxStyled.blockedButtonOff : sxStyled.blockedButtonOn}
-												>
-													{userBlocked ? `Desbloquear` : `Bloquear`}
-												</Button>
-												*/}
 											</div>
-											<div>
+											{/* <div>
 												<div className={classes.cardTitles}>Permisos</div>
-											</div>
+											</div> */}
 										</div>
 										<div className=''></div>
 										<Button /*sx={sxStyled.buttonSaveData}*/ variant='contained' onClick={handleSaveData}>
@@ -223,8 +341,146 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser }
 								</form>
 							</div>
 						</Paper>
+					) : createUser ? (
+						<Paper variant='outlined'>
+							<div className={classes.card}>
+								<Button sx={sxStyled.closeBtn} onClick={closeCreateUser}>
+									<CloseIcon />
+								</Button>
+								<form className={classes.form}>
+									<div className={classes.gridNewUser}>
+										<div>
+											<div className={classes.textFields}>
+												<TextField
+													key={1}
+													id='name'
+													name='name'
+													label='Nombre Completo'
+													variant='outlined'
+													type='text'
+													value={newName}
+													onChange={(e) => {
+														setnewName(e.target.value);
+													}}
+													error={newName === ''}
+												/>
+												<TextField
+													key={1}
+													id='login'
+													name='login'
+													label='Usuario'
+													variant='outlined'
+													type='text'
+													value={newLogin}
+													onChange={(e) => {
+														setnewLogin(e.target.value);
+													}}
+													error={newLogin === ''}
+												/>
+												<div>
+													{/* <FormControl> */}
+													<Select
+														style={{ width: '25%', marginRight: '5%' }}
+														label='Tipo'
+														variant='outlined'
+														name='id_ident_type'
+														value={newTypeDoc}
+														onChange={(e: any) => {
+															setnewTypeDoc(e.target.value as any);
+														}}
+														// error={fm.errorClient}
+													>
+														{listIdentType.map((item: any) => {
+															if (item.name === 'J') return null;
+															return (
+																<MenuItem key={item.name} value={item.name}>
+																	{item.name}
+																</MenuItem>
+															);
+														})}
+													</Select>
+													{/* </FormControl> */}
+													<TextField
+														style={{ width: '70%' }}
+														key={2}
+														id='name'
+														name='name'
+														label='Nro. Documento'
+														variant='outlined'
+														type='number'
+														value={newNroDocument}
+														onChange={(e: any) => {
+															setnewNroDocument(e.target.value as string);
+														}}
+														error={newNroDocument === null || newNroDocument === ''}
+													/>
+												</div>
+												<TextField
+													key={3}
+													id='email'
+													name='email'
+													label='Correo'
+													variant='outlined'
+													type='email'
+													value={newEmail}
+													onChange={(e: any) => {
+														setnewEmail(e.target.value as any);
+													}}
+													error={validEmail(newEmail)}
+												/>
+												{/* <TextField
+													key={4}
+													id='name'
+													name='name'
+													label='Contraseña'
+													variant='outlined'
+													type='password'
+													value={newPassword}
+												/> */}
+												<Autocomplete
+													className={classes.inputText}
+													onChange={(event, value) => (value ? handleNewSelect(event, value, 'department') : null)}
+													value={newUserDep}
+													getOptionLabel={(option: any) => (option.name ? option.name : '')}
+													isOptionEqualToValue={(option: any) => option.id === newUserDep.id}
+													options={listDepartment}
+													renderInput={(params: any) => (
+														<TextField
+															{...params}
+															name='department'
+															label='Seleciona un Departmento'
+															variant='outlined'
+														/>
+													)}
+												/>
+												<Autocomplete
+													className={classes.inputText}
+													onChange={(event, value) => (value ? handleNewSelect(event, value, 'rol') : null)}
+													value={newUserRol}
+													getOptionLabel={(option: any) => (option.name ? option.name : '')}
+													isOptionEqualToValue={(option, value) => option.id === value.id}
+													options={listRoles}
+													renderInput={(params: any) => (
+														<TextField {...params} name='rol' label='Selecciona un Cargo' variant='outlined' />
+													)}
+												/>
+											</div>
+										</div>
+										<Button
+											className={classes.saveButton}
+											variant='contained'
+											color='success'
+											onClick={handleSaveCreatedUser}>
+											Guardar Nuevo Usuario
+										</Button>
+									</div>
+								</form>
+							</div>
+						</Paper>
 					) : openUserView ? (
-						<LoaderLine />
+						<div style={{ position: 'relative', height: '100%' }}>
+							<LoaderLine component />
+						</div>
 					) : null}
 				</Grid>
 			</Grid>
