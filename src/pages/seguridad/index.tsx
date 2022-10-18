@@ -107,6 +107,7 @@ const Seguridad: FC = () => {
 							listRoles={listRoles}
 							listStatus={listStatus}
 							allUser={allUser}
+							getData={getData}
 						/>
 					</TabPanel>
 					{/* 

@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import { Autocomplete, Avatar, Button, Grid, MenuItem, Paper, Select, TextField } from '@mui/material';
 import { DataGrid, GridToolbarContainer, GridToolbarFilterButton } from '@mui/x-data-grid';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import Swal from 'sweetalert2';
 import LoaderLine from '../../../../components/loader/LoaderLine';
 import { handleError } from '../../../../components/swal/alerts';
@@ -18,6 +18,7 @@ interface Props {
 	listRoles: Roles[];
 	allUser: any[];
 	listStatus: any[];
+	getData: () => Promise<void>;
 }
 
 export const listIdentType = [
@@ -38,7 +39,7 @@ export const listIdentType = [
 	},
 ];
 
-const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser, listStatus }) => {
+const GestionUsuarios: FC<Props> = ({ listDepartment, listRoles, allUser, listStatus, getData }) => {
 	const classes = useStyles();
 
 	const [userBlocked, setUserBlocked] = useState<boolean>(false);
@@ -111,9 +112,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser, 
 	const getUserData = async (user: any) => {
 		setDisabledSelect(true);
 		try {
-			// console.log(user);
 			const resp = await axios.get(`seguridad/workerSecurity/${user.id}`);
-			// console.log(resp.data.info);
 			const data = resp.data.info;
 			setUserBlocked(data.active === 0 ? true : false);
 			setLogin(user.login);
@@ -220,9 +219,15 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser, 
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				try {
-					await useAxios.post(`/seguridad/create/user`, data).then((resp) => console.log(resp.data.info));
-					Swal.fire('Usuario creado con éxito.', '', 'success');
-				} catch (error) {
+					await useAxios.post(`/seguridad/create/user`, data).then(() => {
+						Swal.fire('Usuario creado con éxito.', '', 'success').then(async () => {
+							await getData();
+							setCreateUser(false);
+						});
+					});
+				} catch (error: any) {
+					console.log({ ...error });
+					Swal.fire('Error al crear usuario.', `${error.response.data.message}`, 'error');
 					// handleError(error);
 				}
 			} else if (result.isDenied) {
@@ -365,7 +370,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser, 
 													error={newName === ''}
 												/>
 												<TextField
-													key={1}
+													key={2}
 													id='login'
 													name='login'
 													label='Usuario'
@@ -402,7 +407,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser, 
 													{/* </FormControl> */}
 													<TextField
 														style={{ width: '70%' }}
-														key={2}
+														key={3}
 														id='name'
 														name='name'
 														label='Nro. Documento'
@@ -416,7 +421,7 @@ const GestionUsuarios: React.FC<Props> = ({ listDepartment, listRoles, allUser, 
 													/>
 												</div>
 												<TextField
-													key={3}
+													key={4}
 													id='email'
 													name='email'
 													label='Correo'
