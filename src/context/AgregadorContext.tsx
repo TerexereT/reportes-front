@@ -4,7 +4,7 @@ interface Props {
 	children: ReactChild;
 }
 
-export type TAgregador = 'Milpagos' | 'Librepago' | 'Carropago';
+export type TAgregador = 'Milpagos' | 'Librepago' | 'Carropago' | 'GSComputer';
 
 interface IAgregadorContext {
 	Agregador: TAgregador | undefined;

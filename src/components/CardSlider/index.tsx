@@ -1,41 +1,12 @@
-import AgregadorContext, { TAgregador } from 'context/AgregadorContext';
-import entradaMilpagos from 'images/entrada1000Pagos.jpeg';
-import entradaCarropago from 'images/fondoCarropago.jpeg';
-import entradaLibrepago from 'images/fondoLibrepago.jpeg';
-import logo1000pagos from 'images/Logo-1000Pagos-Horizontal.png';
-import logoCarropago from 'images/logo-carropago.png';
-import logoLibrepago from 'images/logo_librePago.png';
+import AgregadorContext from 'context/AgregadorContext';
 import { CSSProperties, FC, useContext, useEffect, useLayoutEffect, useReducer, useRef } from 'react';
+import { AgregadorSlides } from './assets';
 import { useStyles } from './styles';
 import './styles/index.scss';
 
-interface ISlide {
-	description: JSX.Element;
-	image: string;
-	value: TAgregador;
-	key: number;
-}
-
-export const slides: ISlide[] = [
-	{
-		description: <img src={logoCarropago} alt='' style={{ width: '65%' }} />,
-		image: entradaCarropago,
-		value: 'Carropago',
-		key: 1,
-	},
-	{
-		description: <img src={logo1000pagos} alt='' style={{ width: '65%' }} />,
-		image: entradaMilpagos,
-		value: 'Milpagos',
-		key: 2,
-	},
-	{
-		description: <img src={logoLibrepago} alt='' style={{ width: '65%' }} />,
-		image: entradaLibrepago,
-		value: 'Librepago',
-		key: 3,
-	},
-];
+const initialState = {
+	slideIndex: 1,
+};
 
 const useTilt = (active: true | null) => {
 	const ref = useRef(null);
@@ -79,15 +50,11 @@ const useTilt = (active: true | null) => {
 	return ref;
 };
 
-const initialState = {
-	slideIndex: 1,
-};
-
 const slidesReducer = (state: any, event: any) => {
 	if (event.type === 'NEXT') {
 		return {
 			...state,
-			slideIndex: state.slideIndex === 0 ? slides.length - 1 : state.slideIndex - 1,
+			slideIndex: state.slideIndex === 0 ? AgregadorSlides.length - 1 : state.slideIndex - 1,
 		};
 	}
 	if (event.type === 'SET') {
@@ -99,7 +66,7 @@ const slidesReducer = (state: any, event: any) => {
 	if (event.type === 'PREV') {
 		return {
 			...state,
-			slideIndex: (state.slideIndex + 1) % slides.length,
+			slideIndex: (state.slideIndex + 1) % AgregadorSlides.length,
 		};
 	}
 };
@@ -120,7 +87,7 @@ const Slide = ({ slide, offset }: any) => {
 			className='slide'
 			data-active={active}
 			onClick={() => {
-				setAgregador(slide.value);
+				if (slide.value === 'Milpagos' || slide.value === 'Carropago') setAgregador(slide.value);
 			}}
 			style={style}>
 			<div
@@ -155,7 +122,7 @@ const CardSlider: FC = () => {
 	const { Agregador } = useContext(AgregadorContext);
 
 	useLayoutEffect(() => {
-		let agr = slides.findIndex((val) => val.value === Agregador);
+		let agr = AgregadorSlides.findIndex((val) => val.value === Agregador);
 		dispatch({ type: 'SET', index: agr! });
 		window.localStorage.setItem('agregador', Agregador as string);
 	}, [Agregador]);
@@ -164,7 +131,7 @@ const CardSlider: FC = () => {
 		<div className={classes.slides}>
 			<button onClick={() => dispatch({ type: 'PREV' })}>‹</button>
 
-			{slides.map((slide, i) => {
+			{AgregadorSlides.map((slide, i) => {
 				let offset = state.slideIndex - i;
 				return <Slide slide={slide} offset={offset} key={i} />;
 			})}

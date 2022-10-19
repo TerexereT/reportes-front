@@ -27,7 +27,14 @@ function App() {
 					palette: {
 						mode: mode,
 						primary: {
-							main: Agregador === 'Librepago' ? '#008aeb' : Agregador === 'Carropago' ? '#ea5735' : '#2f3775',
+							main:
+								Agregador === 'GSComputer'
+									? '#244289'
+									: Agregador === 'Librepago'
+									? '#008aeb'
+									: Agregador === 'Carropago'
+									? '#ea5735'
+									: '#2f3775',
 							contrastText: '#ffffff',
 						},
 						secondary: {

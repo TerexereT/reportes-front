@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { configure } from 'axios-hooks';
-import { slides } from 'components/CardSlider';
+import { AgregadorSlides } from 'components/CardSlider/assets';
 import { TAgregador } from 'context/AgregadorContext';
 import LRU from 'lru-cache';
 
@@ -10,7 +10,7 @@ const dev = `http://localhost:4040`;
 
 const getKeyAgregador = () => {
 	const agrCache = localStorage.getItem('agregador') || 'Milpagos';
-	const agregador = slides.find((slide) => slide.value === (agrCache as TAgregador));
+	const agregador = AgregadorSlides.find((slide) => slide.value === (agrCache as TAgregador));
 	return agregador!.key;
 };
 
