@@ -1,25 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Card } from '@mui/material';
-import React, { Fragment } from 'react';
+import { FC, Fragment, useLayoutEffect, useState } from 'react';
 import CheckboxList from '../components/CheckboxList';
 import TableReports from '../components/table';
 import useAxios from '../config';
 import { useStyles } from './RepDinamicos';
-// import SelectList from '../components/DateTime';
 
-const Cuotas: React.FC = () => {
+const CuotasResumido: FC = () => {
 	const classes = useStyles();
 
-	const [state, setState]: [any, any] = React.useState({});
-	// const today = new Date();
-	// const lastMonth = new Date(today);
-	// const [initDate, setInitDate] = React.useState<Date | null>(lastMonth);
-	// const [endDate, setEndDate] = React.useState<Date | null>(today);
+	const [state, setState] = useState({});
 
-	React.useEffect(() => {
+	useLayoutEffect(() => {
 		const getdata = async () => {
 			try {
-				const resp = await useAxios.get('/aboterminal/keys');
+				const resp = await useAxios.get('/cuotas_resumidas/keys');
 				setState(resp.data.info);
 			} catch (error) {}
 		};
@@ -30,8 +25,8 @@ const Cuotas: React.FC = () => {
 		<Fragment>
 			<div className='ed-container'>
 				{/* <div className='ed-item m-cross-end m-main-justify s-py-2'>
-					<div className={classes.headerTitle}>Reportes Dinámicos de Cuotas Vencidas</div>
-				</div> */}
+                <div className={classes.headerTitle}>Reportes Dinámicos de Cuotas Vencidas</div>
+            </div> */}
 				<div className='ed-item s-py-2'>
 					<Card className={classes.card}>
 						{/* <SelectList initDate={initDate} endDate={endDate} setInitDate={setInitDate} setEndDate={setEndDate} /> */}
@@ -40,11 +35,11 @@ const Cuotas: React.FC = () => {
 					</Card>
 				</div>
 				<div className='ed-item s-to-center s-py-2'>
-					<TableReports state={state} from='CuotasVencidas' />
+					<TableReports state={state} from='CuotasResumen' />
 				</div>
 			</div>
 		</Fragment>
 	);
 };
 
-export default Cuotas;
+export default CuotasResumido;

@@ -1,29 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // components
-import { Button, Card, CardActions, CardContent, CardHeader, CircularProgress } from '@material-ui/core';
-// styles
-import { makeStyles } from '@material-ui/core/styles';
+import { Alert, Button, Card, CardActions, CardContent, CardHeader, CircularProgress } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
 	DataGrid,
-	GridColDef,
-	GridExportCsvOptions,
-	// GridExportCsvOptions,
-	GridRowData,
+	GridCsvExportOptions,
 	GridToolbarContainer,
 	GridToolbarExport,
-	// GridToolbarExport,
 	GridToolbarFilterButton,
-} from '@material-ui/data-grid';
-import { Alert } from '@material-ui/lab';
+} from '@mui/x-data-grid';
 import { AxiosResponse } from 'axios';
 // import * as FileSaver from 'file-saver';
-import React from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
+// import { CSVLink } from 'react-csv';
 // import * as XLSX from 'xlsx';
 import useAxios from '../../config';
+import formatData from '../../functions/FormatData';
 import { opciones } from '../../pages/Mantenimiento';
 import { useStylesDT } from '../DateTime';
 
-const useStyles = makeStyles((styles) => ({
+export const useStyles = makeStyles((styles) => ({
 	root: {
 		minWidth: 275,
 		boxShadow: '7px 7px 22px -4px rgba(0,0,0,0.74)',
@@ -44,6 +40,7 @@ const useStyles = makeStyles((styles) => ({
 	Button: {
 		background: styles.palette.primary.main,
 		color: styles.palette.primary.contrastText,
+		textTransform: 'none',
 		'&:hover': {
 			background: styles.palette.primary.light,
 			color: styles.palette.primary.contrastText,
@@ -79,15 +76,17 @@ interface TableReportsProps {
 	endDate?: Date | null;
 	initDate?: Date | null;
 	mantOption?: number;
-	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento';
+	Sponsor?: number;
+	from: 'CuotasVencidas' | 'Movimientos' | 'Mantenimiento' | 'CuotasResumen' | 'PagoCuota';
 }
 
-const TableReports: React.FC<TableReportsProps> = ({
+const TableReports: FC<TableReportsProps> = ({
 	initDate = new Date(Date.now()),
 	endDate,
 	state,
 	from,
 	mantOption,
+	Sponsor,
 }) => {
 	const classes = useStyles();
 	const classesDT = useStylesDT();
@@ -96,7 +95,8 @@ const TableReports: React.FC<TableReportsProps> = ({
 		const day = initDate!.getDate();
 		const month = initDate!.getMonth() + 1;
 		const year = initDate!.getFullYear();
-		const ext = `.csv`;
+		// const ext = `.csv`;
+		const ext = ``;
 		if (mantOption !== undefined) {
 			return `RDMantenimiento - ${opciones[mantOption]}${ext}`;
 		}
@@ -112,17 +112,17 @@ const TableReports: React.FC<TableReportsProps> = ({
 	const keys: string[] = Object.entries(state)
 		.filter(([key, value]) => value)
 		.map(([key, value]): string => key);
-	const exportType: GridExportCsvOptions = {
+	const exportType: GridCsvExportOptions = {
 		fileName: getExportFileName(),
 		delimiter: ';',
 		// fileName: `RD${from} - ${keys} - ${date.toISOString().split('T')[0]}`,
 	};
-	const fieldRef = React.useRef<HTMLInputElement>(null);
-	const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
-	const [download, setDownload]: [boolean, (download: boolean) => void] = React.useState<boolean>(false);
-	const [error, setError]: [boolean, (loading: boolean) => void] = React.useState<boolean>(false);
-	const [data, setData]: [any[], any] = React.useState<any>([]);
+	const [download, setDownload]: [boolean, (download: boolean) => void] = useState<boolean>(false);
+	const [loading, setLoading]: [boolean, (loading: boolean) => void] = useState<boolean>(false);
+	const [error, setError]: [boolean, (loading: boolean) => void] = useState<boolean>(false);
 	let resp: AxiosResponse<{ message: string; info: any[] }>;
+	const [data, setData]: [any[], any] = useState<any>([]);
+	const fieldRef = useRef<HTMLInputElement>(null);
 	const traerme = async () => {
 		// console.clear();
 		setError(false);
@@ -131,26 +131,20 @@ const TableReports: React.FC<TableReportsProps> = ({
 			setLoading(true);
 			if (from === 'Movimientos') {
 				resp = await useAxios.post(
-					`/history?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`,
+					`/history?init=${initDate?.toISOString().split('T')[0]}&end=${
+						endDate?.toISOString().split('T')[0]
+					}&sponsor=${Sponsor}`,
 					{
 						keys,
 					}
 				);
-				setData(resp.data.info);
-				fieldRef.current?.scrollIntoView({
-					behavior: 'smooth',
-					block: 'start',
-				});
+				setData(formatData(resp.data.info));
 			}
 			if (from === 'CuotasVencidas') {
 				resp = await useAxios.post(`/aboterminal`, {
 					keys,
 				});
 				setData(resp.data.info);
-				fieldRef.current?.scrollIntoView({
-					behavior: 'smooth',
-					block: 'start',
-				});
 			}
 			if (from === 'Mantenimiento') {
 				switch (mantOption) {
@@ -159,42 +153,42 @@ const TableReports: React.FC<TableReportsProps> = ({
 							keys,
 						});
 						setData(resp.data.info);
-						fieldRef.current?.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-						});
 						break;
 					case 2:
 						resp = await useAxios.post(`/mantenimiento/2`, {
 							keys,
 						});
 						setData(resp.data.info);
-						fieldRef.current?.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-						});
 						break;
 					case 3:
 						resp = await useAxios.post(`/mantenimiento/3`, {
 							keys,
 						});
 						setData(resp.data.info);
-						fieldRef.current?.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-						});
 						break;
 					default:
 						resp = await useAxios.post(`/mantenimiento/0`, {
 							keys,
 						});
 						setData(resp.data.info);
-						fieldRef.current?.scrollIntoView({
-							behavior: 'smooth',
-							block: 'start',
-						});
 				}
 			}
+			if (from === 'CuotasResumen') {
+				resp = await useAxios.post(`/cuotas_resumidas`, {
+					keys,
+				});
+				setData(resp.data.info);
+			}
+			if (from === 'PagoCuota') {
+				resp = await useAxios.post(
+					`/pago-cuota?init=${initDate?.toISOString().split('T')[0]}&end=${endDate?.toISOString().split('T')[0]}`
+				);
+				setData(resp.data.info);
+			}
+			fieldRef.current?.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start',
+			});
 			setDownload(true);
 			setLoading(false);
 		} catch (error) {
@@ -204,7 +198,7 @@ const TableReports: React.FC<TableReportsProps> = ({
 		}
 	};
 
-	const customToolbar: () => JSX.Element = () => {
+	const customToolbar = () => {
 		return (
 			<GridToolbarContainer>
 				{download && <GridToolbarExport csvOptions={exportType} />}
@@ -221,20 +215,68 @@ const TableReports: React.FC<TableReportsProps> = ({
 		);
 	};
 
-	let rowData: GridRowData[] = data.map((val: any, i: number) => {
+	let rowData = data.map((val: any, i: number) => {
 		return { id: i, ...val };
 	});
-	let columns: GridColDef[] = [
+	let columns: any = [
 		{ field: 'Seleccione filtros', headerName: 'key', type: 'string', width: 240, editable: false },
 	];
 	if (rowData[0] !== undefined) {
-		columns = Object.entries(rowData[0]).map(([key, value]: any): GridColDef => {
+		columns = Object.entries(rowData[0]).map(([key, value]) => {
 			if (key === 'id') {
 				return {
 					field: key,
 					headerName: key,
 					type: 'string',
 					width: 25,
+				};
+			}
+			if (key === 'TERMINAL') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 130,
+				};
+			}
+			if (key === 'FECHA_PAGO') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 130,
+				};
+			}
+			if (key === 'CANTIDAD_PAGADAS') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 180,
+				};
+			}
+			if (key === 'MONTOTOTAL') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 175,
+				};
+			}
+			if (key === 'CANT_CUOTAS') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 185,
+				};
+			}
+			if (key === 'ESTATUS') {
+				return {
+					field: key,
+					headerName: key,
+					type: 'string',
+					width: 140,
 				};
 			}
 			return {
@@ -245,18 +287,67 @@ const TableReports: React.FC<TableReportsProps> = ({
 			};
 		});
 	}
-	React.useEffect(() => {
+
+	useEffect(() => {
 		rowData = data.map((val: any, i: number) => {
 			return { id: i, ...val };
 		});
 		if (rowData[0] !== undefined) {
-			columns = Object.entries(rowData[0]).map(([key, value]: any): GridColDef => {
+			columns = Object.entries(rowData[0]).map(([key, value]) => {
 				if (key === 'id') {
 					return {
 						field: key,
 						headerName: key,
 						type: 'string',
-						width: 20,
+						width: 25,
+					};
+				}
+				if (key === 'TERMINAL') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 130,
+					};
+				}
+				if (key === 'FECHA_PAGO') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 130,
+					};
+				}
+				if (key === 'CANTIDAD_PAGADAS') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 180,
+					};
+				}
+				if (key === 'MONTOTOTAL') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 175,
+					};
+				}
+				if (key === 'CANT_CUOTAS') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 185,
+					};
+				}
+				if (key === 'ESTATUS') {
+					return {
+						field: key,
+						headerName: key,
+						type: 'string',
+						width: 140,
 					};
 				}
 				return {
@@ -267,7 +358,7 @@ const TableReports: React.FC<TableReportsProps> = ({
 				};
 			});
 		}
-	}, [keys]);
+	}, [state]);
 
 	return (
 		<>
@@ -305,7 +396,7 @@ const TableReports: React.FC<TableReportsProps> = ({
 							rows={rowData}
 							columns={columns}
 							rowsPerPageOptions={[25, 50, 100]}
-							checkboxSelection
+							// checkboxSelection
 							columnBuffer={1}
 							disableSelectionOnClick
 						/>

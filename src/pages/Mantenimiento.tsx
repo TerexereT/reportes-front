@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Card, MenuItem, Select, Typography } from '@material-ui/core';
+import { Card, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import classnames from 'classnames';
-import React, { Fragment } from 'react';
+import React from 'react';
 import CheckboxList from '../components/CheckboxList';
 import { useStylesDT } from '../components/DateTime';
 import TableReports from '../components/table';
@@ -9,10 +9,10 @@ import useAxios from '../config';
 import { useStyles } from './RepDinamicos';
 
 export const opciones = [
-	'Sin Plan de Mantenimiento',
-	'Sin Plan de Comisión',
-	'Plan de Mantenimiento Inactivo',
-	'Plan de Comisión Inactivo',
+	'Sin Mantenimiento / Inactivo',
+	'Sin Comisión / Inactivo',
+	// 'Plan de Mantenimiento Inactivo',
+	// 'Plan de Comisión Inactivo',
 ];
 
 const Mantenimiento: React.FC = () => {
@@ -34,11 +34,11 @@ const Mantenimiento: React.FC = () => {
 		};
 		getdata();
 	}, [option]);
-	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+	const handleChange = (event: SelectChangeEvent<number>) => {
 		setOption(event.target.value as number);
 	};
 	return (
-		<Fragment>
+		<>
 			<div className='ed-container'>
 				<div className='ed-item s-py-2'>
 					<Card className={classes.card}>
@@ -57,7 +57,11 @@ const Mantenimiento: React.FC = () => {
 								value={option}
 								onChange={handleChange}>
 								{opciones.map((val, i) => {
-									return <MenuItem value={i}>{val}</MenuItem>;
+									return (
+										<MenuItem key={i} value={i}>
+											{val}
+										</MenuItem>
+									);
 								})}
 							</Select>
 						</div>
@@ -68,7 +72,7 @@ const Mantenimiento: React.FC = () => {
 					{show && <TableReports state={state} from='Mantenimiento' mantOption={option} />}
 				</div>
 			</div>
-		</Fragment>
+		</>
 	);
 };
 
